@@ -1,0 +1,40 @@
+[user]
+    name = Robert Schulze
+    email = rs.github@mailbox.org
+    signingkey = 15C08E29800B665D
+[commit]
+    gpgsign = true
+[core]
+    editor = /opt/homebrew/bin/nvim
+[pull]
+    rebase = true # make 'git pull' rebase instead of merge
+[submodule]
+    recurse = true # make 'git pull' and other commands work with submodules
+[alias]
+    a = add
+    b = branch
+    bd = branch --delete --force
+    bm = branch --move --force
+    c = commit
+    cl = clean --force -d
+    ca = commit --amend
+    co = alias_no_longer_needed # deliberately gives an error
+    cob = use_git_sw_instead # deliberately gives an error
+    cp = cherry-pick
+    dc = diff --cached
+    f = fetch
+    fa = fetch --all
+    g = grep
+    l = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
+    m = merge
+    pu = push
+    pl = pull --jobs 8
+    r = rebase
+    s = status --ignore-submodules # too slow otherwise
+    sh = show
+    sw = switch
+    swc = switch --create
+    wipe = reset --hard
+    wt = worktree
+    wta = worktree add -b
+    unstage = reset HEAD
