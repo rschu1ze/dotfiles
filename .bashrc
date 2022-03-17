@@ -3,7 +3,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias c='clear'
 alias e='exit'
-alias g='git'
+alias g='LC_ALL=en_US git' # localization is unneeded
 alias py='python'
 alias v='/opt/homebrew/bin/nvim'
 #alias vim='v'
