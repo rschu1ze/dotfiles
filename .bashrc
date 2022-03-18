@@ -4,9 +4,9 @@ alias ....='cd ../../..'
 alias c='clear'
 alias e='exit'
 alias g='LC_ALL=en_US git' # localization is unneeded
+alias m='LC_ALL=en_US neomutt'
 alias py='python'
-alias v='/opt/homebrew/bin/nvim'
-#alias vim='v'
+alias v='nvim'
 alias t='/opt/homebrew/bin/tmux'
 
 export EDITOR='/opt/homebrew/bin/nvim'
