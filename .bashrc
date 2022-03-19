@@ -1,10 +1,14 @@
+export LC_ALL='en_US.UTF-8'
+export LANG='en_US.UTF-8'
+export LANGUAGE='en_US.UTF-8'
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias c='clear'
 alias e='exit'
-alias g='LC_ALL=en_US git' # localization is unneeded
-alias m='LC_ALL=en_US neomutt'
+alias g='git'
+alias m='neomutt'
 alias py='python'
 alias v='nvim'
 alias t='/opt/homebrew/bin/tmux'
@@ -29,6 +33,10 @@ export PS1='\n\w$(__git_ps1 " (%s)") \$ '
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000000
 export HISTCONTROL=ignoreboth:erasedups
+
+# Make ncurses send Escape immediately instead of waiting
+# for a multi-character sequence. Useful for neomutt keybinding of Esc as abort key.
+export ESCDELAY=0
 
 # EXTRACT FUNCTION ## | Usage: extract <file>
 extract () {
