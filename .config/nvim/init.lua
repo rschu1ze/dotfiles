@@ -16,6 +16,9 @@ require('packer').startup(function()
     use {'phaazon/hop.nvim'}
     use {'vim-scripts/a.vim'} -- Note: comment imap/nmap block in ~/.local/share/nvim/site/pack/packer/start/a.vim/plugin/a.vim
     -- TODO integrate with LSP
+    -- TODO switch to neorg once it reached 1.0 and comes with better
+    --      documentation & tutorials, alternatively: nvim-orgmode (but needs
+    --      more community engagement)
 end)
 
 vim.g.mapleader = " "
@@ -33,13 +36,15 @@ vim.opt.showmode = false
 vim.opt.shiftwidth = 4
 vim.opt.swapfile = false
 vim.opt.list = true
+vim.opt.linebreak= true
+vim.opt.breakindent= true
+vim.opt.showbreak = "> "
 vim.opt.termguicolors = true
 -- vim.opt.background = "light"
 vim.cmd "colorscheme gruvbox" -- TODO: set using Lua one fine day
-
 -- deliberately after the colortheme
 vim.cmd "set listchars=trail:~"
-vim.cmd "highlight NonText ctermfg=green" -- try to make trailing ~ (belonging to group "NonText") green ... doesn't work :(
+vim.cmd "highlight NonText gui=NONE guifg=#83a598"
 
 -- TODO convert keymappings to lua one fine day, of today, only ugly APIs
 -- vim.api.nvim_set_keymap and vim.api.nvim_buf_set_keymap are available
