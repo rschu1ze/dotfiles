@@ -12,7 +12,7 @@ require('packer').startup(function()
     use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
     use {'hrsh7th/nvim-cmp'} -- TODO add a snippet engine one fine day
     use {'hrsh7th/cmp-buffer'}
-    -- use {"ahmedkhalf/project.nvim"} -- TODO needed?
+    use {'jedi2610/nvim-rooter.lua'}
     use {'phaazon/hop.nvim'}
     use {'vim-scripts/a.vim'} -- Note: comment imap/nmap block in ~/.local/share/nvim/site/pack/packer/start/a.vim/plugin/a.vim
     -- TODO integrate with LSP
@@ -24,7 +24,6 @@ end)
 vim.g.mapleader = " "
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.autochdir = true
 vim.opt.shortmess = "Iat"
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 5
@@ -67,11 +66,13 @@ vim.cmd "nnoremap <leader>e <cmd>Telescope git_files theme=ivy previewer=false<c
 vim.cmd "nnoremap <leader>b <cmd>Telescope buffers theme=ivy previewer=false<cr>"
 vim.cmd "nnoremap <leader>l <cmd>Telescope live_grep theme=ivy previewer=false<cr>"
 
--- require("project_nvim").setup()
-
 require('Comment').setup()
 
 require('nvim-autopairs').setup()
+
+require('nvim-rooter').setup {
+    rooter_patterns = { '=src' }
+}
 
 require('hop').setup()
 vim.cmd "map f <cmd>HopWord<CR>"
