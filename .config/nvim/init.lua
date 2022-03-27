@@ -12,6 +12,7 @@ require('packer').startup(function()
     use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
     use {'hrsh7th/nvim-cmp'} -- TODO add a snippet engine one fine day
     use {'hrsh7th/cmp-buffer'}
+    use {'tpope/vim-dispatch'} -- TODO replace by Lua equivalent one fine day
     use {'jedi2610/nvim-rooter.lua'}
     use {'phaazon/hop.nvim'}
     use {'vim-scripts/a.vim'} -- Note: comment imap/nmap block in ~/.local/share/nvim/site/pack/packer/start/a.vim/plugin/a.vim
@@ -73,6 +74,16 @@ require('nvim-autopairs').setup()
 require('nvim-rooter').setup {
     rooter_patterns = { '=src' }
 }
+
+-- Configure makeprg. Error format is automatically chosen depending on the
+-- filetype, e.g. .cpp --> GCC error format. Use :Make (provided by
+-- vim-dispatch) to trigger a build. The relative directory works because
+-- nvim-rooter automatically sets the working directory to the source root
+-- directory.
+vim.cmd [[set makeprg=cd\ ../build-debug;\ ninja]]
+-- Shortcuts to step through the quickfix list
+vim.cmd "map <C-j> :cnext<CR>"
+vim.cmd "map <C-k> :cprevious<CR>"
 
 require('hop').setup()
 vim.cmd "map f <cmd>HopWord<CR>"
