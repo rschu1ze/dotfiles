@@ -43,7 +43,7 @@ vim.opt.termguicolors = true
 -- vim.opt.background = "light"
 vim.cmd "colorscheme gruvbox" -- TODO: set using Lua one fine day
 -- deliberately after the colortheme
-vim.cmd "set listchars=trail:~"
+vim.cmd "set listchars=tab:▸\\ ,trail:~"
 vim.cmd "highlight NonText gui=NONE guifg=#83a598"
 
 -- TODO convert keymappings to lua one fine day, of today, only ugly APIs
