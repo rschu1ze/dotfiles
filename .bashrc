@@ -18,10 +18,6 @@ alias make_rel_with_dbg='cmake -DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clan
 
 export EDITOR='/opt/homebrew/bin/nvim'
 
-# Make $__git_ps1 available, cf.
-#   https://stackoverflow.com/questions/15384025/bash-git-ps1-command-not-found
-source ~/.bash_git
-
 # TODO does not seem to work properly?
 GIT_PS1_SHOWCOLORHINTS=true
 # GIT_PS1_SHOWDIRTYSTATE=true # too slow ...
@@ -63,11 +59,11 @@ extract () {
   fi
 }
 
-# Git autocompletion for Bash, cf.
-#  https://www.macinstruct.com/tutorials/how-to-enable-git-tab-autocomplete-on-your-mac/
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
-fi
+# Make $__git_ps1 available, https://stackoverflow.com/a/15398153
+source ~/.bash_git
 
-# make Git completion work with g alias
+# Git autocompletion for Bash, https://stackoverflow.com/a/19876372
+source ~/.git-completion.bash
+
+# Make Git completion work with g alias, https://askubuntu.com/a/642778
 __git_complete g __git_main
