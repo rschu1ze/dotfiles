@@ -84,6 +84,7 @@ end)
 vim.opt.background = "dark" -- light
 vim.cmd "colorscheme gruvbox" -- TODO: set using Lua one fine day
 vim.cmd "highlight NonText gui=NONE guifg=#83a598" -- fix glitch
+vim.cmd "highlight link markdownError Normal" -- fix another glitch
 
 require('Comment').setup()
 
@@ -188,5 +189,3 @@ vim.cmd [[set makeprg=cd\ ../build;\ ninja]]
 -- Shortcuts to step through the quickfix list
 vim.cmd "map <C-j> :cnext<CR>"
 vim.cmd "map <C-k> :cprevious<CR>"
-
--- TODO Fix underscore _ having red hightlighting, e.g. in hover
