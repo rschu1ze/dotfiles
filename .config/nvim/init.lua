@@ -1,3 +1,4 @@
+-- see :h for each option
 vim.g.mapleader = " "
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -18,16 +19,24 @@ vim.opt.showbreak = "> "
 vim.opt.termguicolors = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
 
+-- Fast save
 vim.cmd "nnoremap <Leader>w :w<CR>"
+-- Fast quit
 vim.cmd "nnoremap <Leader>q :q!<CR>"
+-- Fast buffer close
 vim.cmd "nnoremap <Leader>d :bd<CR>"
+-- Fast switch to last buffer
 vim.cmd "nnoremap <Leader><Leader> :b#<CR>"
 
+-- Un-highlight last search result
 vim.cmd "nnoremap <esc> :noh<return><esc>"
 
+-- Make entry into visual mode consistent with cc and dd
 vim.cmd "nnoremap vv V"
+-- Make (un)indentation repeatable
 vim.cmd "vnoremap < <gv"
 vim.cmd "vnoremap > >gv"
+-- Center search results + jump list matches
 vim.cmd "nnoremap n nzz"
 vim.cmd "nnoremap N Nzz"
 vim.cmd "nnoremap * *zz"
@@ -35,7 +44,7 @@ vim.cmd "nnoremap # *zz"
 vim.cmd "nnoremap <C-o> <C-o>zz"
 vim.cmd "nnoremap <C-i> <C-i>zz"
 
--- Sanitize behavior of "k" and "j" in wrapped lines
+-- More sane behavior of "k" and "j" in wrapped lines
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", {noremap = true, expr = true, silent = true})
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", {noremap = true, expr = true, silent = true})
 
@@ -72,9 +81,10 @@ end)
 --      more community engagement)
 -- TODO Look into indent-blankline.nvim 
 
-vim.opt.background = "dark"
+-- Gruvbox is a popular and widely ported color theme.
+vim.opt.background = "dark" -- light
 vim.cmd "colorscheme gruvbox" -- TODO: set using Lua one fine day
-vim.cmd "highlight NonText gui=NONE guifg=#83a598"
+vim.cmd "highlight NonText gui=NONE guifg=#83a598" -- fix glitch
 
 require('Comment').setup()
 
@@ -95,15 +105,19 @@ require'nvim-treesitter.configs'.setup {
     rainbow = {enable = true}
 }
 
--- Check the status with :LspInfo and :LspInstallInfo
+-- Install LSP servers from within nvim, check the status with :LspInfo and
+-- :LspInstallInfo
 local lsp_installer = require("nvim-lsp-installer")
 local is_found, server = lsp_installer.get_server("clangd")
 if is_found and not server:is_installed() then
     server:install()
 end
 
+-- Disable messages in sign column by LSP plugin, virtual text does the job
+-- nicely
 vim.diagnostic.config({signs = false})
 
+-- Keymaps to expose some LSP features, many other functions are available ...
 vim.cmd "nnoremap <leader>r :lua vim.lsp.buf.rename()<CR>"
 vim.cmd "nnoremap K :lua vim.lsp.buf.hover()<CR>"
 vim.cmd "nnoremap s :lua vim.lsp.buf.definition()<CR>"
@@ -111,18 +125,23 @@ vim.cmd "nnoremap S :ClangdSwitchSourceHeader<CR>"
 vim.cmd "nnoremap <leader>f :lua vim.lsp.buf.formatting()<CR>"
 vim.cmd "nnoremap <C-n> :lua vim.diagnostic.goto_prev()<CR>"
 vim.cmd "nnoremap <C-p> :lua vim.diagnostic.goto_next()<CR>"
--- many other functions are available, maybe another day ...
 
--- not clear atm what it does but recommended
+-- Not clear what happens below but that step is recommended
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 require('lspconfig')['clangd'].setup {
     capabilities = capabilities
 }
--- https://clangd.llvm.org/installation.html:
--- "clangd will look in the parent directories of the files you edit looking for it, and also in subdirectories named build/. For example, if editing $SRC/gui/window.cpp, we search in $SRC/gui/, $SRC/gui/build/, $SRC/, $SRC/build/,"
--- If this becomes too annoying, we could pass --compile-commands-dir=<string> to clangd
 
+-- Note from https://clangd.llvm.org/installation.html:
+-- "clangd will look in the parent directories of the files you edit looking
+-- for it, and also in subdirectories named build/. For example, if editing
+-- $SRC/gui/window.cpp, we search in $SRC/gui/, $SRC/gui/build/, $SRC/,
+-- $SRC/build/,"
+-- If this becomes too annoying, we could pass --compile-commands-dir=<string>
+-- to clangd above (--> "cmd")
+
+-- Stolen from somewhere I don't remember
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
@@ -130,12 +149,13 @@ end
 
 local cmp = require 'cmp'
 cmp.setup {
+    -- The order controls the preference for specific sources
     sources = {
         {name = 'nvim_lsp'},
         {name = 'buffer'}
     },
     mapping = {
-        -- Snippet stolen from kickstart.nvim
+        -- Overload tab for a natural completion experience
         ['<Tab>'] = function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
@@ -155,6 +175,7 @@ cmp.setup {
     },
 }
 
+-- Make telescope available via shortcuts
 vim.cmd "nnoremap <leader>e <cmd>Telescope git_files theme=ivy previewer=false<cr>"
 vim.cmd "nnoremap <leader>b <cmd>Telescope buffers theme=ivy previewer=false<cr>"
 vim.cmd "nnoremap <leader>l <cmd>Telescope live_grep theme=ivy previewer=false<cr>"
@@ -164,7 +185,7 @@ vim.cmd "nnoremap <leader>l <cmd>Telescope live_grep theme=ivy previewer=false<c
 -- vim-dispatch) to trigger a build. The relative directory works because
 -- nvim-rooter automatically sets the working directory to the source root
 -- directory.
-vim.cmd [[set makeprg=cd\ ../build-debug;\ ninja]]
+vim.cmd [[set makeprg=cd\ ../build;\ ninja]]
 -- Shortcuts to step through the quickfix list
 vim.cmd "map <C-j> :cnext<CR>"
 vim.cmd "map <C-k> :cprevious<CR>"
