@@ -18,6 +18,12 @@ alias t='tmux'
 alias make_dbg='cmake -DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ -DCMAKE_AR=$(brew --prefix llvm)/bin/llvm-ar -DCMAKE_RANLIB=$(brew --prefix llvm)/bin/llvm-ranlib -DOBJCOPY_PATH=$(brew --prefix llvm)/bin/llvm-objcopy -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..'
 alias make_rel_with_dbg='cmake -DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ -DCMAKE_AR=$(brew --prefix llvm)/bin/llvm-ar -DCMAKE_RANLIB=$(brew --prefix llvm)/bin/llvm-ranlib -DOBJCOPY_PATH=$(brew --prefix llvm)/bin/llvm-objcopy -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..'
 
+# On Mac, XDG_CONFIG_HOME isn't set. Unless we tell ccache the
+# location of it's config file, it won't pick it up from the
+# standard location. On Linux, this environment variable can be
+# removed. Verify with ccache --show-stats --verbose
+export CCACHE_CONFIGPATH=~/.config/ccache/ccache.conf
+
 export EDITOR='nvim'
 
 # TODO does not seem to work properly?
