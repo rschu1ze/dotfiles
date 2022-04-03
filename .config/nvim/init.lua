@@ -79,7 +79,6 @@ end)
 -- TODO Install neorg once it reached 1.0 and comes with better
 --      documentation & tutorials, alternatively: nvim-orgmode (but needs
 --      more community engagement)
--- TODO Look into indent-blankline.nvim 
 
 -- Gruvbox is a popular and widely ported color theme.
 vim.opt.background = "dark" -- light
