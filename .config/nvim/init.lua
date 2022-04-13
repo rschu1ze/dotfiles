@@ -72,7 +72,7 @@ require('packer').startup(function()
     use 'hrsh7th/cmp-nvim-lsp'
     use 'tpope/vim-dispatch' -- TODO replace by Lua equivalent one fine day
     use 'jedi2610/nvim-rooter.lua'
-    use 'phaazon/hop.nvim'
+    use 'phaazon/hop.nvim' -- TODO lightspeed.nvim and leap.nvim seem reasonable competitors ... converge to whatever plugin comes out successfully from this
     use 'williamboman/nvim-lsp-installer'
     use 'neovim/nvim-lspconfig'
 end)
