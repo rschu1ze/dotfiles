@@ -20,37 +20,30 @@ vim.opt.termguicolors = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
 
 -- Fast save
-vim.cmd "nnoremap <Leader>w :w<CR>"
+vim.keymap.set("n", "<Leader>w", ":w<CR>")
 -- Fast quit
-vim.cmd "nnoremap <Leader>q :q!<CR>"
+vim.keymap.set("n", "<Leader>q", ":q!<CR>")
 -- Fast buffer close
-vim.cmd "nnoremap <Leader>d :bd<CR>"
+vim.keymap.set("n", "<Leader>d", ":bd<CR>")
 -- Fast switch to last buffer
-vim.cmd "nnoremap <Leader><Leader> :b#<CR>"
-
+vim.keymap.set("n", "<Leader><Leader>", ":b#<CR>")
 -- Un-highlight last search result
-vim.cmd "nnoremap <esc> :noh<return><esc>"
-
+vim.keymap.set("n", "<esc>", ":noh<return><esc>")
 -- Make entry into visual mode consistent with cc and dd
-vim.cmd "nnoremap vv V"
+vim.keymap.set("n", "vv", "V")
 -- Make (un)indentation repeatable
-vim.cmd "vnoremap < <gv"
-vim.cmd "vnoremap > >gv"
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
 -- Center search results + jump list matches
-vim.cmd "nnoremap n nzz"
-vim.cmd "nnoremap N Nzz"
-vim.cmd "nnoremap * *zz"
-vim.cmd "nnoremap # *zz"
-vim.cmd "nnoremap <C-o> <C-o>zz"
-vim.cmd "nnoremap <C-i> <C-i>zz"
-
+vim.keymap.set("n", "n", "nzz")
+vim.keymap.set("n", "N", "Nzz")
+vim.keymap.set("n", "*", "*zz")
+vim.keymap.set("n", "#", "*zz")
+vim.keymap.set("n", "<C-o>", "<C-o>zz")
+vim.keymap.set("n", "<C-i>", "<C-i>zz")
 -- More sane behavior of "k" and "j" in wrapped lines
-vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", {noremap = true, expr = true, silent = true})
-vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", {noremap = true, expr = true, silent = true})
-
--- TODO convert keymappings to lua one fine day, of today, only ugly APIs
--- vim.api.nvim_set_keymap and vim.api.nvim_buf_set_keymap are available
--- Cf. https://github.com/neovim/neovim/pull/16591 (neovim 0.7+)
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", {expr=true})
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
 -- ----------------------------------------------------------------------
 -- Plug-ins
@@ -83,8 +76,8 @@ end)
 -- Gruvbox is a popular and widely ported color theme.
 vim.opt.background = "dark" -- light
 vim.cmd "colorscheme gruvbox" -- TODO: set using Lua one fine day
-vim.cmd "highlight NonText gui=NONE guifg=#83a598" -- fix glitch
-vim.cmd "highlight link markdownError Normal" -- fix another glitch
+vim.api.nvim_set_hl(0, 'NonText', {fg="#83a598"})
+vim.cmd "highlight link markdownError Normal" -- fix another glitch, TODO: use Lua
 
 require('Comment').setup()
 
@@ -95,7 +88,7 @@ require('nvim-rooter').setup {
 }
 
 require'hop'.setup()
-vim.cmd "map f <cmd>HopWord<CR>"
+vim.keymap.set("n", "f", ":HopWord<CR>")
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = "maintained",
@@ -118,13 +111,13 @@ end
 vim.diagnostic.config({signs = false})
 
 -- Keymaps to expose some LSP features, many other functions are available ...
-vim.cmd "nnoremap <leader>r :lua vim.lsp.buf.rename()<CR>"
-vim.cmd "nnoremap K :lua vim.lsp.buf.hover()<CR>"
-vim.cmd "nnoremap s :lua vim.lsp.buf.definition()<CR>"
-vim.cmd "nnoremap S :ClangdSwitchSourceHeader<CR>"
-vim.cmd "nnoremap <leader>f :lua vim.lsp.buf.formatting()<CR>"
-vim.cmd "nnoremap <C-n> :lua vim.diagnostic.goto_prev()<CR>"
-vim.cmd "nnoremap <C-p> :lua vim.diagnostic.goto_next()<CR>"
+vim.keymap.set("n", "<Leader>r", ":lua vim.lsp.buf.rename()<CR>")
+vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>")
+vim.keymap.set("n", "s", ":lua vim.lsp.buf.definition()<CR>")
+vim.keymap.set("n", "S", ":ClangdSwitchSourceHeader<CR>")
+vim.keymap.set("n", "<Leader>f", ":lua vim.lsp.buf.formatting<CR>")
+vim.keymap.set("n", "<C-n>", ":lua vim.diagnostic.goto_prev<CR>")
+vim.keymap.set("n", "<C-p>", ":lua vim.diagnostic.goto_next<CR>")
 
 -- Not clear what happens below but that step is recommended
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -176,9 +169,9 @@ cmp.setup {
 }
 
 -- Make telescope available via shortcuts
-vim.cmd "nnoremap <leader>e <cmd>Telescope git_files theme=ivy previewer=false<cr>"
-vim.cmd "nnoremap <leader>b <cmd>Telescope buffers theme=ivy previewer=false<cr>"
-vim.cmd "nnoremap <leader>l <cmd>Telescope live_grep theme=ivy previewer=false<cr>"
+vim.keymap.set("n", "<Leader>e", ":Telescope git_files theme=ivy previewer=false<cr>")
+vim.keymap.set("n", "<Leader>b", ":Telescope buffers theme=ivy previewer=false<cr>")
+vim.keymap.set("n", "<Leader>l", ":Telescope live_grep theme=ivy previewer=false<cr>")
 
 -- Configure makeprg. Error format is automatically chosen depending on the
 -- filetype, e.g. .cpp --> GCC error format. Use :Make (provided by
@@ -187,5 +180,5 @@ vim.cmd "nnoremap <leader>l <cmd>Telescope live_grep theme=ivy previewer=false<c
 -- directory.
 vim.cmd [[set makeprg=cd\ ../build;\ ninja]]
 -- Shortcuts to step through the quickfix list
-vim.cmd "map <C-j> :cnext<CR>"
-vim.cmd "map <C-k> :cprevious<CR>"
+vim.keymap.set("n", "<C-j>", ":cnext<CR>")
+vim.keymap.set("n", "<C-k>", ">cprevious<CR>")
