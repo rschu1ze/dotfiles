@@ -20,30 +20,30 @@ vim.opt.termguicolors = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
 
 -- Fast save
-vim.keymap.set("n", "<Leader>w", ":w<CR>")
+vim.keymap.set('n', '<Leader>w', ':w<CR>')
 -- Fast quit
-vim.keymap.set("n", "<Leader>q", ":q!<CR>")
+vim.keymap.set('n', '<Leader>q', ':q!<CR>')
 -- Fast buffer close
-vim.keymap.set("n", "<Leader>d", ":bd<CR>")
+vim.keymap.set('n', '<Leader>d', ':bd<CR>')
 -- Fast switch to last buffer
-vim.keymap.set("n", "<Leader><Leader>", ":b#<CR>")
+vim.keymap.set('n', '<Leader><Leader>', ':b#<CR>')
 -- Un-highlight last search result
-vim.keymap.set("n", "<esc>", ":noh<return><esc>")
+vim.keymap.set('n', '<esc>', ':noh<return><esc>')
 -- Make entry into visual mode consistent with cc and dd
-vim.keymap.set("n", "vv", "V")
+vim.keymap.set('n', 'vv', 'V')
 -- Make (un)indentation repeatable
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
 -- Center search results + jump list matches
-vim.keymap.set("n", "n", "nzz")
-vim.keymap.set("n", "N", "Nzz")
-vim.keymap.set("n", "*", "*zz")
-vim.keymap.set("n", "#", "*zz")
-vim.keymap.set("n", "<C-o>", "<C-o>zz")
-vim.keymap.set("n", "<C-i>", "<C-i>zz")
--- More sane behavior of "k" and "j" in wrapped lines
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", {expr=true})
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", {expr=true})
+vim.keymap.set('n', 'n', 'nzz')
+vim.keymap.set('n', 'N', 'Nzz')
+vim.keymap.set('n', '*', '*zz')
+vim.keymap.set('n', '#', '*zz')
+vim.keymap.set('n', '<C-o>', '<C-o>zz')
+vim.keymap.set('n', '<C-i>', '<C-i>zz')
+-- More sane behavior of 'k' and 'j' in wrapped lines
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
 -- ----------------------------------------------------------------------
 -- Plug-ins
@@ -88,7 +88,7 @@ require('nvim-rooter').setup {
 }
 
 require'hop'.setup()
-vim.keymap.set("n", "f", ":HopWord<CR>")
+vim.keymap.set('n', 'f', ':HopWord<CR>')
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = "all",
@@ -111,13 +111,13 @@ end
 vim.diagnostic.config({signs = false})
 
 -- Keymaps to expose some LSP features, many other functions are available ...
-vim.keymap.set("n", "<Leader>r", ":lua vim.lsp.buf.rename()<CR>")
-vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>")
-vim.keymap.set("n", "s", ":lua vim.lsp.buf.definition()<CR>")
-vim.keymap.set("n", "S", ":ClangdSwitchSourceHeader<CR>")
-vim.keymap.set("n", "<Leader>f", ":lua vim.lsp.buf.formatting<CR>")
-vim.keymap.set("n", "<C-n>", ":lua vim.diagnostic.goto_prev<CR>")
-vim.keymap.set("n", "<C-p>", ":lua vim.diagnostic.goto_next<CR>")
+vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+vim.keymap.set('n', 's', vim.lsp.buf.definition)
+vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>')
+vim.keymap.set('n', '<Leader>f', vim.lsp.buf.formatting)
+vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next)
 
 -- Not clear what happens below but that step is recommended
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -168,10 +168,27 @@ cmp.setup {
     },
 }
 
+require "telescope".setup {
+  defaults = {
+    preview = false
+  },
+  pickers = {
+    git_files = {
+      theme = 'ivy',
+    },
+    buffers = {
+      theme = 'ivy',
+    },
+    live_grep = {
+      theme = 'ivy',
+    }
+  },
+}
+
 -- Make telescope available via shortcuts
-vim.keymap.set("n", "<Leader>e", ":Telescope git_files theme=ivy previewer=false<cr>")
-vim.keymap.set("n", "<Leader>b", ":Telescope buffers theme=ivy previewer=false<cr>")
-vim.keymap.set("n", "<Leader>l", ":Telescope live_grep theme=ivy previewer=false<cr>")
+vim.keymap.set('n', '<Leader>e', require('telescope.builtin').git_files)
+vim.keymap.set('n', '<Leader>b', require('telescope.builtin').buffers)
+vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep)
 
 -- Configure makeprg. Error format is automatically chosen depending on the
 -- filetype, e.g. .cpp --> GCC error format. Use :Make (provided by
@@ -181,4 +198,4 @@ vim.keymap.set("n", "<Leader>l", ":Telescope live_grep theme=ivy previewer=false
 vim.cmd [[set makeprg=cd\ ../build;\ ninja]]
 -- Shortcuts to step through the quickfix list
 vim.keymap.set("n", "<C-j>", ":cnext<CR>")
-vim.keymap.set("n", "<C-k>", ">cprevious<CR>")
+vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
