@@ -6,6 +6,7 @@
     gpgsign = true
 [core]
     editor = /opt/homebrew/bin/nvim
+    pager = less -i # search case-insensitively
 [pull]
     rebase = true # make 'git pull' rebase instead of merge
 [submodule]
