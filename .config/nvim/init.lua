@@ -179,6 +179,7 @@ require "telescope".setup {
     },
     buffers = {
       theme = 'ivy',
+      sort_mru = true,
     },
     live_grep = {
       theme = 'ivy',
