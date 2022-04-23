@@ -16,6 +16,7 @@ vim.opt.list = true
 vim.opt.linebreak= true
 vim.opt.breakindent= true
 vim.opt.showbreak = "> "
+vim.opt.textwidth = 140
 vim.opt.termguicolors = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
 
