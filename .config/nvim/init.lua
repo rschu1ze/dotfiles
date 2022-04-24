@@ -68,7 +68,7 @@ require('packer').startup(function()
     use 'tpope/vim-dispatch' -- TODO replace by Lua equivalent one fine day
     use 'jedi2610/nvim-rooter.lua'
     use 'phaazon/hop.nvim' -- TODO lightspeed.nvim and leap.nvim seem reasonable competitors ... converge to whatever plugin comes out successfully from this
-    use 'williamboman/nvim-lsp-installer'
+    use 'williamboman/nvim-lsp-installer' -- TODO messes API-wise with lsp-cmp --> get rid of in the long run, pkg managment should be done by the OS/user, unfortunately brew's LLVM is somewhat outdated
     use 'neovim/nvim-lspconfig'
 end)
 -- TODO Install neorg once it reached 1.0 and comes with better
