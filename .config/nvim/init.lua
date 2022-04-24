@@ -1,8 +1,10 @@
+-- For a good starting point, see. https://github.com/nvim-lua/kickstart.nvim/
+
 -- see :h for each option
-vim.g.mapleader = " "
+vim.g.mapleader = ' '
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.shortmess = "Iat"
+vim.opt.shortmess = 'Iat'
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 5
 vim.opt.cursorline = true
@@ -56,12 +58,15 @@ vim.cmd "packadd packer.nvim"
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
     use 'ellisonleao/gruvbox.nvim'
+    use 'EdenEast/nightfox.nvim'
+    use 'ful1e5/onedark.nvim'
     use 'numToStr/Comment.nvim'
     use 'windwp/nvim-autopairs'
     use 'tpope/vim-fugitive' -- TODO replace by Lua equivalent one fine day, maybe neogit
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use 'p00f/nvim-ts-rainbow'
     use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
+    use 'lukas-reineke/indent-blankline.nvim'
     use 'hrsh7th/nvim-cmp' -- TODO add a snippet engine one fine day
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-nvim-lsp'
@@ -75,11 +80,16 @@ end)
 --      documentation & tutorials, alternatively: nvim-orgmode (but needs
 --      more community engagement)
 
--- Gruvbox is a popular and widely ported color theme.
-vim.opt.background = "dark" -- light
-vim.cmd "colorscheme gruvbox" -- TODO: set using Lua one fine day
-vim.api.nvim_set_hl(0, 'NonText', {fg="#83a598"})
-vim.cmd "highlight link markdownError Normal" -- fix another glitch, TODO: use Lua
+vim.opt.background = 'dark' -- light
+-- Choose one of three popular and widely ported color themes
+vim.cmd 'colorscheme gruvbox'
+-- vim.cmd 'colorscheme onedark'
+-- vim.cmd 'colorscheme nightfox'
+-- TODO one fine day, use Lua to configure color theme
+
+-- Special hacks for gruvbox
+vim.api.nvim_set_hl(0, 'NonText', {fg='#83a598'})
+vim.cmd 'highlight link markdownError Normal' -- fix another glitch, TODO: use Lua
 
 require('Comment').setup()
 
@@ -89,11 +99,16 @@ require('nvim-rooter').setup {
     rooter_patterns = {'=src'}
 }
 
+require('indent_blankline').setup {
+  char = '⋮',
+  show_first_indent_level = false,
+}
+
 require'hop'.setup()
 vim.keymap.set('n', 'f', ':HopWord<CR>')
 
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "all",
+    ensure_installed = 'all',
     highlight = {enable = true},
     incremental_selection = {enable = true},
     -- indent = {enable = true}, -- currently experimental
@@ -102,8 +117,8 @@ require'nvim-treesitter.configs'.setup {
 
 -- Install LSP servers from within nvim, check the status with :LspInfo and
 -- :LspInstallInfo
-local lsp_installer = require("nvim-lsp-installer")
-local is_found, server = lsp_installer.get_server("clangd")
+local lsp_installer = require('nvim-lsp-installer')
+local is_found, server = lsp_installer.get_server('clangd')
 if is_found and not server:is_installed() then
     server:install()
 end
@@ -139,8 +154,8 @@ require('lspconfig')['clangd'].setup {
 
 -- Stolen from somewhere I don't remember
 local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+  local col = vim.fn.col '.' - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
 end
 
 local cmp = require 'cmp'
@@ -171,7 +186,7 @@ cmp.setup {
     },
 }
 
-require "telescope".setup {
+require 'telescope'.setup {
   defaults = {
     preview = false
   },
@@ -201,5 +216,5 @@ vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep)
 -- directory.
 vim.cmd [[set makeprg=cd\ ../build;\ ninja]]
 -- Shortcuts to step through the quickfix list
-vim.keymap.set("n", "<C-j>", ":cnext<CR>")
-vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
+vim.keymap.set('n', '<C-j>', ':cnext<CR>')
+vim.keymap.set('n', '<C-k>', ':cprevious<CR>')
