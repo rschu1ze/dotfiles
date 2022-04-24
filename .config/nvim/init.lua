@@ -13,6 +13,7 @@ vim.opt.showmode = false
 vim.opt.shiftwidth = 4
 vim.opt.swapfile = false
 vim.opt.list = true
+vim.opt.laststatus = 3
 vim.opt.linebreak= true
 vim.opt.breakindent= true
 vim.opt.showbreak = "> "
