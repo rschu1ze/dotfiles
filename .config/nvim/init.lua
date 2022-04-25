@@ -129,19 +129,23 @@ end
 vim.diagnostic.config({signs = false})
 
 -- Keymaps to expose some LSP features, many other functions are available ...
-vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename)
-vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-vim.keymap.set('n', 's', vim.lsp.buf.definition)
-vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>')
-vim.keymap.set('v', '<Leader>f', vim.lsp.buf.range_formatting)
-vim.keymap.set('n', '<Leader>F', vim.lsp.buf.formatting)
-vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev)
-vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next)
+local on_attach = function(_, bufnr)
+  local opts = { buffer = bufnr }
+  vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
+  vim.keymap.set('n', '<Leader>F', vim.lsp.buf.formatting, opts)
+  vim.keymap.set('v', '<Leader>f', vim.lsp.buf.range_formatting, opts)
+  vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next, opts)
+end
 
--- Not clear what happens below but that step is recommended
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
 require('lspconfig')['clangd'].setup {
+    on_attach = on_attach,
     capabilities = capabilities
 }
 
