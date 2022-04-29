@@ -7,8 +7,6 @@
 [core]
     editor = /opt/homebrew/bin/nvim
     pager = less -i # search case-insensitively
-[pull]
-    rebase = true # make 'git pull' rebase instead of merge
 [submodule]
     recurse = true # make 'git pull' and other commands work with submodules
 [alias]
@@ -19,23 +17,23 @@
     c = commit
     cl = clean --force -d
     ca = commit --amend
-    co = alias_no_longer_needed # deliberately gives an error
-    cob = use_git_sw_instead # deliberately gives an error
+    co = alias_no_longer_needed # deliberately gives an error ... alias can be removed once enough muscle memory is ther
+    cob = use_git_sw_instead # deliberately gives an error ... alias can be removed once enough muscle memory is ther
     cp = cherry-pick
     dc = diff --cached
-    f = fetch
-    fa = fetch --all
+    f = fetch --all --prune
     g = grep
     l = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
     m = merge
-    pu = push
-    pl = pull --jobs 8
+    p = push
+    pl = pull --prune --rebase
     r = rebase
-    s = status --ignore-submodules # too slow otherwise
+    st = status --ignore-submodules # too slow otherwise
     sh = show
     sw = switch
     swc = switch --create
     wipe = reset --hard
-    wt = worktree
-    wta = worktree add -b
+    # Worktrees don't play well with submodules
+    # wt = worktree
+    # wta = worktree add -b
     unstage = reset HEAD

@@ -67,6 +67,25 @@ extract () {
   fi
 }
 
+# For some Git commands, I *only* want to use the alias (e.g. 'git p' instead of 'git push') because it is shorter or because the alias
+# passes some useful extra args which (in some cases) cannot not be set via Git config file. Unfortunately, Git does not allow to override
+# standard commands by custom commands. Therefore, putting in a workaround based on https://stackoverflow.com/a/39357426 ...
+function git {
+    if [[ "$1" == "fetch" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
+    elif [[ "$1" == "push" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
+    elif [[ "$1" == "pull" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
+    elif [[ "$1" == "show" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
+    elif [[ "$1" == "status" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
+    else
+        command git "$@"
+    fi
+}
+
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
 source ~/.bash_git
 
