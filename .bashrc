@@ -77,6 +77,8 @@ function git {
         use_the_alias_instead
     elif [[ "$1" == "pull" && "$@" != *"--help"* ]]; then
         use_the_alias_instead
+    elif [[ "$1" == "push" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
     elif [[ "$1" == "show" && "$@" != *"--help"* ]]; then
         use_the_alias_instead
     elif [[ "$1" == "status" && "$@" != *"--help"* ]]; then

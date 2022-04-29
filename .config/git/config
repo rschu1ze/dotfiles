@@ -15,7 +15,6 @@
     bd = branch --delete --force
     bm = branch --move --force
     c = commit
-    cl = clean --force -d
     ca = commit --amend
     co = alias_no_longer_needed # deliberately gives an error ... alias can be removed once enough muscle memory is ther
     cob = use_git_sw_instead # deliberately gives an error ... alias can be removed once enough muscle memory is ther
@@ -23,16 +22,17 @@
     dc = diff --cached
     f = fetch --all --prune
     g = grep
-    l = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
+    l = log --pretty=format:'%C(red)%h %C(yellow)%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
     m = merge
     p = push
+    pf = push --force-with-lease # safer than --force
     pl = pull --prune --rebase
     r = rebase
-    st = status --ignore-submodules # too slow otherwise
+    st = status --short --branch --ignore-submodules # too slow otherwise
     sh = show
     sw = switch
     swc = switch --create
-    wipe = reset --hard
+    fuckit = !git reset --hard && git clean --force -d
     # Worktrees don't play well with submodules
     # wt = worktree
     # wta = worktree add -b
