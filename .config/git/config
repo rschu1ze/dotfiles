@@ -1,6 +1,6 @@
 [user]
     name = Robert Schulze
-    email = rs.github@mailbox.org
+    email = robert@clickhouse.com
     signingkey = 15C08E29800B665D
 [commit]
     gpgsign = true
