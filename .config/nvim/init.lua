@@ -116,37 +116,30 @@ require'nvim-treesitter.configs'.setup {
     rainbow = {enable = true}
 }
 
--- Install LSP servers from within nvim, check the status with :LspInfo and
--- :LspInstallInfo
-local lsp_installer = require('nvim-lsp-installer')
-local is_found, server = lsp_installer.get_server('clangd')
-if is_found and not server:is_installed() then
-    server:install()
-end
-
--- Disable messages in sign column by LSP plugin, virtual text does the job
--- nicely
-vim.diagnostic.config({signs = false})
+-- Install LSP servers from within nvim, check the status with :LspInfo and :LspInstallInfo
+require('nvim-lsp-installer').setup {
+    ensure_installed = { 'clangd' },
+    automatic_installation = true
+}
 
 -- Keymaps to expose some LSP features, many other functions are available ...
-local on_attach = function(_, bufnr)
-  local opts = { buffer = bufnr }
-  vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
-  vim.keymap.set('n', '<Leader>F', vim.lsp.buf.formatting, opts)
-  vim.keymap.set('v', '<Leader>f', vim.lsp.buf.range_formatting, opts)
-  vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next, opts)
+local function on_attach(_, bufnr)
+    local opts = { buffer = bufnr }
+    vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
+    vim.keymap.set('n', '<Leader>F', vim.lsp.buf.formatting, opts)
+    vim.keymap.set('v', '<Leader>f', vim.lsp.buf.range_formatting, opts)
+    vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next, opts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+-- Disable messages in sign column by LSP plugin, virtual text does the job nicely
+vim.diagnostic.config({signs = false})
 
 require('lspconfig')['clangd'].setup {
     on_attach = on_attach,
-    capabilities = capabilities
 }
 
 -- Note from https://clangd.llvm.org/installation.html:
