@@ -1,11 +1,11 @@
 [user]
     name = Robert Schulze
     email = robert@clickhouse.com
-    signingkey = 15C08E29800B665D
+    signingkey = 6BCE5A23DC5B61BF9D147DBA6501C40A34BE4E0E
 [commit]
     gpgsign = true
 [core]
-    editor = /opt/homebrew/bin/nvim
+    editor = nvim
     pager = less -i # search case-insensitively
 [submodule]
     recurse = true # make 'git pull' and other commands work with submodules
