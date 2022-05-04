@@ -16,10 +16,14 @@ alias v='nvim'
 alias t='tmux'
 
 CH_TOOLS="-DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ -DCMAKE_AR=$(brew --prefix llvm)/bin/llvm-ar -DCMAKE_RANLIB=$(brew --prefix llvm)/bin/llvm-ranlib -DOBJCOPY_PATH=$(brew --prefix llvm)/bin/llvm-objcopy"
+CH_FULL_BUILD_OPTIONS="-DENABLE_S3=1 -DENABLE_AVRO=1 -DENABLE_EMBEDDED_COMPILER=1 -DENABLE_GRPC=1 -DENABLE_PARQUET=1 -DENABLE_ROCKSDB=1 -DENABLE_MYSQL=1 -DENABLE_KAFKA=1 -DENABLE_PROTOBUF=1"
 CH_LEAN_BUILD_OPTIONS="-DENABLE_S3=0 -DENABLE_AVRO=0 -DENABLE_EMBEDDED_COMPILER=0 -DENABLE_GRPC=0 -DENABLE_PARQUET=0 -DENABLE_ROCKSDB=0 -DENABLE_MYSQL=0 -DENABLE_KAFKA=0 -DENABLE_PROTOBUF=0"
 
-alias make_dbg='cmake -GNinja ${CH_TOOLS} ${CH_LEAN_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
-alias make_rel_with_dbg='cmake -GNinja ${CH_TOOLS} ${CH_LEAN_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
+alias make_dbg_lean='cmake -GNinja ${CH_TOOLS} ${CH_LEAN_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
+alias make_rel_with_dbg_lean='cmake -GNinja ${CH_TOOLS} ${CH_LEAN_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
+
+alias make_dbg_full='cmake -GNinja ${CH_TOOLS} ${CH_FULL_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
+alias make_rel_with_dbg_full='cmake -GNinja ${CH_TOOLS} ${CH_FULL_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
 
 # On Mac, XDG_CONFIG_HOME isn't set. Unless we tell ccache the
 # location of it's config file, it won't pick it up from the
