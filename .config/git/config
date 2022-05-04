@@ -1,7 +1,7 @@
 [user]
     name = Robert Schulze
     email = robert@clickhouse.com
-    signingkey = 6BCE5A23DC5B61BF9D147DBA6501C40A34BE4E0E
+    signingkey = 5BF99C54A67FA475E23625EF26703B55FB13728A
 [commit]
     gpgsign = true
 [core]
