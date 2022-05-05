@@ -31,10 +31,8 @@ alias make_rel_with_dbg_slim='cmake -GNinja ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS}
 alias make_dbg_fat='cmake -GNinja ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
 alias make_rel_with_dbg_fat='cmake -GNinja ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
 
-# On Mac, XDG_CONFIG_HOME isn't set. Unless we tell ccache the
-# location of it's config file, it won't pick it up from the
-# standard location. On Linux, this environment variable can be
-# removed. Verify with ccache --show-stats --verbose
+# CCache's man page does not explicitly mention XDG config dir support --> force it to read from a sensible location. Verify with
+#   ccache --show-stats --verbose
 export CCACHE_CONFIGPATH=~/.config/ccache/ccache.conf
 
 export EDITOR='nvim'
