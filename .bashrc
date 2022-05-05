@@ -14,6 +14,8 @@ alias py='python'
 alias v='nvim'
 alias t='tmux'
 
+CH_BUILDER="-GNinja"
+
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS
     CH_TOOLS="-DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ -DCMAKE_AR=$(brew --prefix llvm)/bin/llvm-ar -DCMAKE_RANLIB=$(brew --prefix llvm)/bin/llvm-ranlib -DOBJCOPY_PATH=$(brew --prefix llvm)/bin/llvm-objcopy"
@@ -22,14 +24,14 @@ else
     CH_TOOLS=""
 fi
 
-CH_FAT_BUILD_OPTIONS="-DENABLE_S3=1 -DENABLE_AVRO=1 -DENABLE_EMBEDDED_COMPILER=1 -DENABLE_GRPC=1 -DENABLE_PARQUET=1 -DENABLE_ROCKSDB=1 -DENABLE_MYSQL=1 -DENABLE_KAFKA=1 -DENABLE_PROTOBUF=1"
 CH_SLIM_BUILD_OPTIONS="-DENABLE_S3=0 -DENABLE_AVRO=0 -DENABLE_EMBEDDED_COMPILER=0 -DENABLE_GRPC=0 -DENABLE_PARQUET=0 -DENABLE_ROCKSDB=0 -DENABLE_MYSQL=0 -DENABLE_KAFKA=0 -DENABLE_PROTOBUF=0"
+CH_FAT_BUILD_OPTIONS="-DENABLE_S3=1 -DENABLE_AVRO=1 -DENABLE_EMBEDDED_COMPILER=1 -DENABLE_GRPC=1 -DENABLE_PARQUET=1 -DENABLE_ROCKSDB=1 -DENABLE_MYSQL=1 -DENABLE_KAFKA=1 -DENABLE_PROTOBUF=1"
 
-alias make_dbg_slim='cmake -GNinja ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
-alias make_rel_with_dbg_slim='cmake -GNinja ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
+alias make_dbg_slim='cmake ${CH_BUILDER} ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
+alias make_rel_with_dbg_slim='cmake ${CH_BUILDER} ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
 
-alias make_dbg_fat='cmake -GNinja ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
-alias make_rel_with_dbg_fat='cmake -GNinja ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
+alias make_dbg_fat='cmake ${CH_BUILDER} ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=Debug ..'
+alias make_rel_with_dbg_fat='cmake ${CH_BUILDER} ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo ..'
 
 # CCache's man page does not explicitly mention XDG config dir support --> force it to read from a sensible location. Verify with
 #   ccache --show-stats --verbose
@@ -37,7 +39,7 @@ export CCACHE_CONFIGPATH=~/.config/ccache/ccache.conf
 
 export EDITOR='nvim'
 
-# make neovim installed from https://github.com/neovim/neovim/releases available
+# Make neovim installed from https://github.com/neovim/neovim/releases available
 export PATH=$PATH:/home/ubuntu/nvim-linux64/bin
 
 # TODO does not seem to work properly?
