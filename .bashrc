@@ -33,6 +33,9 @@ export CCACHE_CONFIGPATH=~/.config/ccache/ccache.conf
 
 export EDITOR='nvim'
 
+# make neovim installed from https://github.com/neovim/neovim/releases available
+export PATH=$PATH:/home/ubuntu/nvim-linux64/bin
+
 # TODO does not seem to work properly?
 GIT_PS1_SHOWCOLORHINTS=true
 # GIT_PS1_SHOWDIRTYSTATE=true # too slow ...
