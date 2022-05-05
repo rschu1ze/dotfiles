@@ -42,11 +42,19 @@ export EDITOR='nvim'
 # Make neovim installed from https://github.com/neovim/neovim/releases available
 export PATH=$PATH:/home/ubuntu/nvim-linux64/bin
 
-# TODO does not seem to work properly?
+# In order to make this fast enough ignore submodules in large repos. Change in .bash-git
+#      git diff --no-ext-diff --quiet || w="*"
+#      git diff --no-ext-diff --cached --quiet || i="+"
+# to
+#      git diff --no-ext-diff --quiet -- :/src || w="*"
+#      git diff --no-ext-diff --cached --quiet -- :/src || i="+"
+# (search for GIT_PS1_SHOWDIRTYSTATE)
+# See https://seb.jambor.dev/posts/performance-optimizations-for-the-shell-prompt/
 GIT_PS1_SHOWCOLORHINTS=true
-# GIT_PS1_SHOWDIRTYSTATE=true # too slow ...
-# GIT_PS1_SHOWSTASHSTATE=true # # fast enough but disabled for consistency with SHOWDIRTYSTATE
-# GIT_PS1_SHOWUNTRACKEDFILES=true # fast enough but disabled for consistency with SHOWDIRTYSTATE
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUPSTREAM='auto'
 export PS1='\n\w$(__git_ps1 " (%s)") \$ '
 
 # Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
