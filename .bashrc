@@ -17,11 +17,13 @@ alias t='tmux'
 CH_GENERATOR="-GNinja"
 
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
-    # MacOS
-    CH_TOOLS="-DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ -DCMAKE_AR=$(brew --prefix llvm)/bin/llvm-ar -DCMAKE_RANLIB=$(brew --prefix llvm)/bin/llvm-ranlib -DOBJCOPY_PATH=$(brew --prefix llvm)/bin/llvm-objcopy"
+    # MacOS: prefer Clang from Homebrew over Apple's Clang
+    export CC=$(brew --prefix llvm)/bin/clang
+    export CXX=$(brew --prefix llvm)/bin/clang++
 else
-    # Linux
-    CH_TOOLS=""
+    # Linux: prefer whatever is already there
+    export CC=$CC
+    export CXX=$CXX
 fi
 
 CH_SLIM_BUILD_OPTIONS="-DENABLE_S3=0 -DENABLE_AVRO=0 -DENABLE_EMBEDDED_COMPILER=0 -DENABLE_GRPC=0 -DENABLE_PARQUET=0 -DENABLE_ROCKSDB=0 -DENABLE_MYSQL=0 -DENABLE_KAFKA=0 -DENABLE_PROTOBUF=0"
@@ -33,13 +35,13 @@ CH_BUILD_TYPE_RELWITHDEBINFO="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 CH_PATH_TO_SOURCE="-S ."
 CH_PATH_TO_BUILD="-B build"
 
-alias make_dbg_slim="cmake ${CH_GENERATOR} ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS} ${CMAKE_BUILD_TYPE_SLIM} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_dbg_slim="cmake ${CH_GENERATOR} ${CH_SLIM_BUILD_OPTIONS} ${CMAKE_BUILD_TYPE_SLIM} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_rel_with_dbg_slim="cmake ${CH_GENERATOR} ${CH_TOOLS} ${CH_SLIM_BUILD_OPTIONS} ${CMAKE_BUILD_TYPE_SLIM} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_rel_with_dbg_slim="cmake ${CH_GENERATOR} ${CH_SLIM_BUILD_OPTIONS} ${CMAKE_BUILD_TYPE_SLIM} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_rel_with_dbg_fat="cmake ${CH_GENERATOR} ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_rel_with_dbg_fat="cmake ${CH_GENERATOR} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
 alias cbuild="cmake --build build -j10 -- "
 
