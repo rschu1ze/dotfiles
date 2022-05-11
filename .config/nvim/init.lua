@@ -206,7 +206,7 @@ require 'telescope'.setup {
 -- Make telescope available via shortcuts
 vim.keymap.set('n', '<Leader>e', require('telescope.builtin').git_files)
 vim.keymap.set('n', '<Leader>b', require('telescope.builtin').buffers)
-vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep)
+vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep) -- requires ripgrep
 
 -- Configure makeprg. Error format is automatically chosen depending on the
 -- filetype, e.g. .cpp --> GCC error format. Use :Make (provided by
