@@ -41,7 +41,7 @@ alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} ${
 
 alias make_rel_with_dbg_fat="cmake ${CH_GENERATOR} ${CH_TOOLS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias cbuild="cmake --build build -- -j10"
+alias cbuild="cmake --build build -j10 -- "
 
 # CCache's man page does not explicitly mention XDG config dir support --> force it to read from a sensible location. Verify with
 #   ccache --show-stats --verbose
