@@ -14,7 +14,7 @@ alias py='python'
 alias v='nvim'
 alias t='tmux'
 
-CH_GENERATOR="-GNinja"
+CH_GENERATOR="-G Ninja"
 
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
@@ -35,11 +35,11 @@ CH_BUILD_TYPE_RELWITHDEBINFO="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 CH_PATH_TO_SOURCE="-S ."
 CH_PATH_TO_BUILD="-B build"
 
-alias make_dbg_slim="cmake ${CH_GENERATOR} ${CH_SLIM_BUILD_OPTIONS} ${CMAKE_BUILD_TYPE_SLIM} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_dbg_slim="cmake ${CH_GENERATOR} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_rel_with_dbg_slim="cmake ${CH_GENERATOR} ${CH_SLIM_BUILD_OPTIONS} ${CMAKE_BUILD_TYPE_SLIM} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_rel_with_dbg_slim="cmake ${CH_GENERATOR} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
 alias make_rel_with_dbg_fat="cmake ${CH_GENERATOR} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
