@@ -128,6 +128,10 @@ function git {
     fi
 }
 
+function fetch_pr() {
+    g f origin pull/$1/head:$1
+}
+
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
 source ~/.bash_git
 
