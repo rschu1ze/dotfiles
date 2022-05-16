@@ -27,7 +27,7 @@ vim.opt.listchars = {trail = '~', tab = '▸ '}
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
 -- Fast quit
-vim.keymap.set('n', '<Leader>q', ':q!<CR>')
+-- vim.keymap.set('n', '<Leader>q', ':q!<CR>') # hit that ,q an ungodly number of times on the new keyboard
 -- Fast buffer close
 vim.keymap.set('n', '<Leader>d', ':bd<CR>')
 -- Fast switch to last buffer
