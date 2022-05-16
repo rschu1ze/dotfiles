@@ -18,6 +18,7 @@ CH_GENERATOR="-G Ninja"
 
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
+    export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=$(brew --prefix llvm)/bin/clang
     export CXX=$(brew --prefix llvm)/bin/clang++
 else
