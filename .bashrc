@@ -129,8 +129,9 @@ function git {
     fi
 }
 
-function fetch_pr() {
-    g f origin pull/$1/head:$1
+function checkout_pr() {
+    g f origin pull/$1/head:$2
+    g sw $2
 }
 
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
