@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<clickhouse>
+
+    <mark_cache_size>5368709120</mark_cache_size>
+
+    <!-- <listen_host>127.0.0.1</listen_host> -->
+    <listen_host>localhost</listen_host>
+
+    <tcp_port>9000</tcp_port>
+    <!-- <http_port>9001</http_port> -->
+
+    <users_config>clickhouse-users.xml</users_config>
+
+    <logger>
+        <level>debug</level>
+        <console>true</console>
+        <!-- <log remove="remove"/> -->
+        <!-- <errorlog remove="remove"/> -->
+    </logger>
+
+</clickhouse>
