@@ -24,9 +24,9 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export CC=$(brew --prefix llvm)/bin/clang
     export CXX=$(brew --prefix llvm)/bin/clang++
 else
-    # Linux: prefer whatever is already there
-    export CC=$CC
-    export CXX=$CXX
+    # Linux:
+    export CC=clang
+    export CXX=clang++
 fi
 
 # CH_SHARED_LIBS="-DUSE_STATIC_LIBRARIES=0 -DSPLIT_SHARED_LIBRARIES=1"
