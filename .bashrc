@@ -23,10 +23,12 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=$(brew --prefix llvm)/bin/clang
     export CXX=$(brew --prefix llvm)/bin/clang++
+    export CH_CORES_FOR_COMPILATION=10
 else
     # Linux:
     export CC=clang
     export CXX=clang++
+    export CH_CORES_FOR_COMPILATION=32
 fi
 
 # CH_SHARED_LIBS="-DUSE_STATIC_LIBRARIES=0 -DSPLIT_SHARED_LIBRARIES=1"
@@ -49,7 +51,7 @@ alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_SHARED_LIBS} ${CH_FAT_BUILD_OPTIO
 
 alias make_rel_with_dbg_fat="cmake ${CH_GENERATOR} ${CH_SHARED_LIBS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias cbuild="cmake --build build -j10 -- "
+alias cbuild="cmake --build build -j${CH_CORES_FOR_COMPILATION} -- "
 
 # CCache's man page does not explicitly mention XDG config dir support --> force it to read from a sensible location. Verify with
 #   ccache --show-stats --verbose
