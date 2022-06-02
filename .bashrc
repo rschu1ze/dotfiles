@@ -16,8 +16,6 @@ alias t='tmux'
 alias ll='ls -alF'
 alias la='ls -A'
 
-CH_GENERATOR="-G Ninja"
-
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
     export PATH=$(brew --prefix llvm)/bin:$PATH
@@ -43,13 +41,13 @@ CH_BUILD_TYPE_RELWITHDEBINFO="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 CH_PATH_TO_SOURCE="-S ."
 CH_PATH_TO_BUILD="-B build"
 
-alias make_dbg_slim="cmake ${CH_GENERATOR} ${CH_SHARED_LIBS} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_dbg_slim="cmake ${CH_SHARED_LIBS} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_rel_with_dbg_slim="cmake ${CH_GENERATOR} ${CH_SHARED_LIBS} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_rel_with_dbg_slim="cmake ${CH_SHARED_LIBS} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_dbg_fat="cmake ${CH_GENERATOR} ${CH_SHARED_LIBS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_dbg_fat="cmake ${CH_SHARED_LIBS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
-alias make_rel_with_dbg_fat="cmake ${CH_GENERATOR} ${CH_SHARED_LIBS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
+alias make_rel_with_dbg_fat="cmake ${CH_SHARED_LIBS} ${CH_FAT_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE} ${CH_PATH_TO_BUILD}"
 
 alias cbuild="cmake --build build -j${CH_CORES_FOR_COMPILATION} -- "
 
