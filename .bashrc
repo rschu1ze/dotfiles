@@ -59,21 +59,6 @@ export EDITOR='nvim'
 # Make neovim installed from https://github.com/neovim/neovim/releases available
 export PATH=$PATH:/home/ubuntu/nvim-linux64/bin
 
-# In order to make this fast enough ignore submodules in large repos. Change in .bash-git
-#      git diff --no-ext-diff --quiet || w="*"
-#      git diff --no-ext-diff --cached --quiet || i="+"
-# to
-#      git diff --no-ext-diff --quiet -- :/src || w="*"
-#      git diff --no-ext-diff --cached --quiet -- :/src || i="+"
-# (search for GIT_PS1_SHOWDIRTYSTATE)
-# See https://seb.jambor.dev/posts/performance-optimizations-for-the-shell-prompt/
-GIT_PS1_SHOWCOLORHINTS=true
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
-GIT_PS1_SHOWUPSTREAM='auto'
-export PS1='\n\w$(__git_ps1 " (%s)") \$ '
-
 # Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
 # It is not recommended to set the terminal in the shell profile, cf. https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
 #export TERM=xterm-256color
@@ -111,6 +96,38 @@ extract () {
   fi
 }
 
+# Make $__git_ps1 available, https://stackoverflow.com/a/15398153
+if [[ ! -f ~/.git-prompt.sh ]]
+then
+    curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
+fi
+source ~/.git-prompt.sh
+
+# Git autocompletion for Bash, https://stackoverflow.com/a/19876372
+if [[ ! -f ~/.git-completion.bash ]]
+then
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/.git-completion.bash
+fi
+source ~/.git-completion.bash
+
+# Make Git completion work with g alias, https://askubuntu.com/a/642778
+__git_complete g __git_main
+
+# In order to make this fast enough ignore submodules in large repos. Change in .git-prompt
+#      git diff --no-ext-diff --quiet || w="*"
+#      git diff --no-ext-diff --cached --quiet || i="+"
+# to
+#      git diff --no-ext-diff --quiet -- :/src || w="*"
+#      git diff --no-ext-diff --cached --quiet -- :/src || i="+"
+# (search for GIT_PS1_SHOWDIRTYSTATE)
+# See https://seb.jambor.dev/posts/performance-optimizations-for-the-shell-prompt/
+GIT_PS1_SHOWCOLORHINTS=true
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUPSTREAM='auto'
+export PS1='\n\w$(__git_ps1 " (%s)") \$ '
+
 # Some Git commands should only be available via an alias (e.g. 'git p' instead of 'git push') because the alias is shorter or allows to
 # pass some options as command line parameters which cannot be set in Git's configuration. Unfortunately, Git does not allow an alias to
 # have the same name as the command. As a workaround, forbid some git commands and enforce usage of an alias with a different name.
@@ -138,11 +155,3 @@ function checkout_pr() {
     g sw $2
 }
 
-# Make $__git_ps1 available, https://stackoverflow.com/a/15398153
-source ~/.bash_git
-
-# Git autocompletion for Bash, https://stackoverflow.com/a/19876372
-source ~/.git-completion.bash
-
-# Make Git completion work with g alias, https://askubuntu.com/a/642778
-__git_complete g __git_main
