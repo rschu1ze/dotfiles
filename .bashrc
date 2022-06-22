@@ -22,18 +22,22 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export CC=$(brew --prefix llvm)/bin/clang
     export CXX=$(brew --prefix llvm)/bin/clang++
     export CH_CORES_FOR_COMPILATION=10
+    export WITH_LIBUNWIND=""
 else
     # Linux:
     export CC=clang
     export CXX=clang++
     export CH_CORES_FOR_COMPILATION=32
+    # on Ubuntu 22.04, if internal libunwind is disabled (i.e. the standard exception handler is used), the linker complains:
+    #     ld.lld-14: error: unable to find library -lgcc_eh
+    export WITH_LIBUNWIND="-DUSE_UNWIND=1" # force internal libunwind
 fi
 
 # CH_SHARED_LIBS="-DUSE_STATIC_LIBRARIES=0 -DSPLIT_SHARED_LIBRARIES=1"
 CH_SHARED_LIBS=""
 
-CH_SLIM_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=0 -DENABLE_LIBRARIES=0"
-CH_FAT_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=1 -DENABLE_LIBRARIES=1"
+CH_SLIM_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=0 -DENABLE_LIBRARIES=0 ${WITH_LIBUNWIND}"
+CH_FAT_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=1 -DENABLE_LIBRARIES=1 ${WITH_LIBUNWIND}"
 
 CH_BUILD_TYPE_DEBUG="-DCMAKE_BUILD_TYPE=Debug"
 CH_BUILD_TYPE_RELWITHDEBINFO="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
