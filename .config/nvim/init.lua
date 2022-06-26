@@ -23,6 +23,7 @@ vim.opt.showbreak = "> "
 vim.opt.textwidth = 140
 vim.opt.termguicolors = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
+-- vim.opt.cmdheight = 0 -- neovim 0.8
 
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
