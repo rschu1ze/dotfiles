@@ -94,6 +94,8 @@ vim.api.nvim_set_hl(0, 'NonText', {fg='#83a598'})
 vim.cmd 'highlight link markdownError Normal' -- fix another glitch, TODO: use Lua
 
 require('Comment').setup()
+local ft = require('Comment.ft')
+ft.cpp = {'/// %s'}
 
 require('nvim-autopairs').setup()
 
