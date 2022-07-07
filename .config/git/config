@@ -7,6 +7,8 @@
 [core]
     editor = nvim
     pager = less -i # search case-insensitively
+[credential]
+    helper = store
 [submodule]
     recurse = true # make 'git pull' and other commands work with submodules
 [alias]
