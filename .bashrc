@@ -27,7 +27,7 @@ else
     # Linux:
     export CC=clang
     export CXX=clang++
-    export CH_CORES_FOR_COMPILATION=32
+    export CH_CORES_FOR_COMPILATION=36
     # on Ubuntu 22.04, if internal libunwind is disabled (i.e. the standard exception handler is used), the linker complains:
     #     ld.lld-14: error: unable to find library -lgcc_eh
     export WITH_LIBUNWIND="-DUSE_UNWIND=1" # force internal libunwind
