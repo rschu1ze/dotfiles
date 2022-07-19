@@ -30,6 +30,7 @@
     puf = push --force-with-lease # safer than --force
     pl = pull --prune --rebase
     r = rebase
+    re = remote
     st = status --short --branch --ignore-submodules # too slow otherwise
     sh = show
     sw = switch
