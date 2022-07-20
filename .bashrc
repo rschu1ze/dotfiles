@@ -139,6 +139,8 @@ export PS1='\n\w$(__git_ps1 " (%s)") \$ '
 function git {
     if [[ "$1" == "fetch" && "$@" != *"--help"* ]]; then
         use_the_alias_instead
+    elif [[ "$1" == "fuckit" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
     elif [[ "$1" == "push" && "$@" != *"--help"* ]]; then
         use_the_alias_instead
     elif [[ "$1" == "pull" && "$@" != *"--help"* ]]; then

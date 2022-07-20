@@ -23,6 +23,7 @@
     cp = cherry-pick
     dc = diff --cached
     f = fetch --prune
+    fi = !git reset --hard && git clean --force -d # fuckit
     g = grep
     l = log --pretty=format:'%C(red)%h %C(yellow)%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
     m = merge
@@ -36,7 +37,6 @@
     su = submodule
     sw = switch
     swc = switch --create
-    fuckit = !git reset --hard && git clean --force -d
     # Worktrees don't play well with submodules
     # wt = worktree
     # wta = worktree add -b
