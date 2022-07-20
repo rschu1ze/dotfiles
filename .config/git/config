@@ -33,6 +33,7 @@
     re = remote
     st = status --short --branch --ignore-submodules # too slow otherwise
     sh = show
+    su = submodule
     sw = switch
     swc = switch --create
     fuckit = !git reset --hard && git clean --force -d

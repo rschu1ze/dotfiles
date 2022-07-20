@@ -151,6 +151,8 @@ function git {
         use_the_alias_instead
     elif [[ "$1" == "status" && "$@" != *"--help"* ]]; then
         use_the_alias_instead
+    elif [[ "$1" == "submodule" && "$@" != *"--help"* ]]; then
+        use_the_alias_instead
     else
         command git "$@"
     fi
