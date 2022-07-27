@@ -75,7 +75,8 @@ require('packer').startup(function()
     use 'tpope/vim-dispatch' -- TODO replace by Lua equivalent one fine day
     use 'jedi2610/nvim-rooter.lua'
     use 'phaazon/hop.nvim' -- TODO lightspeed.nvim and leap.nvim seem reasonable competitors ... converge to whatever plugin comes out successfully from this
-    use 'williamboman/nvim-lsp-installer'
+    use 'williamboman/mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
 end)
 -- TODO Install neorg once it reached 1.0 and comes with better
@@ -121,7 +122,8 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -- Install LSP servers from within nvim, check the status with :LspInfo and :LspInstallInfo
-require('nvim-lsp-installer').setup {
+require('mason').setup {}
+require('mason-lspconfig').setup {
     ensure_installed = { 'clangd' },
     automatic_installation = true
 }
