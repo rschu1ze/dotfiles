@@ -14,6 +14,14 @@
         <console>true</console>
         <!-- <log remove="remove"/> -->
         <!-- <errorlog remove="remove"/> -->
+
+        <!-- stuff for library bridge -->
+        <library_bridge_log>/home/ubuntu/clickhouse-library-bridge.log</library_bridge_log>
+        <library_bridge_errlog>/home/ubuntu/clickhouse-library-bridge.err.log</library_bridge_errlog>
+        <library_bridge_level>trace</library_bridge_level>
     </logger>
+
+    <!-- stuff for library bridge -->
+    <dictionaries_lib_path>/home/ubuntu/repo/ClickHouse4/tmp/</dictionaries_lib_path>
 
 </clickhouse>
