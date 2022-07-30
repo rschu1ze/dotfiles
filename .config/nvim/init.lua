@@ -1,5 +1,8 @@
 -- For a good starting point, see. https://github.com/nvim-lua/kickstart.nvim/
 
+-- TODO Nvim v0.8:
+-- - https://www.reddit.com/r/neovim/comments/w6p25y/vimcmd_can_be_indexed_in_nightly/
+
 -- see :h for each option
 vim.g.mapleader = ' '
 vim.opt.ignorecase = true
