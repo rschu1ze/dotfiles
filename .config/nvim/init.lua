@@ -195,9 +195,16 @@ cmp.setup {
     },
 }
 
+local actions = require("telescope.actions")
+
 require 'telescope'.setup {
   defaults = {
-    preview = false
+    preview = false,
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close, -- close on single <esc> press
+      },
+    },
   },
   pickers = {
     git_files = {
