@@ -165,3 +165,7 @@ function checkout_pr() {
     g sw $2
 }
 
+if [[ -n $SSH_CONNECTION ]] ; then
+    tmux attach
+fi
+
