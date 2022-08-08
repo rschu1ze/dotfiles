@@ -68,7 +68,6 @@ require('packer').startup(function()
     use 'ful1e5/onedark.nvim'
     use 'numToStr/Comment.nvim'
     use 'windwp/nvim-autopairs'
-    use 'tpope/vim-fugitive' -- TODO replace by Lua equivalent one fine day, maybe neogit
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use 'p00f/nvim-ts-rainbow'
     use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
@@ -82,6 +81,7 @@ require('packer').startup(function()
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
+    -- TODO install fugitive-like, lua-based Git interface one fine day (the Git command line works just fine for now)
 end)
 -- TODO Install neorg once it reached 1.0 and comes with better
 --      documentation & tutorials, alternatively: nvim-orgmode (but needs
