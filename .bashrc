@@ -99,6 +99,12 @@ extract () {
   fi
 }
 
+# Packer plug-in manager for Neovim
+if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]
+then
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi
+
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
 if [[ ! -f ~/.git-prompt.sh ]]
 then
@@ -112,12 +118,6 @@ then
     curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/.git-completion.bash
 fi
 source ~/.git-completion.bash
-
-# Packer plug-in manager for Neovim
-if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]
-then
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
-fi
 
 # Make Git completion work with g alias, https://askubuntu.com/a/642778
 __git_complete g __git_main
