@@ -113,6 +113,12 @@ then
 fi
 source ~/.git-completion.bash
 
+# Packer plug-in manager for Neovim
+if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]
+then
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi
+
 # Make Git completion work with g alias, https://askubuntu.com/a/642778
 __git_complete g __git_main
 
@@ -167,4 +173,3 @@ function checkout_pr() {
 if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
     tmux attach
 fi
-
