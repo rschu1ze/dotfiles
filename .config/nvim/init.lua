@@ -81,6 +81,7 @@ require('packer').startup(function()
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
+    use 'tpope/vim-fugitive'
     -- TODO install fugitive-like, lua-based Git interface one fine day (the Git command line works just fine for now)
 end)
 -- TODO Install neorg once it reached 1.0 and comes with better
