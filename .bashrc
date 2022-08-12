@@ -59,9 +59,6 @@ export CCACHE_CONFIGPATH=~/.config/ccache/ccache.conf
 
 export EDITOR='nvim'
 
-# Make neovim installed from https://github.com/neovim/neovim/releases available
-export PATH=$PATH:/home/ubuntu/nvim-linux64/bin
-
 # Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
 # It is not recommended to set the terminal in the shell profile, cf. https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
 #export TERM=xterm-256color
