@@ -165,11 +165,6 @@ function git {
     fi
 }
 
-function checkout_pr() {
-    g f origin pull/$1/head:$2
-    g sw $2
-}
-
 if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
     tmux attach
 fi
