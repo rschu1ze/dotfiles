@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <clickhouse>
     <profiles>
-        <default>
-        </default>
+        <default></default>
     </profiles>
 
     <users>
@@ -17,8 +16,7 @@
     </users>
 
     <quotas>
-        <default>
-        </default>
+        <default></default>
     </quotas>
 </clickhouse>
 
