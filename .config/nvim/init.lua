@@ -77,7 +77,7 @@ require('packer').startup(function()
     use 'hrsh7th/cmp-nvim-lsp'
     use 'tpope/vim-dispatch' -- TODO replace by Lua equivalent one fine day
     use 'jedi2610/nvim-rooter.lua'
-    use 'phaazon/hop.nvim' -- TODO lightspeed.nvim and leap.nvim seem reasonable competitors ... converge to whatever plugin comes out successfully from this
+    use 'ggandor/leap.nvim'
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
@@ -115,8 +115,7 @@ require('indent_blankline').setup {
   show_first_indent_level = false,
 }
 
-require'hop'.setup()
-vim.keymap.set('n', 'f', ':HopWord<CR>')
+require('leap').set_default_keymaps()
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = 'all',
