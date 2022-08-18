@@ -161,7 +161,3 @@ function git {
         command git "$@"
     fi
 }
-
-if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
-    tmux attach
-fi
