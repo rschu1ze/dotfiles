@@ -77,16 +77,17 @@ require('packer').startup(function()
     use 'hrsh7th/cmp-nvim-lsp'
     use 'tpope/vim-dispatch' -- TODO replace by Lua equivalent one fine day
     use 'jedi2610/nvim-rooter.lua'
-    use 'ggandor/leap.nvim'
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
     use 'tpope/vim-fugitive'
     -- TODO install fugitive-like, lua-based Git interface one fine day (the Git command line works just fine for now)
+    -- use 'ggandor/leap.nvim' -- clashes with s/S keybinding for LSP
 end)
 -- TODO Install neorg once it reached 1.0 and comes with better
 --      documentation & tutorials, alternatively: nvim-orgmode (but needs
 --      more community engagement)
+-- TODO Install dap https://www.youtube.com/watch?v=0moS8UHupGc https://www.youtube.com/watch?v=ga3Cas7vNCk https://www.youtube.com/watch?v=SIYt1dopfTc
 
 vim.opt.background = 'dark' -- light
 -- Choose one of three popular and widely ported color themes
