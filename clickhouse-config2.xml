@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<clickhouse>
+
+    <!-- <listen_host>127.0.0.1</listen_host> -->
+    <!-- <listen_host>0.0.0.0</listen_host> -->
+    <listen_host>localhost</listen_host>
+
+    <path>/var/lib/clickhouse1/</path>
+
+    <http_port>8124</http_port>
+    <tcp_port>9001</tcp_port>
+
+    <users_config>clickhouse-users2.xml</users_config>
+
+    <logger>
+        <level>trace</level>
+        <console>true</console>
+        <!-- <log remove="remove"/> -->
+        <!-- <errorlog remove="remove"/> -->
+
+        <!-- stuff for library bridge -->
+        <library_bridge_log>/home/ubuntu/clickhouse-library-bridge.log</library_bridge_log>
+        <library_bridge_errlog>/home/ubuntu/clickhouse-library-bridge.err.log</library_bridge_errlog>
+        <library_bridge_level>trace</library_bridge_level>
+    </logger>
+
+    <!-- stuff for library bridge -->
+    <dictionaries_lib_path>/home/ubuntu/repo/ClickHouse1/tmp/</dictionaries_lib_path>
+
+    <!-- stuff for old catboost bridge -->
+    <catboost_dynamic_library_path>/home/ubuntu/catboost/data/libcatboostmodel.so</catboost_dynamic_library_path>
+    <models_config>/home/ubuntu/catboost/models/*_model.xml</models_config>
+
+    <!-- stuff for new catboost bridge -->
+    <catboost_lib_path>/home/ubuntu/catboost/data/libcatboostmodel.so</catboost_lib_path>
+
+    <!-- enable SQL-based RBAC -->
+    <access_control_path>/home/ubuntu/rbac/</access_control_path>
+
+</clickhouse>
