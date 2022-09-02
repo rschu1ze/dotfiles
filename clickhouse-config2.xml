@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <clickhouse>
 
-    <!-- <listen_host>127.0.0.1</listen_host> -->
-    <!-- <listen_host>0.0.0.0</listen_host> -->
     <listen_host>localhost</listen_host>
 
-    <path>/var/lib/clickhouse1/</path>
+    <path>/var/lib/clickhouse2/</path>
 
     <http_port>8124</http_port>
     <tcp_port>9001</tcp_port>
@@ -15,8 +13,6 @@
     <logger>
         <level>trace</level>
         <console>true</console>
-        <!-- <log remove="remove"/> -->
-        <!-- <errorlog remove="remove"/> -->
 
         <!-- stuff for library bridge -->
         <library_bridge_log>/home/ubuntu/clickhouse-library-bridge.log</library_bridge_log>
@@ -27,7 +23,7 @@
     <!-- stuff for library bridge -->
     <dictionaries_lib_path>/home/ubuntu/repo/ClickHouse1/tmp/</dictionaries_lib_path>
 
-    <!-- stuff for old catboost bridge -->
+    <!-- stuff for old catboost integration -->
     <catboost_dynamic_library_path>/home/ubuntu/catboost/data/libcatboostmodel.so</catboost_dynamic_library_path>
     <models_config>/home/ubuntu/catboost/models/*_model.xml</models_config>
 
@@ -36,5 +32,67 @@
 
     <!-- enable SQL-based RBAC -->
     <access_control_path>/home/ubuntu/rbac/</access_control_path>
+
+    <!-- https://clickhouse.com/docs/en/guides/sre/keeper/clickhouse-keeper -->
+    <keeper_server>
+        <tcp_port>9182</tcp_port>
+        <server_id>2</server_id>
+        <log_storage_path>/var/lib/clickhouse2/coordination/log</log_storage_path>
+        <snapshot_storage_path>/var/lib/clickhouse2/coordination/snapshots</snapshot_storage_path>
+
+        <coordination_settings>
+            <operation_timeout_ms>10000</operation_timeout_ms>
+            <session_timeout_ms>30000</session_timeout_ms>
+            <raft_logs_level>warning</raft_logs_level>
+        </coordination_settings>
+
+        <raft_configuration>
+            <server>
+                <id>1</id>
+                <hostname>localhost</hostname>
+                <port>9444</port>
+            </server>
+            <server>
+                <id>2</id>
+                <hostname>localhost</hostname>
+                <port>9445</port>
+            </server>
+        </raft_configuration>
+    </keeper_server>
+
+    <zookeeper>
+        <node>
+            <host>localhost</host>
+            <port>9181</port>
+        </node>
+        <node>
+            <host>localhost</host>
+            <port>9182</port>
+        </node>
+    </zookeeper>
+
+    <remote_servers>
+        <test_cluster>
+            <shard>
+                <replica>
+                    <host>localhost</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>localhost</host>
+                    <port>9001</port>
+                </replica>
+            </shard>
+        </test_cluster>
+    </remote_servers>
+
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+        <cleanup_delay_period>60</cleanup_delay_period>
+        <task_max_lifetime>86400</task_max_lifetime>
+        <max_tasks_in_queue>1000</max_tasks_in_queue>
+    </distributed_ddl>
 
 </clickhouse>

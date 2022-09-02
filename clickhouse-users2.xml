@@ -2,7 +2,9 @@
 <clickhouse>
 
     <profiles>
-        <default></default>
+        <default>
+            <allow_unrestricted_reads_from_keeper>1</allow_unrestricted_reads_from_keeper>
+        </default>
     </profiles>
 
     <users>
