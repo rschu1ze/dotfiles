@@ -116,8 +116,6 @@ require('indent_blankline').setup {
   show_first_indent_level = false,
 }
 
-require('leap').set_default_keymaps()
-
 require'nvim-treesitter.configs'.setup {
     ensure_installed = 'all',
     highlight = {enable = true},
