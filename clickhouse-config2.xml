@@ -5,8 +5,7 @@
 
     <path>/var/lib/clickhouse2/</path>
 
-    <http_port>8124</http_port>
-    <tcp_port>9001</tcp_port>
+    <tcp_port>19000</tcp_port>
 
     <users_config>clickhouse-users2.xml</users_config>
 
@@ -33,18 +32,23 @@
     <!-- enable SQL-based RBAC -->
     <access_control_path>/home/ubuntu/rbac/</access_control_path>
 
-    <!-- https://clickhouse.com/docs/en/guides/sre/keeper/clickhouse-keeper -->
+    <zookeeper>
+        <node>
+            <host>localhost</host>
+            <port>9181</port>
+        </node>
+        <node>
+            <host>localhost</host>
+            <port>9182</port>
+        </node>
+    </zookeeper>
+
     <keeper_server>
         <tcp_port>9182</tcp_port>
         <server_id>2</server_id>
+
         <log_storage_path>/var/lib/clickhouse2/coordination/log</log_storage_path>
         <snapshot_storage_path>/var/lib/clickhouse2/coordination/snapshots</snapshot_storage_path>
-
-        <coordination_settings>
-            <operation_timeout_ms>10000</operation_timeout_ms>
-            <session_timeout_ms>30000</session_timeout_ms>
-            <raft_logs_level>warning</raft_logs_level>
-        </coordination_settings>
 
         <raft_configuration>
             <server>
@@ -60,19 +64,8 @@
         </raft_configuration>
     </keeper_server>
 
-    <zookeeper>
-        <node>
-            <host>localhost</host>
-            <port>9181</port>
-        </node>
-        <node>
-            <host>localhost</host>
-            <port>9182</port>
-        </node>
-    </zookeeper>
-
     <remote_servers>
-        <test_cluster>
+        <test_cluster_database_replicated>
             <shard>
                 <replica>
                     <host>localhost</host>
@@ -82,10 +75,10 @@
             <shard>
                 <replica>
                     <host>localhost</host>
-                    <port>9001</port>
+                    <port>19000</port>
                 </replica>
             </shard>
-        </test_cluster>
+        </test_cluster_database_replicated>
     </remote_servers>
 
     <distributed_ddl>
