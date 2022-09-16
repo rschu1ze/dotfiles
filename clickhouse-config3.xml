@@ -3,11 +3,11 @@
 
     <listen_host>localhost</listen_host>
 
-    <path>/var/lib/clickhouse2/</path>
+    <path>/var/lib/clickhouse3/</path>
 
-    <tcp_port>19000</tcp_port>
+    <tcp_port>29000</tcp_port>
 
-    <users_config>clickhouse-users2.xml</users_config>
+    <users_config>clickhouse-users3.xml</users_config>
 
     <logger>
         <level>trace</level>
@@ -48,11 +48,11 @@
     </zookeeper>
 
     <keeper_server>
-        <tcp_port>9182</tcp_port>
-        <server_id>2</server_id>
+        <tcp_port>9183</tcp_port>
+        <server_id>3</server_id>
 
-        <log_storage_path>/var/lib/clickhouse2/coordination/log</log_storage_path>
-        <snapshot_storage_path>/var/lib/clickhouse2/coordination/snapshots</snapshot_storage_path>
+        <log_storage_path>/var/lib/clickhouse3/coordination/log</log_storage_path>
+        <snapshot_storage_path>/var/lib/clickhouse3/coordination/snapshots</snapshot_storage_path>
 
         <raft_configuration>
             <server>

@@ -41,6 +41,10 @@
             <host>localhost</host>
             <port>9182</port>
         </node>
+        <node>
+            <host>localhost</host>
+            <port>9183</port>
+        </node>
     </zookeeper>
 
     <keeper_server>
@@ -61,6 +65,11 @@
                 <hostname>localhost</hostname>
                 <port>9445</port>
             </server>
+            <server>
+                <id>3</id>
+                <hostname>localhost</hostname>
+                <port>9446</port>
+            </server>
         </raft_configuration>
     </keeper_server>
 
@@ -76,6 +85,12 @@
                 <replica>
                     <host>localhost</host>
                     <port>19000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>localhost</host>
+                    <port>29000</port>
                 </replica>
             </shard>
         </test_cluster_database_replicated>
