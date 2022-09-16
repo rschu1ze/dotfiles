@@ -39,11 +39,11 @@
         </node>
         <node>
             <host>localhost</host>
-            <port>9182</port>
+            <port>19181</port>
         </node>
         <node>
             <host>localhost</host>
-            <port>9183</port>
+            <port>29181</port>
         </node>
     </zookeeper>
 
