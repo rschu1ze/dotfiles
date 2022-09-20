@@ -19,13 +19,6 @@
         <library_bridge_level>trace</library_bridge_level>
     </logger>
 
-    <!-- stuff for library bridge -->
-    <dictionaries_lib_path>/home/ubuntu/repo/ClickHouse1/tmp/</dictionaries_lib_path>
-
-    <!-- stuff for old catboost integration -->
-    <catboost_dynamic_library_path>/home/ubuntu/catboost/data/libcatboostmodel.so</catboost_dynamic_library_path>
-    <models_config>/home/ubuntu/catboost/models/*_model.xml</models_config>
-
     <!-- stuff for new catboost bridge -->
     <catboost_lib_path>/home/ubuntu/catboost/data/libcatboostmodel.so</catboost_lib_path>
 
