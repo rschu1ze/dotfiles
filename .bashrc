@@ -16,18 +16,18 @@ alias t='tmux'
 alias ll='ls -alF'
 alias la='ls -A'
 
+export CH_CORES_FOR_COMPILATION=$(nproc --all)
+
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
     export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=$(brew --prefix llvm)/bin/clang
     export CXX=$(brew --prefix llvm)/bin/clang++
-    export CH_CORES_FOR_COMPILATION=10
     export WITH_LIBUNWIND=""
 else
     # Linux:
     export CC=clang
     export CXX=clang++
-    export CH_CORES_FOR_COMPILATION=36
     # on Ubuntu 22.04, if internal libunwind is disabled (i.e. the standard exception handler is used), the linker complains:
     #     ld.lld-14: error: unable to find library -lgcc_eh
     export WITH_LIBUNWIND="-DUSE_UNWIND=1" # force internal libunwind
