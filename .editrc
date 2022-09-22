@@ -1,0 +1,3 @@
+# Configuration for editline, a readline replacement. Used e.g. by lldb.
+
+bind -v # vi bindings
