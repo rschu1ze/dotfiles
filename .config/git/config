@@ -35,6 +35,7 @@
     st = status --short --branch --ignore-submodules # too slow otherwise
     sh = show
     su = submodule
+    suu = submodule update --recursive --init
     sw = switch
     swc = switch --create
     # Worktrees don't play well with submodules
