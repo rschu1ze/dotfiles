@@ -6,6 +6,7 @@
     <path>/var/lib/clickhouse1/</path>
 
     <tcp_port>9000</tcp_port>
+    <http_port>8123</http_port> <!-- needed for clickhouse-test -->
 
     <users_config>clickhouse-users1.xml</users_config>
 
@@ -25,75 +26,75 @@
     <!-- enable SQL-based RBAC -->
     <access_control_path>/home/ubuntu/rbac/</access_control_path>
 
-    <zookeeper>
-        <node>
-            <host>localhost</host>
-            <port>9181</port>
-        </node>
-        <node>
-            <host>localhost</host>
-            <port>19181</port>
-        </node>
-        <node>
-            <host>localhost</host>
-            <port>29181</port>
-        </node>
-    </zookeeper>
-
-    <keeper_server>
-        <tcp_port>9181</tcp_port>
-        <server_id>1</server_id>
-
-        <log_storage_path>/var/lib/clickhouse1/coordination/log</log_storage_path>
-        <snapshot_storage_path>/var/lib/clickhouse1/coordination/snapshots</snapshot_storage_path>
-
-        <raft_configuration>
-            <server>
-                <id>1</id>
-                <hostname>localhost</hostname>
-                <port>9444</port>
-            </server>
-            <server>
-                <id>2</id>
-                <hostname>localhost</hostname>
-                <port>9445</port>
-            </server>
-            <server>
-                <id>3</id>
-                <hostname>localhost</hostname>
-                <port>9446</port>
-            </server>
-        </raft_configuration>
-    </keeper_server>
-
-    <remote_servers>
-        <test_cluster_database_replicated>
-            <shard>
-                <replica>
-                    <host>localhost</host>
-                    <port>9000</port>
-                </replica>
-            </shard>
-            <shard>
-                <replica>
-                    <host>localhost</host>
-                    <port>19000</port>
-                </replica>
-            </shard>
-            <shard>
-                <replica>
-                    <host>localhost</host>
-                    <port>29000</port>
-                </replica>
-            </shard>
-        </test_cluster_database_replicated>
-    </remote_servers>
-
-    <distributed_ddl>
-        <path>/clickhouse/task_queue/ddl</path>
-        <cleanup_delay_period>60</cleanup_delay_period>
-        <task_max_lifetime>86400</task_max_lifetime>
-        <max_tasks_in_queue>1000</max_tasks_in_queue>
-    </distributed_ddl>
+    <!-- <zookeeper> -->
+    <!--     <node> -->
+    <!--         <host>localhost</host> -->
+    <!--         <port>9181</port> -->
+    <!--     </node> -->
+    <!--     <node> -->
+    <!--         <host>localhost</host> -->
+    <!--         <port>19181</port> -->
+    <!--     </node> -->
+    <!--     <node> -->
+    <!--         <host>localhost</host> -->
+    <!--         <port>29181</port> -->
+    <!--     </node> -->
+    <!-- </zookeeper> -->
+    <!---->
+    <!-- <keeper_server> -->
+    <!--     <tcp_port>9181</tcp_port> -->
+    <!--     <server_id>1</server_id> -->
+    <!---->
+    <!--     <log_storage_path>/var/lib/clickhouse1/coordination/log</log_storage_path> -->
+    <!--     <snapshot_storage_path>/var/lib/clickhouse1/coordination/snapshots</snapshot_storage_path> -->
+    <!---->
+    <!--     <raft_configuration> -->
+    <!--         <server> -->
+    <!--             <id>1</id> -->
+    <!--             <hostname>localhost</hostname> -->
+    <!--             <port>9444</port> -->
+    <!--         </server> -->
+    <!--         <server> -->
+    <!--             <id>2</id> -->
+    <!--             <hostname>localhost</hostname> -->
+    <!--             <port>9445</port> -->
+    <!--         </server> -->
+    <!--         <server> -->
+    <!--             <id>3</id> -->
+    <!--             <hostname>localhost</hostname> -->
+    <!--             <port>9446</port> -->
+    <!--         </server> -->
+    <!--     </raft_configuration> -->
+    <!-- </keeper_server> -->
+    <!---->
+    <!-- <remote_servers> -->
+    <!--     <test_cluster_database_replicated> -->
+    <!--         <shard> -->
+    <!--             <replica> -->
+    <!--                 <host>localhost</host> -->
+    <!--                 <port>9000</port> -->
+    <!--             </replica> -->
+    <!--         </shard> -->
+    <!--         <shard> -->
+    <!--             <replica> -->
+    <!--                 <host>localhost</host> -->
+    <!--                 <port>19000</port> -->
+    <!--             </replica> -->
+    <!--         </shard> -->
+    <!--         <shard> -->
+    <!--             <replica> -->
+    <!--                 <host>localhost</host> -->
+    <!--                 <port>29000</port> -->
+    <!--             </replica> -->
+    <!--         </shard> -->
+    <!--     </test_cluster_database_replicated> -->
+    <!-- </remote_servers> -->
+    <!---->
+    <!-- <distributed_ddl> -->
+    <!--     <path>/clickhouse/task_queue/ddl</path> -->
+    <!--     <cleanup_delay_period>60</cleanup_delay_period> -->
+    <!--     <task_max_lifetime>86400</task_max_lifetime> -->
+    <!--     <max_tasks_in_queue>1000</max_tasks_in_queue> -->
+    <!-- </distributed_ddl> -->
 
 </clickhouse>

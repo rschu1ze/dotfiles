@@ -6,6 +6,7 @@
     <path>/var/lib/clickhouse3/</path>
 
     <tcp_port>29000</tcp_port>
+    <http_port>8123</http_port> <!-- needed for clickhouse-test -->
 
     <users_config>clickhouse-users3.xml</users_config>
 
