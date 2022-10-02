@@ -1,3 +1,4 @@
+--
 -- For a good starting point, see. https://github.com/nvim-lua/kickstart.nvim/
 
 -- TODO Nvim v0.8:
