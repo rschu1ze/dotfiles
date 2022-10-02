@@ -25,6 +25,7 @@ vim.opt.termguicolors = true
 vim.opt.wildignorecase = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
 vim.opt.cmdheight = 0
+vim.opt.mouse = ""
 
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
