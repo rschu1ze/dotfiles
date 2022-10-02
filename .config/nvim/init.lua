@@ -1,8 +1,5 @@
 -- For a good starting point, see. https://github.com/nvim-lua/kickstart.nvim/
 
--- TODO Nvim v0.8:
--- - https://www.reddit.com/r/neovim/comments/w6p25y/vimcmd_can_be_indexed_in_nightly/
-
 -- see :h for each option
 vim.g.mapleader = ' '
 vim.opt.ignorecase = true
@@ -27,7 +24,7 @@ vim.opt.textwidth = 140
 vim.opt.termguicolors = true
 vim.opt.wildignorecase = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
--- vim.opt.cmdheight = 0 -- neovim 0.8
+vim.opt.cmdheight = 0
 
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
@@ -58,7 +55,7 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 -- ----------------------------------------------------------------------
 -- Plug-ins
 
-vim.cmd "packadd packer.nvim"
+vim.cmd.packadd('packer.nvim')
 
 -- Cf. https://neovimcraft.com/
 require('packer').startup(function()
@@ -91,14 +88,13 @@ end)
 
 vim.opt.background = 'dark' -- light
 -- Choose one of three popular and widely ported color themes
-vim.cmd 'colorscheme gruvbox'
--- vim.cmd 'colorscheme onedark'
--- vim.cmd 'colorscheme nightfox'
--- TODO one fine day, use Lua to configure color theme
+vim.cmd.colorscheme('gruvbox')
+-- vim.cmd.colorscheme('onedark')
+-- vim.cmd.colorscheme('nightfox')
 
 -- Special hacks for gruvbox
 vim.api.nvim_set_hl(0, 'NonText', {fg='#83a598'})
-vim.cmd 'highlight link markdownError Normal' -- fix another glitch, TODO: use Lua
+vim.cmd.highlight('link markdownError Normal') -- fix another glitch
 
 require('Comment').setup()
 local ft = require('Comment.ft')
@@ -223,13 +219,3 @@ require 'telescope'.setup {
 vim.keymap.set('n', '<Leader>e', require('telescope.builtin').git_files)
 vim.keymap.set('n', '<Leader>b', require('telescope.builtin').buffers)
 vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep) -- requires ripgrep
-
--- Configure makeprg. Error format is automatically chosen depending on the
--- filetype, e.g. .cpp --> GCC error format. Use :Make (provided by
--- vim-dispatch) to trigger a build. The relative directory works because
--- nvim-rooter automatically sets the working directory to the source root
--- directory.
-vim.cmd [[set makeprg=cd\ ../build;\ ninja]]
--- Shortcuts to step through the quickfix list
-vim.keymap.set('n', '<C-j>', ':cnext<CR>')
-vim.keymap.set('n', '<C-k>', ':cprevious<CR>')
