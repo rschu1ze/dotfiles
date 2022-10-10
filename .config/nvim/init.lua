@@ -24,7 +24,7 @@ vim.opt.textwidth = 140
 vim.opt.termguicolors = true
 vim.opt.wildignorecase = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
-vim.opt.cmdheight = 0
+-- vim.opt.cmdheight = 0 # v0.8: nice but forces to press <enter> too often
 vim.opt.mouse = ""
 
 -- Fast save
