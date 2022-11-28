@@ -71,7 +71,6 @@ require('packer').startup(function()
     use 'hrsh7th/nvim-cmp' -- TODO add a snippet engine one fine day
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-nvim-lsp'
-    use 'tpope/vim-dispatch' -- TODO replace by Lua equivalent one fine day
     use 'jedi2610/nvim-rooter.lua'
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
