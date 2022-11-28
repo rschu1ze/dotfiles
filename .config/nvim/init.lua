@@ -61,7 +61,7 @@ require('packer').startup(function()
     use 'wbthomason/packer.nvim'
     use 'ellisonleao/gruvbox.nvim'
     use 'EdenEast/nightfox.nvim'
-    use 'ful1e5/onedark.nvim'
+    use 'navarasu/onedark.nvim'
     use 'numToStr/Comment.nvim'
     use 'windwp/nvim-autopairs'
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
