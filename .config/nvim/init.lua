@@ -133,8 +133,6 @@ local function on_attach(_, bufnr)
     vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
     vim.keymap.set('n', 'R', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<Leader>F', vim.lsp.buf.formatting, opts)
-    vim.keymap.set('v', '<Leader>f', vim.lsp.buf.range_formatting, opts)
     vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev, opts)
     vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next, opts)
 end
