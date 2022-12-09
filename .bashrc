@@ -53,10 +53,6 @@ alias make_rel_fat="cmake  ${CH_COMMON_BUILD_OPTIONS} ${CH_FAT_BUILD_OPTIONS}  $
 
 alias cbuild="cmake --build build -j${CH_CORES_FOR_COMPILATION} -- "
 
-# CCache's man page does not explicitly mention XDG config dir support --> force it to read from a sensible location. Verify with
-#   ccache --show-stats --verbose
-export CCACHE_CONFIGPATH=~/.config/ccache/ccache.conf
-
 export EDITOR='nvim'
 
 # Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
