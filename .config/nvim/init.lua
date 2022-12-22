@@ -91,10 +91,6 @@ vim.cmd.colorscheme('gruvbox')
 -- vim.cmd.colorscheme('onedark')
 -- vim.cmd.colorscheme('nightfox')
 
--- Special hacks for gruvbox
-vim.api.nvim_set_hl(0, 'NonText', {fg='#83a598'})
-vim.cmd.highlight('link markdownError Normal') -- fix another glitch
-
 require('Comment').setup()
 local ft = require('Comment.ft')
 ft.cpp = {'/// %s'}
