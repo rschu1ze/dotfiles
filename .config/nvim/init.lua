@@ -109,10 +109,10 @@ require('indent_blankline').setup {
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = 'all',
+    -- enable non-experimental modules:
     highlight = {enable = true},
     incremental_selection = {enable = true},
-    -- indent = {enable = true}, -- currently experimental
-    rainbow = {enable = true}
+    rainbow = {enable = true} -- nvim-ts-rainbow
 }
 
 -- Install LSP servers from within nvim, check the status with :LspInfo and :LspInstallInfo
