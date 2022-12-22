@@ -59,24 +59,24 @@ vim.cmd.packadd('packer.nvim')
 
 -- Cf. https://neovimcraft.com/
 require('packer').startup(function()
-    use 'wbthomason/packer.nvim'
-    use 'ellisonleao/gruvbox.nvim'
     use 'EdenEast/nightfox.nvim'
-    use 'navarasu/onedark.nvim'
-    use 'numToStr/Comment.nvim'
-    use 'windwp/nvim-autopairs'
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-    use 'p00f/nvim-ts-rainbow'
-    use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'hrsh7th/nvim-cmp' -- TODO add a snippet engine one fine day
+    use 'ellisonleao/gruvbox.nvim'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/nvim-cmp' -- TODO add a snippet engine one fine day
     use 'jedi2610/nvim-rooter.lua'
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
+    use 'lukas-reineke/indent-blankline.nvim'
+    use 'navarasu/onedark.nvim'
     use 'neovim/nvim-lspconfig'
+    use 'numToStr/Comment.nvim'
+    use 'p00f/nvim-ts-rainbow'
     use 'tpope/vim-fugitive'
+    use 'wbthomason/packer.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
+    use 'williamboman/mason.nvim'
+    use 'windwp/nvim-autopairs'
+    use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     -- TODO install fugitive-like, lua-based Git interface one fine day (the Git command line works just fine for now)
     -- use 'ggandor/leap.nvim' -- clashes with s/S keybinding for LSP
 end)
