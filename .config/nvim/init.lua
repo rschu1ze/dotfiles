@@ -16,6 +16,7 @@ vim.opt.shiftwidth = 4
 vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.list = true
+vim.opt.number = true
 vim.opt.laststatus = 3
 vim.opt.linebreak= true
 vim.opt.breakindent= true
