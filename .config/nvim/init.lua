@@ -70,14 +70,12 @@ require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
     use 'numToStr/Comment.nvim'
     use 'p00f/nvim-ts-rainbow'
-    use 'tpope/vim-fugitive'
     use 'wbthomason/packer.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use 'williamboman/mason.nvim'
     use 'windwp/nvim-autopairs'
     use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-    -- TODO install fugitive-like, lua-based Git interface one fine day (the Git command line works just fine for now)
     -- use 'ggandor/leap.nvim' -- clashes with s/S keybinding for LSP
 end)
 -- TODO Install neorg once it reached 1.0 and comes with better
