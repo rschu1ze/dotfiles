@@ -123,13 +123,14 @@ require('mason-lspconfig').setup {
 -- Keymaps to expose some LSP features, many other functions are available ...
 local function on_attach(_, bufnr)
     local opts = { buffer = bufnr }
-    vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 't', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
     vim.keymap.set('n', 'R', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, opts)
 end
 
 -- Disable messages in sign column by LSP plugin, virtual text does the job nicely
