@@ -66,10 +66,6 @@ export HISTCONTROL=ignoreboth:erasedups
 # suppress annoying warning "The default interactive shell is now zsh."
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# Make ncurses send Escape immediately instead of waiting
-# for a multi-character sequence. Useful for neomutt keybinding of Esc as abort key.
-export ESCDELAY=0
-
 # EXTRACT FUNCTION ## | Usage: extract <file>
 extract () {
   if [ -f $1 ] ; then
