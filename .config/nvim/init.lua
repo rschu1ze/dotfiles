@@ -94,8 +94,7 @@ require('lazy').setup({
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
-            local ft = require('Comment.ft')
-            ft.cpp = {'/// %s'}
+            require('Comment.ft').cpp = {'/// %s'}
         end
     },
     {
