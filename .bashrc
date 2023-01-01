@@ -91,7 +91,7 @@ extract () {
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
 if [[ ! -f ~/.git-prompt.sh ]]
 then
-    curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
+    curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
 fi
 source ~/.git-prompt.sh
 
