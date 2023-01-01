@@ -13,6 +13,7 @@ alias g='git'
 alias py='python'
 alias v='nvim'
 alias t='tmux'
+alias d='docker'
 alias ll='ls -alF'
 alias la='ls -A'
 
