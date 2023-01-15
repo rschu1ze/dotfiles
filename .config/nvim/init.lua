@@ -79,8 +79,12 @@ require('lazy').setup({
         end
     },
     {
-        'windwp/nvim-autopairs',
-        config = true
+        -- 'windwp/nvim-autopairs',
+        -- config = true
+        'echasnovski/mini.nvim',
+        config = function()
+            require('mini.pairs').setup()
+        end
     },
     {
         'lukas-reineke/indent-blankline.nvim',
