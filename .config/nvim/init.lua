@@ -52,6 +52,9 @@ vim.keymap.set('n', '<C-i>', '<C-i>zz')
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
+-- https://github.com/echasnovski/mini.nvim/issues/124
+vim.cmd([[au FileType cpp lua vim.opt_local.commentstring = '/// %s']])
+
 -- ----------------------------------------------------------------------
 -- Plug-ins
 
@@ -83,8 +86,14 @@ require('lazy').setup({
         -- config = true
         'echasnovski/mini.nvim',
         config = function()
+            require('mini.comment').setup()
             require('mini.pairs').setup()
         end
+    --     'numToStr/Comment.nvim',
+    --     config = function()
+    --         require('Comment').setup()
+    --         require('Comment.ft').cpp = {'/// %s'}
+    --     end
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -97,13 +106,6 @@ require('lazy').setup({
         config = {
             rooter_patterns = {'=src'}
         }
-    },
-    {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-            require('Comment.ft').cpp = {'/// %s'}
-        end
     },
     {
         'nvim-telescope/telescope.nvim',
