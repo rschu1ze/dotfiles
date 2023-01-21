@@ -56,6 +56,7 @@ export EDITOR='nvim'
 # Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
 # It is not recommended to set the terminal in the shell profile, cf. https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
 #export TERM=xterm-256color
+# export TERM=xterm-kitty
 
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000000
