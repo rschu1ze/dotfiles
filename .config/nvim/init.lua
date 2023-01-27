@@ -54,6 +54,7 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
 -- https://github.com/echasnovski/mini.nvim/issues/124
 vim.cmd([[au FileType cpp lua vim.opt_local.commentstring = '/// %s']])
+vim.cmd([[au FileType sql lua vim.opt_local.commentstring = '-- %s']])
 
 -- ----------------------------------------------------------------------
 -- Plug-ins
