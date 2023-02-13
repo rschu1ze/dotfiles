@@ -20,6 +20,14 @@
         <library_bridge_level>trace</library_bridge_level>
     </logger>
 
+    <query_log>
+        <database>system</database>
+        <table>query_log</table>
+        <engine>Engine = MergeTree PARTITION BY event_date ORDER BY event_time TTL event_date + INTERVAL 30 day</engine>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </query_log>
+
+
     <!-- stuff for new catboost bridge -->
     <catboost_lib_path>/home/ubuntu/catboost/data/libcatboostmodel.so</catboost_lib_path>
 
