@@ -27,8 +27,8 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export WITH_LIBUNWIND=""
 else
     # Linux:
-    export CC=clang-16
-    export CXX=clang++-16
+    export CC=clang-15
+    export CXX=clang++-15
     # on Ubuntu 22.04, if internal libunwind is disabled (i.e. the standard exception handler is used), the linker complains:
     #     ld.lld-14: error: unable to find library -lgcc_eh
     export WITH_LIBUNWIND="-DUSE_UNWIND=1" # force internal libunwind
@@ -119,31 +119,3 @@ GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
 export PS1='\n\w$(__git_ps1 " (%s)") \$ '
-
-# Some Git commands should only be available via an alias (e.g. 'git p' instead of 'git push') because the alias is shorter or allows to
-# pass some options as command line parameters which cannot be set in Git's configuration. Unfortunately, Git does not allow an alias to
-# have the same name as the command. As a workaround, forbid some git commands and enforce usage of an alias with a different name.
-# (https://stackoverflow.com/a/39357426)
-function git {
-    if [[ "$1" == "fetch" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "fuckit" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "push" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "pull" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "push" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "remote" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "show" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "status" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    elif [[ "$1" == "submodule" && "$@" != *"--help"* ]]; then
-        use_the_alias_instead
-    else
-        command git "$@"
-    fi
-}
