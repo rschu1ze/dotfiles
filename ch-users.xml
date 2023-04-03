@@ -4,21 +4,27 @@
     <profiles>
         <default>
             <allow_unrestricted_reads_from_keeper>1</allow_unrestricted_reads_from_keeper>
+            <http_max_field_value_size>3333333333</http_max_field_value_size>
         </default>
     </profiles>
 
-    <users>
+    <quotas>
+        <default>
+        </default>
+    </quotas>
 
+    <users>
         <default>
             <password></password>
+            <bla></bla>
             <networks>
                 <ip>127.0.0.1</ip>
             </networks>
             <profile>default</profile>
             <quota>default</quota>
             <access_management>1</access_management>
+            <query_cache_max_size>100</query_cache_max_size>
         </default>
-
     </users>
 
     <quotas>

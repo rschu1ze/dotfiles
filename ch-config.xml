@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<clickhouse>
+
+    <listen_host>localhost</listen_host>
+
+    <path>/var/lib/clickhouse1/</path>
+
+    <tcp_port>9000</tcp_port>
+    <http_port>8123</http_port>
+    <interserver_http_port>9009</interserver_http_port>
+
+    <users_config>ch-users.xml</users_config>
+
+    <logger>
+        <level>trace</level>
+        <console>true</console>
+    </logger>
+
+    <query_log>
+        <database>system</database>
+        <table>query_log</table>
+        <engine>Engine = MergeTree PARTITION BY event_date ORDER BY event_time TTL event_date + INTERVAL 30 day</engine>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </query_log>
+
+    <!-- https://docs.google.com/presentation/d/17WMonmZLGSTfsQulgCPBAHk9roI0NcO0DLM9ArqrQqU/ -->
+
+    <!-- Configure zookeepers -->
+    <keeper_server>
+    <!-- Configure zookeepers -->
+        <tcp_port>9181</tcp_port> <!-- how to reach zookeeper from clickhouse-server -->
+        <server_id>1</server_id>
+        <!-- Other servers in the ensemble and how to connect to them -->
+        <raft_configuration>
+            <server>
+                <id>1</id>
+                <hostname>localhost</hostname>
+                <port>9234</port> <!-- how zookeepers talk to each other -->
+            </server>
+            <!-- <server> -->
+            <!--     ... -->
+            <!-- </server> -->
+        </raft_configuration>
+    </keeper_server>
+
+    <!-- Tell clickhouse-server to which zookeeper it should connect. -->
+    <!-- This would include all servers in "raft_configuration" in "keeper_server". -->
+    <zookeeper>
+        <node>
+            <host>localhost</host>
+            <port>9181</port>
+        </node>
+        <!-- <node> -->
+        <!--     ... -->
+        <!-- </node> -->
+    </zookeeper>
+
+    <!-- Defines clusters, which consist of shards, which consist of replicas -->
+    <remote_servers>
+        <!-- Predefined, used by tests -->
+        <test_shard_localhost>
+            <shard>
+                <!-- internal_replication needs zookeeper, if off: user must synchronize replicas manually -->
+                <!-- <internal_replication>false</internal_replication> -->
+                <replica>
+                    <host>localhost</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </test_shard_localhost>
+        <!-- Predefined, used by tests -->
+        <test_cluster_one_shard_three_replicas_localhost>
+            <shard>
+                <internal_replication>false</internal_replication>
+                <replica>
+                    <host>127.0.0.1</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.2</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.3</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </test_cluster_one_shard_three_replicas_localhost>
+        <!-- Predefined, used by tests -->
+	    <parallel_replicas>
+            <shard>
+                <internal_replication>false</internal_replication>
+                <replica>
+                    <host>127.0.0.1</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.2</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.3</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.4</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.5</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.6</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.7</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.8</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.9</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.10</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </parallel_replicas>
+        <!-- Predefined, used by tests -->
+        <test_cluster_two_shards_localhost>
+             <shard>
+                 <replica>
+                     <host>localhost</host>
+                     <port>9000</port>
+                 </replica>
+             </shard>
+             <shard>
+                 <replica>
+                     <host>localhost</host>
+                     <port>9000</port>
+                 </replica>
+             </shard>
+        </test_cluster_two_shards_localhost>
+        <!-- Predefined, used by tests -->
+        <test_cluster_two_shards>
+            <shard>
+                <replica>
+                    <host>127.0.0.1</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>127.0.0.2</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </test_cluster_two_shards>
+        <!-- Predefined, used by tests -->
+        <test_cluster_two_shards_internal_replication>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>127.0.0.1</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>127.0.0.2</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </test_cluster_two_shards_internal_replication>
+        <!-- Predefined, used by tests -->
+        <test_shard_localhost_secure>
+            <shard>
+                <replica>
+                    <host>localhost</host>
+                    <port>9440</port>
+                    <secure>1</secure>
+                </replica>
+            </shard>
+        </test_shard_localhost_secure>
+        <!-- Predefined, used by tests -->
+        <test_unavailable_shard>
+            <shard>
+                <replica>
+                    <host>localhost</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>localhost</host>
+                    <port>1</port>
+                </replica>
+            </shard>
+        </test_unavailable_shard>
+    </remote_servers>
+
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+    </distributed_ddl>
+
+</clickhouse>
