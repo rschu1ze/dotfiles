@@ -17,8 +17,6 @@ alias d='docker'
 alias ll='ls -alF'
 alias la='ls -A'
 
-export CH_CORES_FOR_COMPILATION=$(nproc --all)
-
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
     export PATH=$(brew --prefix llvm)/bin:$PATH
@@ -49,7 +47,7 @@ alias make_rel_slim="cmake ${CH_COMMON_BUILD_OPTIONS} ${CH_SLIM_BUILD_OPTIONS} $
 alias make_dbg_fat="cmake  ${CH_COMMON_BUILD_OPTIONS} ${CH_FAT_BUILD_OPTIONS}  ${CH_BUILD_TYPE_DEBUG}          ${CH_PATH_TO_SOURCE_AND_BUILD}"
 alias make_rel_fat="cmake  ${CH_COMMON_BUILD_OPTIONS} ${CH_FAT_BUILD_OPTIONS}  ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE_AND_BUILD}"
 
-alias cbuild="cmake --build build -j${CH_CORES_FOR_COMPILATION} -- "
+alias cbuild="cmake --build build --parallel"
 
 export EDITOR='nvim'
 
