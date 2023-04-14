@@ -16,7 +16,6 @@
     <users>
         <default>
             <password></password>
-            <bla></bla>
             <networks>
                 <ip>127.0.0.1</ip>
             </networks>
