@@ -3,7 +3,7 @@
 
     <listen_host>localhost</listen_host>
 
-    <path>/var/lib/clickhouse1/</path>
+    <path>/var/lib/ch1/</path>
 
     <tcp_port>9000</tcp_port>
     <http_port>8123</http_port>
