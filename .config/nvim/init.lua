@@ -91,11 +91,6 @@ require('lazy').setup({
             require('mini.surround').setup()
             require('mini.pairs').setup()
         end
-    --     'numToStr/Comment.nvim',
-    --     config = function()
-    --         require('Comment').setup()
-    --         require('Comment.ft').cpp = {'/// %s'}
-    --     end
     },
     {
         'lukas-reineke/indent-blankline.nvim',
