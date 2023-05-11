@@ -76,7 +76,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
     {
         'ellisonleao/gruvbox.nvim',
-        lazy = false, -- force load during startup ...
         priority = 1000, -- ... as the first plug-in
         config = function()
             vim.cmd.colorscheme('gruvbox')
@@ -139,7 +138,7 @@ require('lazy').setup({
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
-        dependencies = 'p00f/nvim-ts-rainbow',
+        dependencies = 'HiPhish/nvim-ts-rainbow2',
         config = function()
             require'nvim-treesitter.configs'.setup {
                 ensure_installed = 'all',
