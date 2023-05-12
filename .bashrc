@@ -27,8 +27,8 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export WITH_LIBUNWIND=""
 else
     # Linux:
-    export CC=clang-15
-    export CXX=clang++-15
+    export CC=clang-16
+    export CXX=clang++-16
     # on Ubuntu 22.04, if internal libunwind is disabled (i.e. the standard exception handler is used), the linker complains:
     #     ld.lld-14: error: unable to find library -lgcc_eh
     export WITH_LIBUNWIND="-DUSE_UNWIND=1" # force internal libunwind
