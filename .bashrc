@@ -17,6 +17,9 @@ alias d='docker'
 alias ll='ls -alF'
 alias la='ls -A'
 
+alias chs='./clickhouse-server'
+alias chc='./clickhouse-client'
+
 export CH_CORES_FOR_COMPILATION=$(nproc --all)
 
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
