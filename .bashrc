@@ -66,6 +66,9 @@ export HISTCONTROL=ignoreboth:erasedups
 # suppress annoying warning "The default interactive shell is now zsh."
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# No support for the XDG base directory spec in ripgrep
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
+
 # EXTRACT FUNCTION ## | Usage: extract <file>
 extract () {
   if [ -f $1 ] ; then

@@ -24,7 +24,7 @@
     dc = diff --cached
     f = fetch --prune --recurse-submodules -j32
     fi = !git reset --hard && git clean --force -d # fuckit
-    g = grep
+    ; g = grep # use ripgrep instead
     l = log --pretty=format:'%C(red)%h %C(yellow)%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
     m = merge
     pu = push

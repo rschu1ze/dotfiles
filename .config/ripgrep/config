@@ -1,0 +1,18 @@
+--smart-case
+
+# make the output look like traditional grep
+--no-heading
+--no-line-number
+
+# unfortunately makes search single-threaded
+--sort
+path
+
+--glob
+!contrib/*
+
+--glob
+!tests/*
+
+--glob
+!tests/*
