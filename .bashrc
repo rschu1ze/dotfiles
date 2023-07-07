@@ -92,6 +92,10 @@ extract () {
   fi
 }
 
+resettests () {
+    gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=pending -F description="Manually unset to rerun" -F context="$2"
+}
+
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
 if [[ ! -f ~/.git-prompt.sh ]]
 then
