@@ -25,20 +25,16 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=$(brew --prefix llvm)/bin/clang
     export CXX=$(brew --prefix llvm)/bin/clang++
-    export WITH_LIBUNWIND=""
 else
     # Linux:
     export CC=clang-16
     export CXX=clang++-16
-    # on Ubuntu 22.04, if internal libunwind is disabled (i.e. the standard exception handler is used), the linker complains:
-    #     ld.lld-14: error: unable to find library -lgcc_eh
-    export WITH_LIBUNWIND="-DUSE_UNWIND=1" # force internal libunwind
     export CORES=$(nproc)
 fi
 
 CH_PARALLEL_JOBS="-DPARALLEL_COMPILE_JOBS=${CORES} -DPARALLEL_LINK_JOBS=${CORES}" # otherwise the job-limiter kicks in
 
-CH_COMMON_BUILD_OPTIONS="${WITH_LIBUNWIND} ${CH_PARALLEL_JOBS}"
+CH_COMMON_BUILD_OPTIONS="${CH_PARALLEL_JOBS}"
 
 CH_SLIM_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=0 -DENABLE_LIBRARIES=0"
 CH_FAT_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=1 -DENABLE_LIBRARIES=1"
