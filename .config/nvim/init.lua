@@ -101,7 +101,7 @@ require('lazy').setup({
     {
         -- TODO: replace by Lua equivalent
         -- See :Copilot setup / status
-        'github/copilot.vim'
+        -- 'github/copilot.vim'
     },
     {
         'jedi2610/nvim-rooter.lua',
