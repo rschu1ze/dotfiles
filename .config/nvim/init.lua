@@ -6,7 +6,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.shortmess = 'Iat'
 vim.opt.scrolloff = 6
-vim.opt.sidescrolloff = 8
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.smartindent = true
@@ -16,6 +15,7 @@ vim.opt.shiftwidth = 4
 vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.list = true
+vim.opt.listchars = {trail = '~', tab = '▸ '}
 vim.opt.number = true
 vim.opt.laststatus = 3
 vim.opt.linebreak= true
@@ -24,9 +24,8 @@ vim.opt.showbreak = '> '
 vim.opt.textwidth = 140
 vim.opt.termguicolors = true
 vim.opt.wildignorecase = true
-vim.opt.listchars = {trail = '~', tab = '▸ '}
--- vim.opt.cmdheight = 0 # v0.8: nice but forces to press <enter> too often
-vim.opt.mouse = ''
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'} -- recommended by nvim-cmp
+-- vim.opt.cmdheight = 0 -- v0.8: nice but forces to press <enter> too often
 
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
@@ -35,12 +34,12 @@ vim.keymap.set('n', '<Leader>d', ':bd<CR>')
 -- Fast switch to last buffer
 vim.keymap.set('n', '<Leader><Leader>', ':b#<CR>')
 -- Un-highlight last search result
-vim.keymap.set('n', '<esc>', ':noh<return><esc>')
+vim.keymap.set('n', '<esc>', ':nohlsearch<return><esc>')
 -- Make entry into visual mode consistent with cc and dd
 vim.keymap.set('n', 'vv', 'V')
--- Make (un)indentation repeatable
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
+-- Make (un)indentation repeatable, obsoleted by mini.move
+-- vim.keymap.set('v', '<', '<gv')
+-- vim.keymap.set('v', '>', '>gv')
 -- Center search results + jump list matches
 vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'N', 'Nzz')
@@ -79,27 +78,34 @@ require('lazy').setup({
         priority = 1000, -- ... as the first plug-in
         config = function()
             vim.cmd.colorscheme('gruvbox')
+            -- vim.o.background = 'dark'
         end
     },
     {
-        -- 'windwp/nvim-autopairs',
-        -- config = true
         'echasnovski/mini.nvim',
         config = function()
+            require('mini.bracketed').setup()
             require('mini.comment').setup()
-            require('mini.surround').setup()
+            require('mini.jump2d').setup()
+            require('mini.move').setup()
             require('mini.pairs').setup()
+            require('mini.surround').setup()
         end
     },
     {
         'lukas-reineke/indent-blankline.nvim',
-        config = {
+        opts = {
             show_first_indent_level = false
         }
     },
     {
+        -- TODO: replace by Lua equivalent
+        -- See :Copilot setup / status
+        'github/copilot.vim'
+    },
+    {
         'jedi2610/nvim-rooter.lua',
-        config = {
+        opts = {
             rooter_patterns = {'=src'}
         }
     },
@@ -108,12 +114,12 @@ require('lazy').setup({
         dependencies = 'nvim-lua/plenary.nvim',
         config = function()
             local actions = require('telescope.actions')
-            require 'telescope'.setup {
+            require 'telescope'.setup({
               defaults = {
                 preview = false,
                 mappings = {
                   i = {
-                    ['<esc>'] = actions.close, -- close on single <esc> press
+                    ['<esc>'] = actions.close, -- close on single <esc> press (instead of two)
                   },
                 },
               },
@@ -127,44 +133,49 @@ require('lazy').setup({
                 },
                 live_grep = {
                   theme = 'ivy',
+                  preview = true
                 }
               },
-            }
+            })
             vim.keymap.set('n', '<Leader>e', require('telescope.builtin').git_files)
             vim.keymap.set('n', '<Leader>b', require('telescope.builtin').buffers)
             vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep) -- requires ripgrep
         end
     },
     {
+        'hiphish/rainbow-delimiters.nvim'
+    },
+    {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
-        dependencies = 'HiPhish/nvim-ts-rainbow2',
         config = function()
-            require'nvim-treesitter.configs'.setup {
+            require'nvim-treesitter.configs'.setup({
                 ensure_installed = 'all',
                 -- enable non-experimental modules:
                 highlight = {enable = true},
                 incremental_selection = {enable = true},
-                rainbow = {enable = true} -- nvim-ts-rainbow
-            }
+            })
         end
     },
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            'hrsh7th/nvim-cmp', -- TODO add a snippet engine one fine day
+            -- TODO add a snippet engine
+            'hrsh7th/nvim-cmp',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
             'williamboman/mason-lspconfig.nvim',
             'williamboman/mason.nvim'
         },
         config = function()
             -- Install LSP servers from within nvim, check the status with :LspInfo and :LspInstallInfo
-            require('mason').setup {}
-            require('mason-lspconfig').setup {
+            require('mason').setup()
+            require('mason-lspconfig').setup({
                 ensure_installed = { 'clangd' },
                 automatic_installation = true
-            }
+            })
+
             -- Keymaps to expose some LSP features, many other functions are available ...
             local function on_attach(_, bufnr)
                 local opts = { buffer = bufnr }
@@ -177,11 +188,18 @@ require('lazy').setup({
                 vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, opts)
                 vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, opts)
             end
+
+            -- Advertise capabilities to LSP server
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
             -- Disable messages in sign column by LSP plugin, virtual text does the job nicely
             vim.diagnostic.config({signs = false})
-            require('lspconfig')['clangd'].setup {
+
+            require('lspconfig')['clangd'].setup({
                 on_attach = on_attach,
-            }
+                capabilities = capabilities
+            })
+
             -- Note from https://clangd.llvm.org/installation.html:
             -- "clangd will look in the parent directories of the files you edit looking
             -- for it, and also in subdirectories named build/. For example, if editing
@@ -189,15 +207,18 @@ require('lazy').setup({
             -- $SRC/build/,"
             -- If this becomes too annoying, we could pass --compile-commands-dir=<string>
             -- to clangd above (--> "cmd")
+            --
             local check_backspace = function()
                 local col = vim.fn.col '.' - 1
                 return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
             end
+
             local cmp = require 'cmp'
-            cmp.setup {
+            cmp.setup({
                 -- The order controls the preference for specific sources
                 sources = {
                     {name = 'nvim_lsp'},
+                    {name = 'nvim_lsp_signature_help'},
                     {name = 'buffer'}
                 },
                 mapping = {
@@ -219,7 +240,7 @@ require('lazy').setup({
                       end
                     end,
                 },
-            }
+            })
         end
     }
 })
