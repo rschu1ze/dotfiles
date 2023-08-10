@@ -102,6 +102,7 @@ require('lazy').setup({
         -- TODO: replace by Lua equivalent
         -- See :Copilot setup / status
         -- 'github/copilot.vim'
+        -- 'zbirenbaum/copilot.lua',
     },
     {
         'jedi2610/nvim-rooter.lua',
@@ -207,11 +208,11 @@ require('lazy').setup({
             -- $SRC/build/,"
             -- If this becomes too annoying, we could pass --compile-commands-dir=<string>
             -- to clangd above (--> "cmd")
-            --
-            local check_backspace = function()
-                local col = vim.fn.col '.' - 1
-                return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
-            end
+
+            -- local check_backspace = function()
+            --     local col = vim.fn.col '.' - 1
+            --     return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
+            -- end
 
             local cmp = require 'cmp'
             cmp.setup({
@@ -226,8 +227,8 @@ require('lazy').setup({
                     ['<Tab>'] = function(fallback)
                       if cmp.visible() then
                         cmp.select_next_item()
-                      elseif check_backspace() then
-                        fallback()
+                      -- elseif check_backspace() then
+                      --   fallback()
                       else
                         fallback()
                       end
