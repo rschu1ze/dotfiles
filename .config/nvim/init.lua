@@ -24,6 +24,7 @@ vim.opt.showbreak = '> '
 vim.opt.textwidth = 140
 vim.opt.termguicolors = true
 vim.opt.wildignorecase = true
+vim.opt.mouse = '' -- double-clicking text to copy it has weird work boundaries
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'} -- recommended by nvim-cmp
 -- vim.opt.cmdheight = 0 -- v0.8: nice but forces to press <enter> too often
 
