@@ -14,6 +14,8 @@ config.freetype_load_flags = "NO_HINTING"
 
 config.font_size = 12.5
 
+config.selection_word_boundary = ' \t\n{}[]()"\'`,;:'
+
 config.color_scheme = 'Gruvbox Dark (Gogh)'
 
 config.window_padding = {
