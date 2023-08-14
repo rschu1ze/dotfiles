@@ -12,7 +12,7 @@ config.font = wezterm.font 'JetBrains Mono'
 
 config.freetype_load_flags = "NO_HINTING"
 
-config.font_size = 12.5
+config.font_size = 13.5
 
 config.selection_word_boundary = ' \t\n{}[]()"\'`,;:'
 
