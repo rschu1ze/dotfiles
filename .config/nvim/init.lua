@@ -10,6 +10,8 @@ vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.showmode = false
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.undofile = true
@@ -51,6 +53,8 @@ vim.keymap.set('n', '<C-i>', '<C-i>zz')
 -- More sane behavior of 'k' and 'j' in wrapped lines
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
+-- Don't reset the cursor after visual yank
+vim.keymap.set('v', 'y', 'ygv<esc>')
 
 -- https://github.com/echasnovski/mini.nvim/issues/124
 vim.cmd([[au FileType cpp lua vim.opt_local.commentstring = '/// %s']])
@@ -155,7 +159,14 @@ require('lazy').setup({
                 ensure_installed = 'all',
                 -- enable non-experimental modules:
                 highlight = {enable = true},
-                incremental_selection = {enable = true},
+                incremental_selection = {
+                    enable = true,
+                    keymaps = { -- TODO used? useful?
+                        init_selection = "e",
+                        node_incremental = "e",
+                        node_decremental = "<BS>"
+                    },
+                },
             })
         end
     },
@@ -246,3 +257,6 @@ require('lazy').setup({
         end
     }
 })
+
+-- Reopen last Telescope window, super useful for live grep
+vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
