@@ -13,6 +13,3 @@ path
 
 --glob
 !tests/*
-
---glob
-!tests/*
