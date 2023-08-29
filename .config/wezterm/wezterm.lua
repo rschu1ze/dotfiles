@@ -14,7 +14,7 @@ config.freetype_load_flags = "NO_HINTING"
 
 config.font_size = 13.5
 
-config.selection_word_boundary = ' \t\n{}[]()"\'`,;:│.'
+config.selection_word_boundary = ' \t\n{}[]()"\'`,;:│'
 
 config.color_scheme = 'Gruvbox Dark (Gogh)'
 
