@@ -18,8 +18,6 @@
     bm = branch --move --force
     c = commit
     ca = commit --amend
-    co = alias_no_longer_needed # deliberately gives an error ... alias can be removed once enough muscle memory is there
-    cob = use_git_sw_instead # deliberately gives an error ... alias can be removed once enough muscle memory is there
     cp = cherry-pick
     dc = diff --cached
     f = fetch --prune --recurse-submodules -j32
