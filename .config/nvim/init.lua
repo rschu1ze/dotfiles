@@ -100,8 +100,11 @@ require('lazy').setup({
     },
     {
         'lukas-reineke/indent-blankline.nvim',
+        main = "ibl",
         opts = {
-            show_first_indent_level = false
+            indent = {
+                char = {"│"},
+            },
         }
     },
     {
@@ -261,6 +264,12 @@ require('lazy').setup({
         end
     }
 })
+
+local hooks = require "ibl.hooks"
+hooks.register(
+  hooks.type.WHITESPACE,
+  hooks.builtin.hide_first_space_indent_level
+)
 
 -- Reopen last Telescope window, super useful for live grep
 vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
