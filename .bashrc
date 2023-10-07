@@ -69,6 +69,12 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # No support for the XDG base directory spec in ripgrep
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 
+# When Go was installed manually: https://go.dev/doc/install
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/repo/k9s/execs
+alias k9s="k9s --readonly"
+alias k9s-admin="k9s --write"
+
 # EXTRACT FUNCTION ## | Usage: extract <file>
 extract () {
   if [ -f $1 ] ; then
