@@ -14,8 +14,9 @@ alias py='python'
 alias v='nvim'
 alias t='tmux'
 alias d='docker'
-alias ll='ls -alF'
-alias la='ls -A'
+alias ls='exa --group-directories-first --classify'
+alias la='exa --group-directories-first --classify --all' #'ls -A'
+alias ll='exa --long --group-directories-first --classify --all' #'ls -alF'
 
 alias less='batcat'
 
