@@ -21,8 +21,7 @@
     cp = cherry-pick
     dc = diff --cached
     f = fetch --prune --recurse-submodules -j128
-    fi = !git reset --hard && git clean --force -d # fuckit
-    ; g = grep # use ripgrep instead
+    fi = !cd $(git rev-parse --show-toplevel) && git restore --staged --worktree . && git clean --force -d # fuckit
     l = log --pretty=format:'%C(red)%h %C(yellow)%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
     m = merge
     pu = push
@@ -39,4 +38,4 @@
     # Worktrees don't play well with submodules
     # wt = worktree
     # wta = worktree add -b
-    unstage = reset HEAD
+    unstage = restore --staged
