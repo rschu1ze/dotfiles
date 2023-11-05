@@ -17,6 +17,8 @@ alias d='docker'
 alias ll='ls -alF'
 alias la='ls -A'
 
+alias less='batcat'
+
 alias chs='./clickhouse-server'
 alias chc='./clickhouse-client'
 
@@ -133,3 +135,9 @@ GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
 export PS1='\n\w$(__git_ps1 " (%s)") \$ '
+
+# # The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/home/ubuntu/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/home/ubuntu/Downloads/google-cloud-sdk/path.bash.inc'; fi
+#
+# # The next line enables shell command completion for gcloud.
+# if [ -f '/home/ubuntu/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/home/ubuntu/Downloads/google-cloud-sdk/completion.bash.inc'; fi
