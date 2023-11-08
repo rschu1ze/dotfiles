@@ -20,7 +20,7 @@
     ca = commit --amend
     cp = cherry-pick
     dc = diff --cached
-    f = fetch --prune --recurse-submodules -j128
+    f = !git fetch --prune --recurse-submodules --jobs $(nproc)
     fi = !cd $(git rev-parse --show-toplevel) && git restore --staged --worktree . && git clean --force -d # fuckit
     l = log --pretty=format:'%C(red)%h %C(yellow)%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
     m = merge
