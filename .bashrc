@@ -24,6 +24,10 @@ alias chs='./clickhouse-server'
 alias chc='./clickhouse-client'
 
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
     export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=$(brew --prefix llvm)/bin/clang
@@ -58,9 +62,9 @@ export EDITOR='nvim'
 
 # Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
 # It is not recommended to set the terminal in the shell profile, cf. https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
-# export TERM=xterm-256color
+export TERM=xterm-256color
 # export TERM=xterm-kitty
-export TERM=wezterm
+# export TERM=wezterm
 
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000000
