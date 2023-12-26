@@ -35,7 +35,4 @@
     suu = submodule update --recursive --init
     sw = switch
     swc = switch --create
-    # Worktrees don't play well with submodules
-    # wt = worktree
-    # wta = worktree add -b
     unstage = restore --staged
