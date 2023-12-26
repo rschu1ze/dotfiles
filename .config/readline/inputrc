@@ -1,0 +1,23 @@
+set editing-mode vi
+
+# Use color for proposals in tab completion
+set colored-stats on
+
+# Ignore case in tab completion
+set completion-ignore-case on
+
+# Replace _ by - and vice versa
+set completion-map-case on
+
+# Show the "Display (...) possibilities?" prompt only for really long lists
+set completion-query-items 1000
+
+# Show matches immediately (instead of after 2x <tab>)
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Disable the "-- more --" prompt for long lists
+set page-completions off
+
+# Disable the sound bell
+set bell-style none

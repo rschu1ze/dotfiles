@@ -70,17 +70,13 @@ export HISTSIZE=1000000
 export HISTFILESIZE=1000000000
 export HISTCONTROL=ignoreboth:erasedups
 
-# suppress annoying warning "The default interactive shell is now zsh."
+# Suppress annoying warning "The default interactive shell is now zsh."
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# No support for the XDG base directory spec in ripgrep
-export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
-
-# When Go was installed manually: https://go.dev/doc/install
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:~/repo/k9s/execs
-alias k9s="k9s --readonly"
-alias k9s-admin="k9s --write"
+# Support XDG base directory spec in tools
+export XDG_CONFIG_HOME=$HOME/.config
+export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/.config/ripgrep/config
 
 # EXTRACT FUNCTION ## | Usage: extract <file>
 extract () {
@@ -140,6 +136,12 @@ GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
 export PS1='\n\w$(__git_ps1 " (%s)") \$ '
+
+# When Go was installed manually: https://go.dev/doc/install
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/repo/k9s/execs
+alias k9s="k9s --readonly"
+alias k9s-admin="k9s --write"
 
 # # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '/home/ubuntu/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/home/ubuntu/Downloads/google-cloud-sdk/path.bash.inc'; fi
