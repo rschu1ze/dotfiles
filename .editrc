@@ -1,3 +1,4 @@
 # Configuration for editline, a readline replacement. Used e.g. by lldb.
 
 bind -v # vi bindings
+# bind '\t' rl_complete # <tab> completes input, works only for Python

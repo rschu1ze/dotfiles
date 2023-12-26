@@ -1,3 +1,5 @@
+# Move to .config: https://github.com/llvm/llvm-project/issues/71426
+
 settings set stop-line-count-before 10
 settings set stop-line-count-after 10
 settings set interpreter.prompt-on-quit false
