@@ -95,24 +95,26 @@ require('lazy').setup({
             require('mini.move').setup()
             require('mini.pairs').setup()
             require('mini.surround').setup()
+            require('mini.indentscope').setup({
+                draw = { animation = function() return 0 end },
+                symbol ='│'
+            })
             -- TODO try pick and extra
         end
     },
-    -- TODO currently broken
-    -- {
-    --     'lukas-reineke/indent-blankline.nvim',
-    --     main = "ibl",
-    --     opts = {
-    --         indent = {
-    --             char = {"│"},
-    --         },
-    --     }
-    -- },
     {
         -- TODO: replace by Lua equivalent
         -- See :Copilot setup / status
         -- 'github/copilot.vim'
         -- 'zbirenbaum/copilot.lua',
+    },
+    {
+        -- Remember last cursor position
+        -- https://github.com/neovim/neovim/issues/16339
+        'ethanholz/nvim-lastplace',
+        config = function()
+            require('nvim-lastplace').setup()
+        end
     },
     {
         'jedi2610/nvim-rooter.lua',
@@ -256,13 +258,6 @@ require('lazy').setup({
         end
     }
 })
-
--- indent-blankline
--- local hooks = require "ibl.hooks"
--- hooks.register(
---   hooks.type.WHITESPACE,
---   hooks.builtin.hide_first_space_indent_level
--- )
 
 -- Reopen last Telescope window, super useful for live grep
 vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
