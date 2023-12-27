@@ -7,19 +7,18 @@ export LANGUAGE='en_US.UTF-8'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias .....='cd ../../../..'
 alias c='clear'
 alias e='exit'
 alias g='git'
-alias py='python'
+alias p='python3'
 alias v='nvim'
 alias t='tmux'
 alias d='docker'
 alias ls='exa --group-directories-first --classify'
-alias la='exa --group-directories-first --classify --all' #'ls -A'
-alias ll='exa --long --group-directories-first --classify --all' #'ls -alF'
-
+alias la='exa --group-directories-first --classify --all' # 'ls -A'
+alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
 alias less='batcat'
-
 alias chs='./clickhouse-server'
 alias chc='./clickhouse-client'
 
@@ -39,28 +38,20 @@ else
     export CORES=$(nproc)
 fi
 
-CH_PARALLEL_JOBS="-DPARALLEL_COMPILE_JOBS=${CORES} -DPARALLEL_LINK_JOBS=${CORES}" # otherwise the job-limiter kicks in
+CH_SLIM="-DENABLE_EMBEDDED_COMPILER=0 -DENABLE_LIBRARIES=0"
+CH_FAT="-DENABLE_EMBEDDED_COMPILER=1 -DENABLE_LIBRARIES=1"
+CH_DBG="-DCMAKE_BUILD_TYPE=Debug"
+CH_REL="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+CH_COMMON="-DPARALLEL_COMPILE_JOBS=${CORES} -DPARALLEL_LINK_JOBS=${CORES} -S . -B build"
 
-CH_COMMON_BUILD_OPTIONS="${CH_PARALLEL_JOBS}"
-
-CH_SLIM_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=0 -DENABLE_LIBRARIES=0"
-CH_FAT_BUILD_OPTIONS="-DENABLE_EMBEDDED_COMPILER=1 -DENABLE_LIBRARIES=1"
-
-CH_BUILD_TYPE_DEBUG="-DCMAKE_BUILD_TYPE=Debug"
-CH_BUILD_TYPE_RELWITHDEBINFO="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-
-CH_PATH_TO_SOURCE_AND_BUILD="-S . -B build"
-
-alias make_dbg_slim="cmake ${CH_COMMON_BUILD_OPTIONS} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_DEBUG}          ${CH_PATH_TO_SOURCE_AND_BUILD}"
-alias make_rel_slim="cmake ${CH_COMMON_BUILD_OPTIONS} ${CH_SLIM_BUILD_OPTIONS} ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE_AND_BUILD}"
-alias make_dbg_fat="cmake  ${CH_COMMON_BUILD_OPTIONS} ${CH_FAT_BUILD_OPTIONS}  ${CH_BUILD_TYPE_DEBUG}          ${CH_PATH_TO_SOURCE_AND_BUILD}"
-alias make_rel_fat="cmake  ${CH_COMMON_BUILD_OPTIONS} ${CH_FAT_BUILD_OPTIONS}  ${CH_BUILD_TYPE_RELWITHDEBINFO} ${CH_PATH_TO_SOURCE_AND_BUILD}"
-
+alias make_dbg_slim="cmake ${CH_SLIM} ${CH_DBG} ${CH_COMMON}"
+alias make_rel_slim="cmake ${CH_SLIM} ${CH_REL} ${CH_COMMON}"
+alias make_dbg_fat="cmake  ${CH_FAT}  ${CH_DBG} ${CH_COMMON}"
+alias make_rel_fat="cmake  ${CH_FAT}  ${CH_REL} ${CH_COMMON}"
 alias cbuild="cmake --build build --parallel -- "
 
 export EDITOR='nvim'
 
-# Seems not needed on Mac, already set by terminal emulator, check with 'echo $TERM'
 # It is not recommended to set the terminal in the shell profile, cf. https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
 export TERM=xterm-256color
 # export TERM=xterm-kitty
