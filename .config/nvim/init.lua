@@ -84,7 +84,6 @@ require('lazy').setup({
         priority = 1000, -- ... as the first plug-in
         config = function()
             vim.cmd.colorscheme('gruvbox')
-            -- vim.o.background = 'dark'
         end
     },
     {
@@ -96,17 +95,19 @@ require('lazy').setup({
             require('mini.move').setup()
             require('mini.pairs').setup()
             require('mini.surround').setup()
+            -- TODO try pick and extra
         end
     },
-    {
-        'lukas-reineke/indent-blankline.nvim',
-        main = "ibl",
-        opts = {
-            indent = {
-                char = {"│"},
-            },
-        }
-    },
+    -- TODO currently broken
+    -- {
+    --     'lukas-reineke/indent-blankline.nvim',
+    --     main = "ibl",
+    --     opts = {
+    --         indent = {
+    --             char = {"│"},
+    --         },
+    --     }
+    -- },
     {
         -- TODO: replace by Lua equivalent
         -- See :Copilot setup / status
@@ -164,16 +165,7 @@ require('lazy').setup({
         config = function()
             require'nvim-treesitter.configs'.setup({
                 ensure_installed = 'all',
-                -- enable non-experimental modules:
-                highlight = {enable = true},
-                incremental_selection = {
-                    enable = true,
-                    keymaps = { -- TODO used? useful?
-                        init_selection = "e",
-                        node_incremental = "e",
-                        node_decremental = "<BS>"
-                    },
-                },
+                highlight = {enable = true}
             })
         end
     },
@@ -265,11 +257,12 @@ require('lazy').setup({
     }
 })
 
-local hooks = require "ibl.hooks"
-hooks.register(
-  hooks.type.WHITESPACE,
-  hooks.builtin.hide_first_space_indent_level
-)
+-- indent-blankline
+-- local hooks = require "ibl.hooks"
+-- hooks.register(
+--   hooks.type.WHITESPACE,
+--   hooks.builtin.hide_first_space_indent_level
+-- )
 
 -- Reopen last Telescope window, super useful for live grep
 vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
