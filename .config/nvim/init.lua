@@ -99,6 +99,8 @@ require('lazy').setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'
             })
+            require('mini.misc').setup()
+            MiniMisc.setup_auto_root()
             -- TODO try pick and extra
         end
     },
@@ -115,12 +117,6 @@ require('lazy').setup({
         config = function()
             require('nvim-lastplace').setup()
         end
-    },
-    {
-        'jedi2610/nvim-rooter.lua',
-        opts = {
-            rooter_patterns = {'=src'}
-        }
     },
     {
         "FabijanZulj/blame.nvim"
@@ -172,6 +168,7 @@ require('lazy').setup({
         end
     },
     {
+        -- TODO: migrate to LSP Zero one fine day
         'neovim/nvim-lspconfig',
         dependencies = {
             -- TODO add a snippet engine
