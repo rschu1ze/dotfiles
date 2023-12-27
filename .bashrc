@@ -28,11 +28,9 @@ fi
 
 export EDITOR='nvim'
 
-# Not setting a terminal achieves 24-bit true colors
-# export TERM=xterm-256color
-# export TERM=xterm-24bit
-# export TERM=xterm-kitty
-# export TERM=wezterm
+# This achieves 24-bit true colors.
+# Test with https://gist.github.com/weimeng23/60b51b30eb758bd7a2a648436da1e563
+export TERM=xterm-256color
 
 # History stuff
 export HISTSIZE=-1 # unlimited in-memory history size
