@@ -32,12 +32,14 @@ export EDITOR='nvim'
 # Test with https://gist.github.com/weimeng23/60b51b30eb758bd7a2a648436da1e563
 export TERM=xterm-256color
 
-# History stuff
-export HISTSIZE=-1 # unlimited in-memory history size
-export HISTFILESIZE=-1 # unlimited on-disk history file size
-export HISTCONTROL=ignoreboth:erasedups
-shopt -s histappend # append to history file
-PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # append to / read from history file for each command
+# History stuff (not on macOS ... their bash is too old)
+if [ "$(uname)" != "Darwin" ]; then
+    export HISTSIZE=-1 # unlimited in-memory history size
+    export HISTFILESIZE=-1 # unlimited on-disk history file size
+    export HISTCONTROL=ignoreboth:erasedups
+    shopt -s histappend # append to history file
+    PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # append to / read from history file for each command
+fi
 
 export BASH_SILENCE_DEPRECATION_WARNING=1 # macOS: Suppress warning "The default interactive shell is now zsh."
 
