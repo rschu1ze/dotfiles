@@ -26,6 +26,52 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+export EDITOR='nvim'
+
+# Not setting a terminal achieves 24-bit true colors
+# export TERM=xterm-256color
+# export TERM=xterm-24bit
+# export TERM=xterm-kitty
+# export TERM=wezterm
+
+# History stuff
+export HISTSIZE=-1 # unlimited in-memory history size
+export HISTFILESIZE=-1 # unlimited on-disk history file size
+export HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend # append to history file
+PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # append to / read from history file for each command
+
+export BASH_SILENCE_DEPRECATION_WARNING=1 # macOS: Suppress warning "The default interactive shell is now zsh."
+
+# Support XDG base directory spec in tools
+export XDG_CONFIG_HOME=$HOME/.config
+export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/.config/ripgrep/config
+
+extract () {
+  if [ -f $1 ] ; then
+      case $1 in
+          *.tar.bz2)   tar xvjf $1    ;;
+          *.tar.gz)    tar xvzf $1    ;;
+          *.bz2)       bunzip2 $1     ;;
+          *.rar)       rar x $1       ;;
+          *.gz)        gunzip $1      ;;
+          *.tar)       tar xvf $1     ;;
+          *.tbz2)      tar xvjf $1    ;;
+          *.tgz)       tar xvzf $1    ;;
+          *.zip)       unzip $1       ;;
+          *.zst)       unzstd $1      ;;
+          *.Z)         uncompress $1  ;;
+          *.7z)        7z x $1        ;;
+          *)           echo "don't know how to extract '$1'..." ;;
+      esac
+  else
+      echo "'$1' is not a valid file!"
+  fi
+}
+
+# -- ClickHouse-specific stuff --------------------------------------------------------------
+
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     # MacOS: prefer Clang from Homebrew over Apple's Clang
     export PATH=$(brew --prefix llvm)/bin:$PATH
@@ -50,51 +96,11 @@ alias make_dbg_fat="cmake  ${CH_FAT}  ${CH_DBG} ${CH_COMMON}"
 alias make_rel_fat="cmake  ${CH_FAT}  ${CH_REL} ${CH_COMMON}"
 alias cbuild="cmake --build build --parallel -- "
 
-export EDITOR='nvim'
-
-# It is not recommended to set the terminal in the shell profile, cf. https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
-export TERM=xterm-256color
-# export TERM=xterm-kitty
-# export TERM=wezterm
-
-export HISTSIZE=1000000
-export HISTFILESIZE=1000000000
-export HISTCONTROL=ignoreboth:erasedups
-
-# Suppress annoying warning "The default interactive shell is now zsh."
-export BASH_SILENCE_DEPRECATION_WARNING=1
-
-# Support XDG base directory spec in tools
-export XDG_CONFIG_HOME=$HOME/.config
-export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
-export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/.config/ripgrep/config
-
-# EXTRACT FUNCTION ## | Usage: extract <file>
-extract () {
-  if [ -f $1 ] ; then
-      case $1 in
-          *.tar.bz2)   tar xvjf $1    ;;
-          *.tar.gz)    tar xvzf $1    ;;
-          *.bz2)       bunzip2 $1     ;;
-          *.rar)       rar x $1       ;;
-          *.gz)        gunzip $1      ;;
-          *.tar)       tar xvf $1     ;;
-          *.tbz2)      tar xvjf $1    ;;
-          *.tgz)       tar xvzf $1    ;;
-          *.zip)       unzip $1       ;;
-          *.zst)       unzstd $1      ;;
-          *.Z)         uncompress $1  ;;
-          *.7z)        7z x $1        ;;
-          *)           echo "don't know how to extract '$1'..." ;;
-      esac
-  else
-      echo "'$1' is not a valid file!"
-  fi
-}
-
 resettests () {
     gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=pending -F description="Manually unset to rerun" -F context="$2"
 }
+
+# -------------------------------------------------------------------------------------------
 
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
 if [[ ! -f ~/.git-prompt.sh ]]
@@ -113,7 +119,7 @@ source ~/.git-completion.bash
 # Make Git completion work with g alias, https://askubuntu.com/a/642778
 __git_complete g __git_main
 
-# In order to make this fast enough ignore submodules in large repos. Change in .git-prompt
+# In order to make this fast enough ignore submodules in large repos. Change in .git-prompt.sh
 #      git diff --no-ext-diff --quiet || w="*"
 #      git diff --no-ext-diff --cached --quiet || i="+"
 # to
@@ -133,9 +139,3 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/repo/k9s/execs
 alias k9s="k9s --readonly"
 alias k9s-admin="k9s --write"
-
-# # The next line updates PATH for the Google Cloud SDK.
-# if [ -f '/home/ubuntu/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/home/ubuntu/Downloads/google-cloud-sdk/path.bash.inc'; fi
-#
-# # The next line enables shell command completion for gcloud.
-# if [ -f '/home/ubuntu/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/home/ubuntu/Downloads/google-cloud-sdk/completion.bash.inc'; fi
