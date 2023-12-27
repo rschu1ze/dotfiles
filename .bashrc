@@ -121,10 +121,12 @@ __git_complete g __git_main
 #      git diff --no-ext-diff --quiet || w="*"
 #      git diff --no-ext-diff --cached --quiet || i="+"
 # to
-#      git diff --no-ext-diff --quiet -- :/src || w="*"
-#      git diff --no-ext-diff --cached --quiet -- :/src || i="+"
+#      git diff --no-ext-diff --quiet -- :!contrib || w="*"
+#      git diff --no-ext-diff --cached --quiet -- :!contrib || i="+"
 # (search for GIT_PS1_SHOWDIRTYSTATE)
-# See https://seb.jambor.dev/posts/performance-optimizations-for-the-shell-prompt/
+# See
+# - https://seb.jambor.dev/posts/performance-optimizations-for-the-shell-prompt/
+# - https://css-tricks.com/git-pathspecs-and-how-to-use-them/
 GIT_PS1_SHOWCOLORHINTS=true
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
