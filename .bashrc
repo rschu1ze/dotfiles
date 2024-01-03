@@ -46,7 +46,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1 # macOS: Suppress warning "The default
 # Support XDG base directory spec in tools
 export XDG_CONFIG_HOME=$HOME/.config
 export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
-export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/.config/ripgrep/config
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/config
 
 extract () {
   if [ -f $1 ] ; then
