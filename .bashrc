@@ -37,8 +37,9 @@ if [ "$(uname)" != "Darwin" ]; then
     export HISTSIZE=-1 # unlimited in-memory history size
     export HISTFILESIZE=-1 # unlimited on-disk history file size
     export HISTCONTROL=ignoreboth:erasedups
-    shopt -s histappend # append to history file
-    PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # append to / read from history file for each command
+    # Nice but not practical:
+    # shopt -s histappend # append to history file
+    # PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # append to / read from history file for each command
 fi
 
 export BASH_SILENCE_DEPRECATION_WARNING=1 # macOS: Suppress warning "The default interactive shell is now zsh."
