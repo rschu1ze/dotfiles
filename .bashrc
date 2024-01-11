@@ -143,5 +143,5 @@ export PATH=$PATH:~/repo/k9s/execs
 alias k9s="k9s --readonly"
 alias k9s-admin="k9s --write"
 
-# Install fzf: https://github.com/junegunn/fzf
+# Install fzf: https://github.com/junegunn/fzf, useful for kubectx and kubens
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
