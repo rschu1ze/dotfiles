@@ -142,3 +142,6 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/repo/k9s/execs
 alias k9s="k9s --readonly"
 alias k9s-admin="k9s --write"
+
+# Install fzf: https://github.com/junegunn/fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
