@@ -9,7 +9,7 @@
     <http_port>8123</http_port>
     <interserver_http_port>9009</interserver_http_port>
 
-    <!-- <users_config>ch-users.xml</users_config> -->
+    <users_config>users.xml</users_config>
 
     <logger>
         <level>trace</level>
