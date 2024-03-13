@@ -5,8 +5,8 @@
 --no-line-number
 
 # unfortunately makes search single-threaded
---sort
-path
+# --sort
+# path
 
 --glob
 !contrib/*
