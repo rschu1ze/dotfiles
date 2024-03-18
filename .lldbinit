@@ -1,6 +1,7 @@
 # Move to .config: https://github.com/llvm/llvm-project/issues/71426
 
 settings set prompt '$ '
+settings set auto-confirm 1 # e.g. for run
 
 settings set stop-line-count-before 10
 settings set stop-line-count-after 10
