@@ -90,7 +90,7 @@ require('lazy').setup({
         'echasnovski/mini.nvim',
         config = function()
             require('mini.bracketed').setup()
-            require('mini.comment').setup()
+            -- require('mini.comment').setup() -- obsolete with neovim 0.10
             require('mini.jump2d').setup()
             require('mini.move').setup()
             require('mini.pairs').setup()
