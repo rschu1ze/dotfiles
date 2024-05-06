@@ -9,5 +9,5 @@ settings set stop-line-count-after 10
 settings set interpreter.prompt-on-quit false
 
 command alias bdi breakpoint disable
-command alias bde breakpoint disable
+command alias bde breakpoint delete
 command alias ben breakpoint enable
