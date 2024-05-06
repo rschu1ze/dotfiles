@@ -119,7 +119,10 @@ require('lazy').setup({
         end
     },
     {
-        "FabijanZulj/blame.nvim"
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require("blame").setup()
+        end
     };
     {
         'nvim-telescope/telescope.nvim',
