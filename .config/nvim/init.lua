@@ -90,7 +90,6 @@ require('lazy').setup({
         'echasnovski/mini.nvim',
         config = function()
             require('mini.bracketed').setup()
-            -- require('mini.comment').setup() -- obsolete with neovim 0.10
             require('mini.jump2d').setup()
             require('mini.move').setup()
             require('mini.pairs').setup()
@@ -193,7 +192,7 @@ require('lazy').setup({
             -- Keymaps to expose some LSP features, many other functions are available ...
             local function on_attach(_, bufnr)
                 local opts = { buffer = bufnr }
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts) -- neovim 0.10 sets this by default
                 vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
                 vim.keymap.set('n', 't', vim.lsp.buf.type_definition, opts)
                 vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
