@@ -137,11 +137,5 @@ GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
 export PS1='\n\w$(__git_ps1 " (%s)") \$ '
 
-# When Go was installed manually: https://go.dev/doc/install
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:~/repo/k9s/execs
-alias k9s="k9s --readonly"
-alias k9s-admin="k9s --write"
-
 # Install fzf: https://github.com/junegunn/fzf, useful for kubectx and kubens
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

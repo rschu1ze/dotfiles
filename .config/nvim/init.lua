@@ -37,7 +37,7 @@ vim.keymap.set('n', '<Leader>d', ':bd<CR>')
 -- Fast switch to last buffer
 vim.keymap.set('n', '<Leader><Leader>', ':b#<CR>')
 -- Un-highlight last search result
-vim.keymap.set('n', '<esc>', ':nohlsearch<return><esc>')
+vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
 -- Make entry into visual mode consistent with cc and dd
 vim.keymap.set('n', 'vv', 'V')
 -- Make (un)indentation repeatable, obsoleted by mini.move
