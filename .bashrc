@@ -101,6 +101,10 @@ resettests () {
     gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=pending -F description="Manually unset to rerun" -F context="$2"
 }
 
+greentests () {
+    gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=success -F description="Manually set" -F context="Mergeable Check"
+}
+
 # -------------------------------------------------------------------------------------------
 
 # Make $__git_ps1 available, https://stackoverflow.com/a/15398153
