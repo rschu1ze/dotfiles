@@ -24,7 +24,6 @@ vim.opt.linebreak= true
 vim.opt.breakindent= true
 vim.opt.showbreak = '> '
 vim.opt.textwidth = 140
-vim.opt.termguicolors = true
 vim.opt.wildignorecase = true
 vim.opt.mouse = '' -- double-clicking text to copy it has weird work boundaries
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'} -- recommended by nvim-cmp
@@ -98,8 +97,6 @@ require('lazy').setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'
             })
-            require('mini.misc').setup()
-            MiniMisc.setup_auto_root()
             -- TODO try pick and extra
         end
     },
@@ -260,3 +257,13 @@ require('lazy').setup({
 
 -- Reopen last Telescope window, super useful for live grep
 vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+
+-- Auto-root
+-- Source: https://www.reddit.com/r/neovim/comments/1cwd181/what_have_you_changed_or_added_your_settings_from/
+--         (previously I used setup_auto_root() from https://github.com/echasnovski/mini.misc)
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function(ctx)
+        root = vim.fs.root(ctx.buf, {".git"})
+        if root then vim.uv.chdir(root) end
+    end,
+})
