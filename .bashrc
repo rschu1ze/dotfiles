@@ -20,6 +20,7 @@ alias ls='exa --group-directories-first --classify'
 alias la='exa --group-directories-first --classify --all' # 'ls -A'
 alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
 alias less='batcat'
+alias diff='diff --color -u'
 alias chs='./clickhouse-server'
 alias chc='./clickhouse-client'
 
