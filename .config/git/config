@@ -6,7 +6,13 @@
     gpgsign = true
 [core]
     editor = nvim
-    pager = less -i # search case-insensitively
+    # pager = less -i # search case-insensitively
+    pager = delta
+[delta]
+    line-numbers = true
+    side-by-side = true
+[merge]
+    conflictstyle = zdiff3
 [credential]
     helper = store
 [submodule]
