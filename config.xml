@@ -28,7 +28,7 @@
     <!-- https://docs.google.com/presentation/d/17WMonmZLGSTfsQulgCPBAHk9roI0NcO0DLM9ArqrQqU/ -->
 
     <!-- Configure zookeepers -->
-    <keeper_server>
+    <keeper_server remove="remove">
     <!-- Configure zookeepers -->
         <tcp_port>9181</tcp_port> <!-- how to reach zookeeper from clickhouse-server -->
         <server_id>1</server_id>
@@ -47,7 +47,7 @@
 
     <!-- Tell clickhouse-server to which zookeeper it should connect. -->
     <!-- This would include all servers in "raft_configuration" in "keeper_server". -->
-    <zookeeper>
+    <zookeeper remove="remove">
         <node>
             <host>localhost</host>
             <port>9181</port>

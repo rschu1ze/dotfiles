@@ -1,5 +1,5 @@
 <clickhouse>
-    <zookeeper>
+    <zookeeper remove="remove">
         <!--<zookeeper_load_balancing>random / in_order / nearest_hostname / first_or_random / round_robin</zookeeper_load_balancing>-->
         <zookeeper_load_balancing>random</zookeeper_load_balancing>
         <node index="1">
@@ -7,7 +7,7 @@
             <port>9181</port>
         </node>
     </zookeeper>
-    <auxiliary_zookeepers>
+    <auxiliary_zookeepers remove="remove">
         <zookeeper2>
             <node index="1">
                 <host>localhost</host>

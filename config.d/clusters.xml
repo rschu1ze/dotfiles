@@ -1,5 +1,5 @@
 <clickhouse>
-    <remote_servers>
+    <remote_servers remove="remove">
         <test_shard_localhost>
             <shard>
                 <replica>
