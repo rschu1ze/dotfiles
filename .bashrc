@@ -31,7 +31,7 @@ fi
 export EDITOR='nvim'
 
 # This achieves 24-bit true colors.
-# Test with https://gist.github.com/weimeng23/60b51b30eb758bd7a2a648436da1e563
+# Test with https://unix.stackexchange.com/questions/404414/print-true-color-24-bit-test-pattern
 export TERM=xterm-256color
 
 # History stuff (not on macOS ... their bash is too old)
