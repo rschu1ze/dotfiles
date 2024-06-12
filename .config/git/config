@@ -60,8 +60,6 @@
     merge-conflict-theirs-diff-header-style = "#FABD2F" bold overline
     merge-conflict-ours-diff-header-decoration-style = ''
     merge-conflict-theirs-diff-header-decoration-style = ''
-[merge]
-    conflictstyle = zdiff3
 [credential]
     helper = store
 [submodule]
