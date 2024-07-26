@@ -90,6 +90,8 @@ require('lazy').setup({
         config = function()
             require('mini.bracketed').setup()
             require('mini.jump2d').setup()
+            require('mini.misc').setup()
+            MiniMisc.setup_auto_root()
             require('mini.move').setup()
             require('mini.pairs').setup()
             require('mini.surround').setup()
@@ -100,12 +102,12 @@ require('lazy').setup({
             -- TODO try pick and extra
         end
     },
-    {
-        -- TODO: replace by Lua equivalent
-        -- See :Copilot setup / status
-        -- 'github/copilot.vim'
-        -- 'zbirenbaum/copilot.lua',
-    },
+    -- {
+    --     -- TODO: replace by Lua equivalent
+    --     -- See :Copilot setup / status
+    --     -- 'github/copilot.vim'
+    --     -- 'zbirenbaum/copilot.lua',
+    -- },
     {
         -- Remember last cursor position
         -- https://github.com/neovim/neovim/issues/16339
@@ -257,13 +259,3 @@ require('lazy').setup({
 
 -- Reopen last Telescope window, super useful for live grep
 vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
-
--- Auto-root
--- Source: https://www.reddit.com/r/neovim/comments/1cwd181/what_have_you_changed_or_added_your_settings_from/
---         (previously I used setup_auto_root() from https://github.com/echasnovski/mini.misc)
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function(ctx)
-        root = vim.fs.root(ctx.buf, {".git"})
-        if root then vim.uv.chdir(root) end
-    end,
-})
