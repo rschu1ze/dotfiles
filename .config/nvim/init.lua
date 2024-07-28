@@ -1,6 +1,7 @@
 -- For a good starting point, see. https://github.com/nvim-lua/kickstart.nvim/
 
 -- see :h for each option
+
 vim.g.mapleader = ' '
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -28,6 +29,9 @@ vim.opt.wildignorecase = true
 vim.opt.mouse = '' -- double-clicking text to copy it has weird work boundaries
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'} -- recommended by nvim-cmp
 -- vim.opt.cmdheight = 0 -- v0.8: nice but forces to press <enter> too often
+
+vim.g.loaded_netrw = 0
+vim.g.loaded_netrwPlugin = 0
 
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
