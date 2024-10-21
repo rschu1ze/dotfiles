@@ -16,10 +16,13 @@ alias v='nvim'
 alias s='ssh'
 alias t='tmux'
 alias d='docker'
-alias ls='exa --group-directories-first --classify'
-alias la='exa --group-directories-first --classify --all' # 'ls -A'
-alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
-alias less='batcat'
+# exa is unmaintained on MacOS https://formulae.brew.sh/formula/exa
+if [ "$(uname)" != "Darwin" ]; then
+    alias ls='exa --group-directories-first --classify'
+    alias la='exa --group-directories-first --classify --all' # 'ls -A'
+    alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
+    alias less='batcat'
+fi
 alias diff='diff --color -u'
 alias chs='./clickhouse-server'
 alias chc='./clickhouse-client'
