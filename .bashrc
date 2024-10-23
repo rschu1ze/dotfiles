@@ -92,7 +92,7 @@ fi
 
 # CHCACHE="/data/chcache/chcache-rust/target/release/chcache-rust"
 # CH_COMMON="-DCMAKE_CXX_COMPILER_LAUNCHER=${CHCACHE} -DCMAKE_C_COMPILER_LAUNCHER=${CHCACHE} -DCOMPILER_CACHE=disabled -DPARALLEL_COMPILE_JOBS=${CORES} -DPARALLEL_LINK_JOBS=${CORES} -DENABLE_BUILD_PATH_MAPPING=0 -S . -B build"
-CH_COMMON="-DPARALLEL_COMPILE_JOBS=${CORES} -DPARALLEL_LINK_JOBS=${CORES} -DENABLE_BUILD_PATH_MAPPING=0 -S . -B build"
+CH_COMMON="-DPARALLEL_COMPILE_JOBS=${CORES} -DPARALLEL_LINK_JOBS=${CORES} -DENABLE_BUILD_PATH_MAPPING=0 -DENABLE_TESTS=0 -S . -B build"
 
 CH_SLIM="-DENABLE_LIBRARIES=0 -DENABLE_LIBURING=1"
 CH_FAT="-DENABLE_LIBRARIES=1"
@@ -104,10 +104,10 @@ alias make_dbg_slim="cmake ${CH_SLIM} ${CH_DBG}  ${CH_COMMON}"
 alias make_rel_slim="cmake ${CH_SLIM} ${CH_REL}  ${CH_COMMON}"
 alias make_dbg_fat="cmake  ${CH_FAT}  ${CH_DBG}  ${CH_COMMON}"
 alias make_rel_fat="cmake  ${CH_FAT}  ${CH_REL}  ${CH_COMMON}"
-alias make_tsan="cmake     ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=thread -DENABLE_TESTS=1"
-alias make_ubsan="cmake    ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=undefined -DENABLE_TESTS=1"
-alias make_msan="cmake     ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=memory -DENABLE_TESTS=1"
-alias make_asan="cmake     ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=address -DENABLE_TESTS=1"
+alias make_tsan="cmake     ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=thread"
+alias make_ubsan="cmake    ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=undefined"
+alias make_msan="cmake     ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=memory"
+alias make_asan="cmake     ${CH_FAT}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=address"
 alias cbuild="cmake --build build --parallel -- "
 
 resettests () {
