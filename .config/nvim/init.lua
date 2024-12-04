@@ -107,6 +107,7 @@ require('mini.pairs').setup()
 
 require('mini.pick').setup({
   mappings = {
+    -- only define keybindings which I actually use
     caret_left  = '',
     caret_right = '',
     choose            = '<CR>',
