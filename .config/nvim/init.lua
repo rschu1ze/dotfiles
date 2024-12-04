@@ -1,4 +1,6 @@
--- For a good starting point, see. https://github.com/nvim-lua/kickstart.nvim/
+-- For a good starting point, see
+--   - https://github.com/nvim-lua/kickstart.nvim/
+--   - https://www.youtube.com/playlist?list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft
 
 -- see :h for each option
 
@@ -88,17 +90,61 @@ MiniDeps.add('ellisonleao/gruvbox.nvim')
 vim.cmd('colorscheme gruvbox')
 
 require('mini.bracketed').setup()
+
 require('mini.indentscope').setup({
-    draw = { animation = function() return 0 end },
-    symbol ='│'
+  draw = { animation = function() return 0 end },
+  symbol ='│'
 })
+
 require('mini.jump2d').setup()
+
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
+
 require('mini.move').setup()
+
 require('mini.pairs').setup()
+
+require('mini.pick').setup({
+  mappings = {
+    caret_left  = '',
+    caret_right = '',
+    choose            = '<CR>',
+    choose_in_split   = '',
+    choose_in_tabpage = '',
+    choose_in_vsplit  = '',
+    choose_marked     = '',
+    delete_char       = '<BS>',
+    delete_char_right = '',
+    delete_left       = '',
+    delete_word       = '',
+    mark     = '',
+    mark_all = '',
+    move_down  = '<Tab>',
+    move_up    = '<S-Tab>',
+    refine        = '';
+    refine_marked = '',
+    scroll_down  = '',
+    scroll_left  = '',
+    scroll_right = '',
+    scroll_up    = '',
+    stop = '<Esc>',
+    toggle_info    = '',
+    toggle_preview = '',
+  },
+  options = {
+    content_from_bottom = true,
+    use_cache = true,
+  },
+})
+vim.keymap.set('n', '<Leader>e', function() require('mini.pick').builtin.files() end)
+vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers() end)
+
+require('mini.icons').setup()
+
 require('mini.surround').setup()
-    -- TODO pick, extra
+
+require('mini.trailspace').setup()
 
 -- Remember last cursor position, https://github.com/neovim/neovim/issues/16339
 MiniDeps.add('ethanholz/nvim-lastplace')
@@ -117,39 +163,6 @@ require('nvim-treesitter.configs').setup({
     ensure_installed = 'all',
     highlight = { enable = true },
 })
-
-MiniDeps.add({
-    source = 'nvim-telescope/telescope.nvim',
-    depends = {'nvim-lua/plenary.nvim'}
-})
-require 'telescope'.setup({
-    defaults = {
-        preview = false,
-        mappings = {
-            i = {
-            ['<esc>'] = require('telescope.actions').close, -- close on single <esc> press (instead of two)
-            },
-        },
-    },
-    pickers = {
-        git_files = {
-            theme = 'ivy',
-        },
-    buffers = {
-        theme = 'ivy',
-        sort_mru = true,
-    },
-    live_grep = {
-          theme = 'ivy',
-        preview = true
-    }
-  },
-})
-vim.keymap.set('n', '<Leader>e', require('telescope.builtin').git_files)
-vim.keymap.set('n', '<Leader>b', require('telescope.builtin').buffers)
-vim.keymap.set('n', '<Leader>l', require('telescope.builtin').live_grep) -- requires ripgrep
--- Reopen last Telescope window, super useful for live grep
-vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
 
 MiniDeps.add({
     source = 'neovim/nvim-lspconfig',
