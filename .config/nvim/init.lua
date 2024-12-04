@@ -100,15 +100,14 @@ require('mini.pairs').setup()
 require('mini.surround').setup()
     -- TODO pick, extra
 
--- Remember last cursor position
--- https://github.com/neovim/neovim/issues/16339
+-- Remember last cursor position, https://github.com/neovim/neovim/issues/16339
 MiniDeps.add('ethanholz/nvim-lastplace')
 require('nvim-lastplace').setup()
 
 MiniDeps.add('FabijanZulj/blame.nvim')
 require('blame').setup()
 
--- MiniDeps.add('hiphish/rainbow-delimiters.nvim')
+MiniDeps.add('hiphish/rainbow-delimiters.nvim')
 
 MiniDeps.add({
     source = 'nvim-treesitter/nvim-treesitter',
