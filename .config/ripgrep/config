@@ -10,6 +10,3 @@
 
 --glob
 !contrib/*
-
---glob
-!tests/*

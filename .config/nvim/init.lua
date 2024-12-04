@@ -107,7 +107,7 @@ require('mini.pairs').setup()
 
 require('mini.pick').setup({
   mappings = {
-    -- only define keybindings which I actually use
+    -- intentionally disable all other bindings explicitly ...
     caret_left  = '',
     caret_right = '',
     choose            = '<CR>',
@@ -137,6 +137,12 @@ require('mini.pick').setup({
     content_from_bottom = true,
     use_cache = true,
   },
+  window = {
+    config = {
+      width = 1000, -- max
+      height = 10,
+    },
+  }
 })
 vim.keymap.set('n', '<Leader>e', function() require('mini.pick').builtin.files() end)
 vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers() end)
@@ -168,6 +174,7 @@ require('nvim-treesitter.configs').setup({
 MiniDeps.add({
     source = 'neovim/nvim-lspconfig',
     -- TODO: migrate to LSP Zero one fine day
+    -- TODO: migrate to mini.completion?
     depends = {'hrsh7th/nvim-cmp',
                'hrsh7th/cmp-buffer',
                'hrsh7th/cmp-nvim-lsp',
