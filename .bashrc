@@ -158,3 +158,7 @@ alias rgc='rg -tcpp' # ripgrep for cpp files
 
 # Install fzf: https://github.com/junegunn/fzf, useful for kubectx and kubens
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "$HOME/.cargo/env"
+
+# Trash my env with rust
+. "$HOME/.cargo/env"
