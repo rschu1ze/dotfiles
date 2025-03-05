@@ -2,8 +2,11 @@
     name = Robert Schulze
     email = robert@clickhouse.com
     signingkey = 5BF99C54A67FA475E23625EF26703B55FB13728A
+[branch]
+    sort = -committerdate
 [commit]
     gpgsign = true
+    verbose = true
 [core]
     editor = nvim
     # pager = less -i # search case-insensitively
@@ -64,6 +67,8 @@
     helper = store
 [submodule]
     recurse = true # make 'git pull' and other commands work with submodules
+[tag]
+    sort = version:refname
 [alias]
     a = add
     b = branch
