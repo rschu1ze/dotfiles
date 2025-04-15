@@ -1,6 +1,6 @@
 <clickhouse>
     <!-- from keeper_port.xml -->
-    <keeper_server>
+    <keeper_server remove="remove">
         <tcp_port>9181</tcp_port>
         <server_id>1</server_id>
         <four_letter_word_allow_list>*</four_letter_word_allow_list>
