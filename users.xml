@@ -5,6 +5,11 @@
         <default>
             <allow_unrestricted_reads_from_keeper>1</allow_unrestricted_reads_from_keeper>
             <http_max_field_value_size>3333333333</http_max_field_value_size>
+
+            <enable_parallel_replicas>1</enable_parallel_replicas>
+            <max_parallel_replicas>10</max_parallel_replicas>
+            <cluster_for_parallel_replicas>default_parallel_replicas</cluster_for_parallel_replicas>
+            <parallel_replicas_for_non_replicated_merge_tree>1</parallel_replicas_for_non_replicated_merge_tree>
         </default>
     </profiles>
 

@@ -35,40 +35,11 @@
         <flush_on_crash>false</flush_on_crash>
     </text_log>
 
-    <!-- https://docs.google.com/presentation/d/17WMonmZLGSTfsQulgCPBAHk9roI0NcO0DLM9ArqrQqU/ -->
-
-    <!-- Configure zookeepers -->
-    <keeper_server remove="remove">
-    <!-- Configure zookeepers -->
-        <tcp_port>9181</tcp_port> <!-- how to reach zookeeper from clickhouse-server -->
-        <server_id>1</server_id>
-        <!-- Other servers in the ensemble and how to connect to them -->
-        <raft_configuration>
-            <server>
-                <id>1</id>
-                <hostname>localhost</hostname>
-                <port>9234</port> <!-- how zookeepers talk to each other -->
-            </server>
-            <!-- <server> -->
-            <!--     ... -->
-            <!-- </server> -->
-        </raft_configuration>
-    </keeper_server>
-
-    <!-- Tell clickhouse-server to which zookeeper it should connect. -->
-    <!-- This would include all servers in "raft_configuration" in "keeper_server". -->
-    <zookeeper remove="remove">
-        <node>
-            <host>localhost</host>
-            <port>9181</port>
-        </node>
-        <!-- <node> -->
-        <!--     ... -->
-        <!-- </node> -->
-    </zookeeper>
-
     <distributed_ddl>
         <path>/clickhouse/task_queue/ddl</path>
     </distributed_ddl>
+
+    <!-- https://docs.google.com/presentation/d/17WMonmZLGSTfsQulgCPBAHk9roI0NcO0DLM9ArqrQqU/ -->
+    <!--https://clickhouse.com/docs/deployment-guides/parallel-replicas-->
 
 </clickhouse>
