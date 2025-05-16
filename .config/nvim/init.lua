@@ -2,6 +2,9 @@
 --   - https://github.com/nvim-lua/kickstart.nvim/
 --   - https://www.youtube.com/playlist?list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft
 
+-- require('config.options')
+-- require('config.lazy')
+
 -- see :h for each option
 
 vim.g.mapleader = ' '
@@ -66,7 +69,7 @@ vim.cmd([[au FileType c lua vim.opt_local.commentstring = '/// %s']])
 vim.cmd([[au FileType cpp lua vim.opt_local.commentstring = '/// %s']])
 vim.cmd([[au FileType sql lua vim.opt_local.commentstring = '-- %s']])
 
--- ----------------------------------------------------------------------
+----------------------------------------------------------------------
 -- Plug-ins
 
 local path_package = vim.fn.stdpath('data') .. '/site/'
@@ -84,7 +87,7 @@ end
 
 require('mini.deps').setup({ path = { package = path_package } })
 
---
+
 
 MiniDeps.add('ellisonleao/gruvbox.nvim')
 vim.cmd('colorscheme gruvbox')
