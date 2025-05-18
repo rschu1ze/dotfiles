@@ -178,10 +178,16 @@ MiniDeps.add({
     depends = {'hrsh7th/nvim-cmp',
                'hrsh7th/cmp-buffer',
                'hrsh7th/cmp-nvim-lsp',
-               'hrsh7th/cmp-nvim-lsp-signature-help',
-               'williamboman/mason-lspconfig.nvim',
-               'williamboman/mason.nvim'
+               'hrsh7th/cmp-nvim-lsp-signature-help'
+               -- 'williamboman/mason-lspconfig.nvim',
+               -- 'williamboman/mason.nvim'
 }})
+
+MiniDeps.add({source = 'williamboman/mason.nvim', checkout = 'v1.11.0'})
+MiniDeps.add({source = 'williamboman/mason-lspconfig.nvim', checkout = 'v1.32.0'})
+
+-- They somehow destroyed Mason:
+-- See https://github.com/mason-org/mason-lspconfig.nvim/issues/545
 
 -- Install LSP servers from within nvim, check the status with :LspInfo and :LspInstallInfo
 require('mason').setup()
