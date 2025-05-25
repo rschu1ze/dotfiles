@@ -69,195 +69,277 @@ vim.cmd([[au FileType sql lua vim.opt_local.commentstring = '-- %s']])
 -- ----------------------------------------------------------------------
 -- Plug-ins
 
-local path_package = vim.fn.stdpath('data') .. '/site/'
-local mini_path = path_package .. 'pack/deps/start/mini.nvim'
-if not vim.loop.fs_stat(mini_path) then
-  vim.cmd('echo "Installing `mini.nvim`" | redraw')
-  local clone_cmd = {
-    'git', 'clone', '--filter=blob:none',
-    'https://github.com/echasnovski/mini.nvim', mini_path
-  }
-  vim.fn.system(clone_cmd)
-  vim.cmd('packadd mini.nvim | helptags ALL')
-  vim.cmd('echo "Installed `mini.nvim`" | redraw')
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
+vim.opt.rtp:prepend(lazypath)
 
-require('mini.deps').setup({ path = { package = path_package } })
+-- Setup lazy.nvim
+require("lazy").setup({
+    spec = {
+        {
+            "ellisonleao/gruvbox.nvim",
+            priority = 1000 ,
+            config = function()
+                vim.cmd("colorscheme gruvbox")
+            end
+        },
+        {
+            "echasnovski/mini.nvim",
+            -- version = false,
+            config = function()
+                require("mini.icons").setup()
+                require("mini.indentscope").setup({
+                    draw = { animation = function() return 0 end },
+                    symbol ='│'
+                })
+                require('mini.misc').setup()
+                require('mini.move').setup()
+                MiniMisc.setup_auto_root()
+                require("mini.pairs").setup()
+                require('mini.pick').setup({
+                    mappings = {
+                    -- intentionally disable all other bindings explicitly ...
+                        caret_left  = '',
+                        caret_right = '',
+                        choose            = '<CR>',
+                        choose_in_split   = '',
+                        choose_in_tabpage = '',
+                        choose_in_vsplit  = '',
+                        choose_marked     = '',
+                        delete_char       = '<BS>',
+                        delete_char_right = '',
+                        delete_left       = '',
+                        delete_word       = '',
+                        mark     = '',
+                        mark_all = '',
+                        move_down  = '<Tab>',
+                        move_up    = '<S-Tab>',
+                        refine        = '';
+                        refine_marked = '',
+                        scroll_down  = '',
+                        scroll_left  = '',
+                        scroll_right = '',
+                        scroll_up    = '',
+                        stop = '<Esc>',
+                        toggle_info    = '',
+                        toggle_preview = '',
+                    },
+                    window = {
+                        config = {
+                            width = 1000, -- max
+                            height = 10,
+                        },
+                    }
+                })
+                vim.keymap.set('n', '<Leader>e', function() require('mini.pick').builtin.files() end)
+                vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers() end)
+                require("mini.surround").setup()
+                require("mini.trailspace").setup()
+            end
+        },
+        {"ethanholz/nvim-lastplace", opts = {}}, -- https://github.com/neovim/neovim/issues/16339
+        {"FabijanZulj/blame.nvim", opts = {}},
+        {"hiphish/rainbow-delimiters.nvim"},
+        {
+            -- Implicitly based on their "master" branch which is frozen.
+            -- New development happens in "main" branch.
+            -- TODO Switch over when "main" stabilized (the setup seems slightly different)
+            "nvim-treesitter/nvim-treesitter",
+            config = function()
+                require("nvim-treesitter.configs").setup({
+                    ensure_installed = "all",
+                    highlight = {
+                        enable = true
+                    },
+                })
+            end
+        },
+        -- From kickstart.nvim
+        {
+        -- Main LSP Configuration
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            -- Automatically install LSPs and related tools to stdpath for Neovim
+            -- Mason must be loaded before its dependents so we need to set it up here.
+            -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
+            {'mason-org/mason.nvim', opts = {}},
+            'mason-org/mason-lspconfig.nvim',
+            'WhoIsSethDaniel/mason-tool-installer.nvim',
 
---
+            -- Useful status updates for LSP.
+            {'j-hui/fidget.nvim', opts = {}},
 
-MiniDeps.add('ellisonleao/gruvbox.nvim')
-vim.cmd('colorscheme gruvbox')
+            'saghen/blink.cmp',
 
-require('mini.bracketed').setup()
+            -- :ClangdSwitchSourceHeader
+            {'p00f/clangd_extensions.nvim', opts = {}}
+        },
+        config = function()
+          --  This function gets run when an LSP attaches to a particular buffer.
+          --    That is to say, every time a new file is opened that is associated with
+          --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
+          --    function will be executed to configure the current buffer
+          vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+            callback = function(event)
+              -- NOTE: Remember that Lua is a real programming language, and as such it is possible
+              -- to define small helper and utility functions so you don't have to repeat yourself.
+              --
+              -- In this case, we create a function that lets us more easily define mappings specific
+              -- for LSP related items. It sets the mode, buffer and description for us each time.
+              local map = function(keys, func, desc, mode)
+                mode = mode or 'n'
+                vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+              end
 
-require('mini.indentscope').setup({
-  draw = { animation = function() return 0 end },
-  symbol ='│'
-})
+              -- Default mappings:
+              -- grn - rename
+              -- grr - references
+              -- K - hover
 
-require('mini.jump2d').setup()
+              -- Extra mappings
+              map('s', vim.lsp.buf.definition, '[G]oto [D]efinition')
+              map('S', ':ClangdSwitchSourceHeader<CR>', 'Switch header')
 
-require('mini.misc').setup()
-MiniMisc.setup_auto_root()
+              local function client_supports_method(client, method, bufnr)
+                  return client:supports_method(method, bufnr)
+              end
 
-require('mini.move').setup()
+              -- The following two autocommands are used to highlight references of the
+              -- word under your cursor when your cursor rests there for a little while.
+              --    See `:help CursorHold` for information about when this is executed
+              --
+              -- When you move your cursor, the highlights will be cleared (the second autocommand).
+              local client = vim.lsp.get_client_by_id(event.data.client_id)
+              if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+                vim.api.nvim_create_autocmd('LspDetach', {
+                  group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+                  callback = function(event2)
+                    vim.lsp.buf.clear_references()
+                    vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+                  end,
+                })
+              end
 
-require('mini.pairs').setup()
+            end,
+          })
 
-require('mini.pick').setup({
-  mappings = {
-    -- intentionally disable all other bindings explicitly ...
-    caret_left  = '',
-    caret_right = '',
-    choose            = '<CR>',
-    choose_in_split   = '',
-    choose_in_tabpage = '',
-    choose_in_vsplit  = '',
-    choose_marked     = '',
-    delete_char       = '<BS>',
-    delete_char_right = '',
-    delete_left       = '',
-    delete_word       = '',
-    mark     = '',
-    mark_all = '',
-    move_down  = '<Tab>',
-    move_up    = '<S-Tab>',
-    refine        = '';
-    refine_marked = '',
-    scroll_down  = '',
-    scroll_left  = '',
-    scroll_right = '',
-    scroll_up    = '',
-    stop = '<Esc>',
-    toggle_info    = '',
-    toggle_preview = '',
-  },
-  options = {
-    -- content_from_bottom = true,
-    use_cache = true,
-  },
-  window = {
-    config = {
-      width = 1000, -- max
-      height = 10,
-    },
+          -- Diagnostic Config
+          vim.diagnostic.config {
+            signs = false,
+            virtual_text = true
+          }
+
+          -- LSP servers and clients are able to communicate to each other what features they support.
+          --  By default, Neovim doesn't support everything that is in the LSP specification.
+          --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
+          --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
+          local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+          -- Enable the following language servers
+          --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+          local servers = {
+            clangd = {},
+          }
+
+          -- Ensure the servers and tools above are installed
+          -- `mason` had to be setup earlier: to configure its options see the
+          -- `dependencies` table for `nvim-lspconfig` above.
+          local ensure_installed = vim.tbl_keys(servers or {})
+          require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+          require('mason-lspconfig').setup {
+            ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+            automatic_installation = false,
+            handlers = {
+              function(server_name)
+                local server = servers[server_name] or {}
+                -- This handles overriding only values explicitly passed
+                -- by the server configuration above. Useful when disabling
+                -- certain features of an LSP (for example, turning off formatting for ts_ls)
+                server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+                require('lspconfig')[server_name].setup(server)
+              end,
+            },
+          }
+        end,
+      },
+
+      { -- Autocompletion
+        'saghen/blink.cmp',
+        event = 'VimEnter',
+        version = '1.*',
+        opts = {
+          keymap = {
+            -- 'default' (recommended) for mappings similar to built-in completions
+            --   <c-y> to accept ([y]es) the completion.
+            --    This will auto-import if your LSP supports it.
+            --    This will expand snippets if the LSP sent a snippet.
+            -- 'super-tab' for tab to accept
+            -- 'enter' for enter to accept
+            -- 'none' for no mappings
+            --
+            -- For an understanding of why the 'default' preset is recommended,
+            -- you will need to read `:help ins-completion`
+            --
+            -- No, but seriously. Please read `:help ins-completion`, it is really good!
+            --
+            -- All presets have the following mappings:
+            -- <tab>/<s-tab>: move to right/left of your snippet expansion
+            -- <c-space>: Open menu or open docs if already open
+            -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
+            -- <c-e>: Hide menu
+            -- <c-k>: Toggle signature help
+            --
+            -- See :h blink-cmp-config-keymap for defining your own keymap
+            preset = 'default',
+            ["<Tab>"] = { "accept", "fallback"}
+            -- Ctrl-y accepts
+
+            -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+            --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+          },
+
+          completion = {
+            -- By default, you may press `<c-space>` to show the documentation.
+            -- Optionally, set `auto_show = true` to show the documentation after a delay.
+            documentation = { auto_show = true, auto_show_delay_ms = 500 },
+          },
+
+          sources = {
+            default = { 'lsp', 'path', 'buffer' }
+          },
+
+          signature = {enabled = true},
+
+          -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
+          -- which automatically downloads a prebuilt binary when enabled.
+          --
+          -- By default, we use the Lua implementation instead, but you may enable
+          -- the rust implementation via `'prefer_rust_with_warning'`
+          --
+          -- See :h blink-cmp-config-fuzzy for more information
+          fuzzy = { implementation = 'lua' },
+
+          -- Shows a signature help window while you type arguments for a function
+          signature = { enabled = true },
+        },
+      },
   }
 })
+
 vim.keymap.set('n', '<Leader>e', function() require('mini.pick').builtin.files() end)
 vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers() end)
-
-require('mini.icons').setup()
-
-require('mini.surround').setup()
-
-require('mini.trailspace').setup()
-
--- Remember last cursor position, https://github.com/neovim/neovim/issues/16339
-MiniDeps.add('ethanholz/nvim-lastplace')
-require('nvim-lastplace').setup()
-
-MiniDeps.add('FabijanZulj/blame.nvim')
-require('blame').setup()
-
-MiniDeps.add('hiphish/rainbow-delimiters.nvim')
-
-MiniDeps.add({
-    source = 'nvim-treesitter/nvim-treesitter',
-    hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
-})
-require('nvim-treesitter.configs').setup({
-    ensure_installed = 'all',
-    highlight = { enable = true },
-})
-
-MiniDeps.add({
-    source = 'neovim/nvim-lspconfig',
-    -- TODO: migrate to LSP Zero one fine day
-    -- TODO: migrate to mini.completion?
-    depends = {'hrsh7th/nvim-cmp',
-               'hrsh7th/cmp-buffer',
-               'hrsh7th/cmp-nvim-lsp',
-               'hrsh7th/cmp-nvim-lsp-signature-help'
-               -- 'williamboman/mason-lspconfig.nvim',
-               -- 'williamboman/mason.nvim'
-}})
-
-MiniDeps.add({source = 'williamboman/mason.nvim', checkout = 'v1.11.0'})
-MiniDeps.add({source = 'williamboman/mason-lspconfig.nvim', checkout = 'v1.32.0'})
-
--- They somehow destroyed Mason:
--- See https://github.com/mason-org/mason-lspconfig.nvim/issues/545
-
--- Install LSP servers from within nvim, check the status with :LspInfo and :LspInstallInfo
-require('mason').setup()
-require('mason-lspconfig').setup({
-    ensure_installed = { 'clangd' },
-    automatic_installation = true
-})
-
--- Keymaps to expose some LSP features, many other functions are available ...
-local function on_attach(_, bufnr)
-    local opts = { buffer = bufnr }
-    -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts) -- neovim 0.10 sets this by default
-    vim.keymap.set('n', 's', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 't', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', 'S', ':ClangdSwitchSourceHeader<CR>', opts)
-    vim.keymap.set('n', 'R', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, opts)
-end
-
--- Advertise capabilities to LSP server
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- Disable messages in sign column by LSP plugin, virtual text does the job nicely
-vim.diagnostic.config({signs = false})
-
-require('lspconfig')['clangd'].setup({
-    on_attach = on_attach,
-    capabilities = capabilities
-})
-
--- Note from https://clangd.llvm.org/installation.html:
--- "clangd will look in the parent directories of the files you edit looking
--- for it, and also in subdirectories named build/. For example, if editing
--- $SRC/gui/window.cpp, we search in $SRC/gui/, $SRC/gui/build/, $SRC/,
--- $SRC/build/,"
--- If this becomes too annoying, we could pass --compile-commands-dir=<string>
--- to clangd above (--> "cmd")
-
-local check_backspace = function()
-    local col = vim.fn.col '.' - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
-end
-
-local cmp = require 'cmp'
-cmp.setup({
-    -- The order controls the preference for specific sources
-    sources = {
-        {name = 'nvim_lsp'},
-        {name = 'nvim_lsp_signature_help'},
-        {name = 'buffer'}
-    },
-    mapping = {
-        -- Overload tab for a natural completion experience
-        ['<Tab>'] = function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          -- elseif check_backspace() then
-          --   fallback()
-          else
-            fallback()
-          end
-        end,
-        ['<S-Tab>'] = function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end,
-    },
-})
