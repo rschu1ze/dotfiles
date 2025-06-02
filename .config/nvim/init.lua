@@ -1,9 +1,4 @@
--- For a good starting point, see
---   - https://github.com/nvim-lua/kickstart.nvim/
---   - https://www.youtube.com/playlist?list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft
-
 -- see :h for each option
-
 vim.g.mapleader = ' '
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -27,9 +22,7 @@ vim.opt.linebreak= true
 vim.opt.breakindent= true
 vim.opt.showbreak = '> '
 vim.opt.textwidth = 140
-vim.opt.wildignorecase = true
 vim.opt.mouse = '' -- double-clicking text to copy it has weird work boundaries
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'} -- recommended by nvim-cmp
 -- vim.opt.cmdheight = 0 -- v0.8: nice but forces to press <enter> too often
 
 vim.g.loaded_netrw = 0
@@ -45,9 +38,6 @@ vim.keymap.set('n', '<Leader><Leader>', ':b#<CR>')
 vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
 -- Make entry into visual mode consistent with cc and dd
 vim.keymap.set('n', 'vv', 'V')
--- Make (un)indentation repeatable, obsoleted by mini.move
--- vim.keymap.set('v', '<', '<gv')
--- vim.keymap.set('v', '>', '>gv')
 -- Center search results + jump list matches
 vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'N', 'Nzz')
@@ -86,69 +76,64 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Setup lazy.nvim
+-- Setup plug-ins
 require("lazy").setup({
     spec = {
         {
             "ellisonleao/gruvbox.nvim",
-            priority = 1000 ,
+            priority = 1000,
             config = function()
+                vim.o.background = "dark" -- "light" for other theme
                 vim.cmd("colorscheme gruvbox")
             end
         },
         {
             "echasnovski/mini.nvim",
-            -- version = false,
             config = function()
                 require("mini.icons").setup()
                 require("mini.indentscope").setup({
-                    draw = { animation = function() return 0 end },
-                    symbol ='│'
+                    draw = { animation = require("mini.indentscope").gen_animation.none() }
                 })
                 require('mini.misc').setup()
-                require('mini.move').setup()
                 MiniMisc.setup_auto_root()
+                require('mini.move').setup()
                 require("mini.pairs").setup()
-                require('mini.pick').setup({
-                    mappings = {
-                    -- intentionally disable all other bindings explicitly ...
-                        caret_left  = '',
-                        caret_right = '',
-                        choose            = '<CR>',
-                        choose_in_split   = '',
-                        choose_in_tabpage = '',
-                        choose_in_vsplit  = '',
-                        choose_marked     = '',
-                        delete_char       = '<BS>',
-                        delete_char_right = '',
-                        delete_left       = '',
-                        delete_word       = '',
-                        mark     = '',
-                        mark_all = '',
-                        move_down  = '<Tab>',
-                        move_up    = '<S-Tab>',
-                        refine        = '';
-                        refine_marked = '',
-                        scroll_down  = '',
-                        scroll_left  = '',
-                        scroll_right = '',
-                        scroll_up    = '',
-                        stop = '<Esc>',
-                        toggle_info    = '',
-                        toggle_preview = '',
-                    },
-                    window = {
-                        config = {
-                            width = 1000, -- max
-                            height = 10,
-                        },
-                    }
-                })
-                vim.keymap.set('n', '<Leader>e', function() require('mini.pick').builtin.files() end)
-                vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers() end)
                 require("mini.surround").setup()
                 require("mini.trailspace").setup()
             end
+        },
+        {
+            -- TODO One fine day, check snacks.picker
+            "ibhagwan/fzf-lua",
+            keys = {
+                {"<Leader>e", function() require('fzf-lua').files() end, desc = "none" },
+                {"<Leader>b", function() require('fzf-lua').buffers() end, desc = "none" }
+            },
+            opts = {
+                defaults = {
+                    -- icons are a distraction
+                    file_icons = false,
+                    git_icons = false,
+                    color_icons = false
+                },
+                files = {
+                    rg_opts = [[--color=never --files --glob "!.git" --glob "!contrib"]]
+                },
+                fzf_opts = {
+                    ["--layout"] = 'default', -- fzf-lua uses "reverse" by default
+                    ["--no-scrollbar"] = true
+                },
+                winopts = {
+                    height = 0.4, -- window height
+                    width = 1, -- window width
+                    row = 1, -- window row position (0 = top, 1 = bottom)
+                    col = 0, -- window col position (0 = left, 1 = right)
+                    backdrop = 100, -- don't dim background
+                    preview = {
+                        hidden = true
+                    }
+                }
+            }
         },
         {"ethanholz/nvim-lastplace", opts = {}}, -- https://github.com/neovim/neovim/issues/16339
         {"FabijanZulj/blame.nvim", opts = {}},
@@ -156,6 +141,8 @@ require("lazy").setup({
         {
             -- Implicitly based on their "master" branch which is frozen.
             -- New development happens in "main" branch.
+            -- https://www.reddit.com/r/neovim/comments/1ky0i9q/treesittermodulesnvim_a_reimplementation_of/
+            -- https://www.reddit.com/r/neovim/comments/1kuj9xm/has_anyone_successfully_switched_to_the_new/
             -- TODO Switch over when "main" stabilized (the setup seems slightly different)
             "nvim-treesitter/nvim-treesitter",
             config = function()
@@ -223,16 +210,16 @@ require("lazy").setup({
               --    See `:help CursorHold` for information about when this is executed
               --
               -- When you move your cursor, the highlights will be cleared (the second autocommand).
-              local client = vim.lsp.get_client_by_id(event.data.client_id)
-              if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-                vim.api.nvim_create_autocmd('LspDetach', {
-                  group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-                  callback = function(event2)
-                    vim.lsp.buf.clear_references()
-                    vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
-                  end,
-                })
-              end
+              -- local client = vim.lsp.get_client_by_id(event.data.client_id)
+              -- if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+              --   vim.api.nvim_create_autocmd('LspDetach', {
+              --     group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+              --     callback = function(event2)
+              --       vim.lsp.buf.clear_references()
+              --       vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+              --     end,
+              --   })
+              -- end
 
             end,
           })
@@ -278,68 +265,62 @@ require("lazy").setup({
         end,
       },
 
-      { -- Autocompletion
+      {
         'saghen/blink.cmp',
         event = 'VimEnter',
         version = '1.*',
         opts = {
-          keymap = {
-            -- 'default' (recommended) for mappings similar to built-in completions
-            --   <c-y> to accept ([y]es) the completion.
-            --    This will auto-import if your LSP supports it.
-            --    This will expand snippets if the LSP sent a snippet.
-            -- 'super-tab' for tab to accept
-            -- 'enter' for enter to accept
-            -- 'none' for no mappings
+            keymap = {
+                -- 'default' (recommended) for mappings similar to built-in completions
+                --   <c-y> to accept ([y]es) the completion.
+                --    This will auto-import if your LSP supports it.
+                --    This will expand snippets if the LSP sent a snippet.
+                -- 'super-tab' for tab to accept
+                -- 'enter' for enter to accept
+                -- 'none' for no mappings
+                --
+                -- For an understanding of why the 'default' preset is recommended,
+                -- you will need to read `:help ins-completion`
+                --
+                -- No, but seriously. Please read `:help ins-completion`, it is really good!
+                --
+                -- All presets have the following mappings:
+                -- <tab>/<s-tab>: move to right/left of your snippet expansion
+                -- <c-space>: Open menu or open docs if already open
+                -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
+                -- <c-e>: Hide menu
+                -- <c-k>: Toggle signature help
+                --
+                -- See :h blink-cmp-config-keymap for defining your own keymap
+                preset = 'default',
+                ["<Tab>"] = { "accept", "fallback"}
+                -- Ctrl-y accepts
+            },
+
+            completion = {
+                -- By default, you may press `<c-space>` to show the documentation.
+                -- Optionally, set `auto_show = true` to show the documentation after a delay.
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 500
+                },
+            },
+            sources = {
+                default = { 'lsp', 'path', 'buffer' }
+            },
+            signature = {enabled = true},
+            -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
+            -- which automatically downloads a prebuilt binary when enabled.
             --
-            -- For an understanding of why the 'default' preset is recommended,
-            -- you will need to read `:help ins-completion`
+            -- By default, we use the Lua implementation instead, but you may enable
+            -- the rust implementation via `'prefer_rust_with_warning'`
             --
-            -- No, but seriously. Please read `:help ins-completion`, it is really good!
-            --
-            -- All presets have the following mappings:
-            -- <tab>/<s-tab>: move to right/left of your snippet expansion
-            -- <c-space>: Open menu or open docs if already open
-            -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-            -- <c-e>: Hide menu
-            -- <c-k>: Toggle signature help
-            --
-            -- See :h blink-cmp-config-keymap for defining your own keymap
-            preset = 'default',
-            ["<Tab>"] = { "accept", "fallback"}
-            -- Ctrl-y accepts
+            -- See :h blink-cmp-config-fuzzy for more information
+            fuzzy = { implementation = 'lua' },
 
-            -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-            --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-          },
-
-          completion = {
-            -- By default, you may press `<c-space>` to show the documentation.
-            -- Optionally, set `auto_show = true` to show the documentation after a delay.
-            documentation = { auto_show = true, auto_show_delay_ms = 500 },
-          },
-
-          sources = {
-            default = { 'lsp', 'path', 'buffer' }
-          },
-
-          signature = {enabled = true},
-
-          -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-          -- which automatically downloads a prebuilt binary when enabled.
-          --
-          -- By default, we use the Lua implementation instead, but you may enable
-          -- the rust implementation via `'prefer_rust_with_warning'`
-          --
-          -- See :h blink-cmp-config-fuzzy for more information
-          fuzzy = { implementation = 'lua' },
-
-          -- Shows a signature help window while you type arguments for a function
-          signature = { enabled = true },
+            -- Shows a signature help window while you type arguments for a function
+            signature = { enabled = true },
+            },
         },
-      },
-  }
+    }
 })
-
-vim.keymap.set('n', '<Leader>e', function() require('mini.pick').builtin.files() end)
-vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers() end)
