@@ -102,37 +102,45 @@ require("lazy").setup({
                 require("mini.trailspace").setup()
             end
         },
+        -- BROKEN .. I tab-select some file, press <Enter>, and some other file is opened. UNUSABLE.
+        -- {
+        --     -- TODO One fine day, check snacks.picker
+        --     "ibhagwan/fzf-lua",
+        --     keys = {
+        --         {"<Leader>e", function() require('fzf-lua').files() end, desc = "none" },
+        --         {"<Leader>b", function() require('fzf-lua').buffers() end, desc = "none" }
+        --     },
+        --     opts = {
+        --         defaults = {
+        --             -- icons are a distraction
+        --             file_icons = false,
+        --             git_icons = false,
+        --             color_icons = false
+        --         },
+        --         files = {
+        --             rg_opts = [[--color=never --files --glob "!.git" --glob "!contrib"]]
+        --         },
+        --         fzf_opts = {
+        --             ["--layout"] = 'default', -- fzf-lua uses "reverse" by default
+        --             ["--no-scrollbar"] = true
+        --         },
+        --         winopts = {
+        --             height = 0.4, -- window height
+        --             width = 1, -- window width
+        --             row = 1, -- window row position (0 = top, 1 = bottom)
+        --             col = 0, -- window col position (0 = left, 1 = right)
+        --             backdrop = 100, -- don't dim background
+        --             preview = {
+        --                 hidden = true
+        --             }
+        --         }
+        --     }
+        -- },
         {
-            -- TODO One fine day, check snacks.picker
-            "ibhagwan/fzf-lua",
+            "folke/snacks.nvim",
             keys = {
-                {"<Leader>e", function() require('fzf-lua').files() end, desc = "none" },
-                {"<Leader>b", function() require('fzf-lua').buffers() end, desc = "none" }
-            },
-            opts = {
-                defaults = {
-                    -- icons are a distraction
-                    file_icons = false,
-                    git_icons = false,
-                    color_icons = false
-                },
-                files = {
-                    rg_opts = [[--color=never --files --glob "!.git" --glob "!contrib"]]
-                },
-                fzf_opts = {
-                    ["--layout"] = 'default', -- fzf-lua uses "reverse" by default
-                    ["--no-scrollbar"] = true
-                },
-                winopts = {
-                    height = 0.4, -- window height
-                    width = 1, -- window width
-                    row = 1, -- window row position (0 = top, 1 = bottom)
-                    col = 0, -- window col position (0 = left, 1 = right)
-                    backdrop = 100, -- don't dim background
-                    preview = {
-                        hidden = true
-                    }
-                }
+                { "<leader>b", function() Snacks.picker.buffers() end, desc = "Buffers" },
+                { "<leader>e", function() Snacks.picker.git_files() end, desc = "Explorer" }
             }
         },
         {"ethanholz/nvim-lastplace", opts = {}}, -- https://github.com/neovim/neovim/issues/16339
