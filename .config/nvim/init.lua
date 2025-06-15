@@ -102,7 +102,7 @@ require("lazy").setup({
                 require("mini.trailspace").setup()
             end
         },
-        -- BROKEN .. I tab-select some file, press <Enter>, and some other file is opened. UNUSABLE.
+        -- UTTERLY BROKEN .. I tab-select some file, press <Enter>, and some other file is opened. UNUSABLE.
         -- {
         --     -- TODO One fine day, check snacks.picker
         --     "ibhagwan/fzf-lua",
