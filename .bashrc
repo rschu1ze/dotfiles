@@ -116,6 +116,9 @@ resettests () {
 
 greentests () {
     gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=success -F description="Manually set" -F context="Mergeable Check"
+}
+
+greentests_sync () {
     gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=success -F description="Manually set" -F context="CH Inc sync"
 }
 
