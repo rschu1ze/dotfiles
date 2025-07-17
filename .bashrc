@@ -110,10 +110,6 @@ alias make_msan="cmake     ${CH_FULL}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=memory
 alias make_asan="cmake     ${CH_FULL}  ${CH_NONE} ${CH_COMMON} -DSANITIZE=address"
 alias cbuild="cmake --build build --parallel -- "
 
-resettests () {
-    gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=pending -F description="Manually unset to rerun" -F context="$2"
-}
-
 greentests () {
     gh api repos/ClickHouse/ClickHouse/statuses/"$1" -X POST -F state=success -F description="Manually set" -F context="Mergeable Check"
 }
