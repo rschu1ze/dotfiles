@@ -23,7 +23,7 @@ vim.opt.breakindent= true
 vim.opt.showbreak = '> '
 vim.opt.textwidth = 140
 vim.opt.mouse = '' -- double-clicking text to copy it has weird work boundaries
--- vim.opt.cmdheight = 0 -- v0.8: nice but forces to press <enter> too often
+vim.opt.cmdheight = 1 -- v0.8: nice but forces to press <enter> too often
 
 vim.g.loaded_netrw = 0
 vim.g.loaded_netrwPlugin = 0
