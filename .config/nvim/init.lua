@@ -91,6 +91,33 @@ require("mini.pairs").setup()
 require("mini.surround").setup()
 require("mini.trailspace").setup()
 require('mini.pick').setup({
+    mappings = {
+        -- intentionally disable all other bindings explicitly ...
+        caret_left  = '',
+        caret_right = '',
+        choose            = '<CR>',
+        choose_in_split   = '',
+        choose_in_tabpage = '',
+        choose_in_vsplit  = '',
+        choose_marked     = '',
+        delete_char       = '<BS>',
+        delete_char_right = '',
+        delete_left       = '',
+        delete_word       = '',
+        mark     = '',
+        mark_all = '',
+        move_down  = '<Tab>',
+        move_up    = '<S-Tab>',
+        refine        = '';
+        refine_marked = '',
+        scroll_down  = '',
+        scroll_left  = '',
+        scroll_right = '',
+        scroll_up    = '',
+        stop = '<Esc>',
+        toggle_info    = '',
+        toggle_preview = '',
+    },
     window = {
         config = {
             width = 1000, -- max
