@@ -42,4 +42,6 @@
     <!-- https://docs.google.com/presentation/d/17WMonmZLGSTfsQulgCPBAHk9roI0NcO0DLM9ArqrQqU/ -->
     <!--https://clickhouse.com/docs/deployment-guides/parallel-replicas-->
 
+    <!-- https://clickhouse.com/docs/architecture/replication#configure-clickhouse-keeper-nodes -->
+
 </clickhouse>
