@@ -64,11 +64,7 @@ vim.pack.add({
     'https://github.com/ethanholz/nvim-lastplace',          -- https://github.com/neovim/neovim/issues/16339
     'https://github.com/FabijanZulj/blame.nvim',
     'https://github.com/hiphish/rainbow-delimiters.nvim',
-    -- Implicitly based on their "master" branch which is frozen. New development happens in "main" branch.
-    --     https://www.reddit.com/r/neovim/comments/1ky0i9q/treesittermodulesnvim_a_reimplementation_of/
-    --     https://www.reddit.com/r/neovim/comments/1kuj9xm/has_anyone_successfully_switched_to_the_new/
-    -- TODO Switch over when "main" stabilized (the setup is different)
-    'https://github.com/nvim-treesitter/nvim-treesitter',
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
     { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range("^1") },
     -- Main LSP Configuration
     'https://github.com/neovim/nvim-lspconfig',
@@ -132,12 +128,13 @@ vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers
 require('nvim-lastplace').setup{}
 require('blame').setup{}
 
-require('nvim-treesitter.configs').setup({
-    ensure_installed = {'cpp', 'sql', 'markdown'},
-    highlight = {
-        enable = true
-    }
-})
+local ensure_installed = {
+  "cpp",
+  "sql",
+  "markdown"
+}
+require("nvim-treesitter").setup({})
+require("nvim-treesitter").install(ensure_installed)
 
 require('mason').setup{}
 require("mason-lspconfig").setup{
