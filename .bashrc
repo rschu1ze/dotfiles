@@ -85,8 +85,8 @@ if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     export CXX=$(brew --prefix llvm)/bin/clang++
 else
     # Linux:
-    export CC=clang-19
-    export CXX=clang++-19
+    export CC=clang-21
+    export CXX=clang++-21
     export CORES=$(nproc)
 fi
 
