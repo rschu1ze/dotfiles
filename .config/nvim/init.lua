@@ -64,7 +64,7 @@ vim.pack.add({
     'https://github.com/ethanholz/nvim-lastplace',          -- https://github.com/neovim/neovim/issues/16339
     'https://github.com/FabijanZulj/blame.nvim',
     'https://github.com/hiphish/rainbow-delimiters.nvim',
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+    'https://github.com/nvim-treesitter/nvim-treesitter',
     { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range("^1") },
     -- Main LSP Configuration
     'https://github.com/neovim/nvim-lspconfig',
@@ -128,13 +128,13 @@ vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers
 require('nvim-lastplace').setup{}
 require('blame').setup{}
 
-local ensure_installed = {
-  "cpp",
-  "sql",
-  "markdown"
-}
-require("nvim-treesitter").setup({})
-require("nvim-treesitter").install(ensure_installed)
+-- local ensure_installed = {
+--   "cpp",
+--   "sql",
+--   "markdown"
+-- }
+-- require("nvim-treesitter").setup({})
+-- require("nvim-treesitter").install(ensure_installed)
 
 require('mason').setup{}
 require("mason-lspconfig").setup{
