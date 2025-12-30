@@ -64,7 +64,8 @@ vim.pack.add({
     'https://github.com/ethanholz/nvim-lastplace',          -- https://github.com/neovim/neovim/issues/16339
     'https://github.com/FabijanZulj/blame.nvim',
     'https://github.com/hiphish/rainbow-delimiters.nvim',
-    'https://github.com/nvim-treesitter/nvim-treesitter',
+    -- 'https://github.com/nvim-treesitter/nvim-treesitter', -- completely destroyed by upstream, spent 1 hour fixing this mess,
+    -- didn't work
     { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range("^1") },
     -- Main LSP Configuration
     'https://github.com/neovim/nvim-lspconfig',
