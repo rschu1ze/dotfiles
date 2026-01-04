@@ -84,7 +84,7 @@ require("mini.indentscope").setup({
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 require('mini.move').setup()
-require("mini.pairs").setup()
+-- require("mini.pairs").setup() -- annoying
 require("mini.surround").setup()
 require("mini.trailspace").setup()
 require('mini.pick').setup({
