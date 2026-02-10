@@ -3,13 +3,8 @@
 
     <profiles>
         <default>
-            <allow_unrestricted_reads_from_keeper>1</allow_unrestricted_reads_from_keeper>
-            <http_max_field_value_size>3333333333</http_max_field_value_size>
-
-            <!--<enable_parallel_replicas>1</enable_parallel_replicas>-->
-            <!--<max_parallel_replicas>10</max_parallel_replicas>-->
-            <!--<cluster_for_parallel_replicas>default_parallel_replicas</cluster_for_parallel_replicas>-->
-            <!--<parallel_replicas_for_non_replicated_merge_tree>1</parallel_replicas_for_non_replicated_merge_tree>-->
+            <!-- <allow_unrestricted_reads_from_keeper>1</allow_unrestricted_reads_from_keeper> -->
+            <!-- <http_max_field_value_size>1</http_max_field_value_size> -->
         </default>
     </profiles>
 
@@ -24,16 +19,11 @@
             <networks>
                 <ip>127.0.0.1</ip>
             </networks>
-            <profile>default</profile>
             <quota>default</quota>
             <access_management>1</access_management>
             <query_cache_max_size>100</query_cache_max_size>
         </default>
     </users>
-
-    <quotas>
-        <default></default>
-    </quotas>
 
 </clickhouse>
 

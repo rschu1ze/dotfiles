@@ -1,3 +1,0 @@
-<clickhouse>
-    <allow_zookeeper_write remove="remove">true</allow_zookeeper_write>
-</clickhouse>
