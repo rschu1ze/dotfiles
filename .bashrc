@@ -26,6 +26,7 @@ fi
 alias diff='diff --color -u'
 alias chs='./clickhouse-server'
 alias chc='./clickhouse-client'
+alias fix_git='git submodule deinit --all -f && git submodule sync && git submodule update --init -f --depth=10'
 
 if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
