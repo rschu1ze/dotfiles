@@ -151,3 +151,6 @@ alias rgc='rg -tcpp' # ripgrep for cpp files
 
 # Install fzf: https://github.com/junegunn/fzf, useful for kubectx and kubens
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# E.g. tree-sitter-cli
+PATH=$PATH:~/.cargo/bin/

@@ -17,15 +17,11 @@ vim.opt.swapfile = false
 vim.opt.list = true
 vim.opt.listchars = {trail = '~', tab = '▸ '}
 vim.opt.number = true
-vim.opt.laststatus = 3
 vim.opt.linebreak= true
 vim.opt.breakindent= true
 vim.opt.showbreak = '> '
 vim.opt.textwidth = 140
 vim.opt.mouse = '' -- double-clicking text to copy it has weird work boundaries
-
-vim.g.loaded_netrw = 0
-vim.g.loaded_netrwPlugin = 0
 
 -- Fast save
 vim.keymap.set('n', '<Leader>w', ':w<CR>')
@@ -63,9 +59,8 @@ vim.pack.add({
     'https://github.com/nvim-mini/mini.nvim',
     'https://github.com/ethanholz/nvim-lastplace',          -- https://github.com/neovim/neovim/issues/16339
     'https://github.com/FabijanZulj/blame.nvim',
-    'https://github.com/hiphish/rainbow-delimiters.nvim',
-    -- 'https://github.com/nvim-treesitter/nvim-treesitter', -- completely destroyed by upstream, spent 1 hour fixing this mess,
-    -- didn't work
+    -- 'https://github.com/hiphish/rainbow-delimiters.nvim', -- somehow broken, try again later
+    'https://github.com/romus204/tree-sitter-manager.nvim',  -- Replacement for https://github.com/nvim-treesitter/nvim-treesitter
     { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range("^1") },
     -- Main LSP Configuration
     'https://github.com/neovim/nvim-lspconfig',
@@ -78,9 +73,9 @@ vim.o.background = 'dark' -- "light" for other theme
 vim.cmd.colorscheme('gruvbox')
 
 require("mini.icons").setup()
-require("mini.indentscope").setup({
-    draw = { animation = require("mini.indentscope").gen_animation.none() }
-})
+-- require("mini.indentscope").setup({ -- too annoying for copy-paste
+--     draw = { animation = require("mini.indentscope").gen_animation.none() }
+-- })
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 require('mini.move').setup()
@@ -129,17 +124,16 @@ vim.keymap.set('n', '<Leader>b', function() require('mini.pick').builtin.buffers
 require('nvim-lastplace').setup{}
 require('blame').setup{}
 
--- local ensure_installed = {
---   "cpp",
---   "sql",
---   "markdown"
--- }
--- require("nvim-treesitter").setup({})
--- require("nvim-treesitter").install(ensure_installed)
+-- Run this first:
+--   $ cargo install --locked tree-sitter-cli
+require("tree-sitter-manager").setup({
+  ensure_installed = {c, cpp, markdown, sql},
+  auto_install = true,
+})
 
 require('mason').setup{}
 require("mason-lspconfig").setup{
-    ensure_installed = { "clangd" }, -- sudo apt install unzip
+    ensure_installed = { "clangd" }, -- needs 'sudo apt install unzip'
 }
 
 vim.diagnostic.config {
